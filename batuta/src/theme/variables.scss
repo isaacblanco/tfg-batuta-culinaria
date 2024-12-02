@@ -1,2 +1,25 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+/** Ionic CSS Variables **/
+:root {
+  /** primary **/
+  --ion-color-primary: #3880ff;
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    /* global app variables */
+  }
+
+  .ios body {
+    /* global ios app variables */
+  }
+
+  .md body {
+    /* global md app variables */
+  }
+}
