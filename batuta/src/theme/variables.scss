@@ -11,6 +11,7 @@
   --ion-color-primary-shade: #654e37;
   --ion-color-primary-tint: #ffbd00;
 
+  /** Secondary **/
   --ion-color-secondary: #f8eed9;
   --ion-color-secondary-rgb: 69, 47, 23;
   --ion-color-secondary-contrast: #ffffff;
@@ -18,6 +19,7 @@
   --ion-color-secondary-shade: #654e37;
   --ion-color-secondary-tint: #ffbd00;
 
+  /** Tertiary **/
   --ion-color-tertiary: #452e17;
   --ion-color-tertiary-rgb: 69, 47, 23;
   --ion-color-tertiary-contrast: #ffffff;
@@ -25,6 +27,7 @@
   --ion-color-tertiary-shade: #654e37;
   --ion-color-tertiary-tint: #ffbd00;
 
+  /** Accent **/
   --ion-color-accent: #e91e63;
   --ion-color-accent-rgb: 233, 30, 99;
   --ion-color-accent-contrast: #ffffff;
@@ -32,7 +35,8 @@
   --ion-color-accent-shade: #d81b60;
   --ion-color-accent-tint: #ec407a;
 
-  --ion-color-background: #f6f5ef;
+  /** Background **/
+  --ion-background-color: #f6f5ef;
   --button-border-radius: 12px; /* Valor personalizado del redondeo */
   --ion-header-background: #faefd8;
 
