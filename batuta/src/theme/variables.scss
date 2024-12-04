@@ -4,10 +4,63 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary: #452e17;
+  --ion-color-primary-rgb: 69, 47, 23;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #654e37;
+  --ion-color-primary-tint: #ffbd00;
+
+  --ion-color-secondary: #f8eed9;
+  --ion-color-secondary-rgb: 69, 47, 23;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #654e37;
+  --ion-color-secondary-tint: #ffbd00;
+
+  --ion-color-tertiary: #452e17;
+  --ion-color-tertiary-rgb: 69, 47, 23;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #654e37;
+  --ion-color-tertiary-tint: #ffbd00;
+
+  --ion-color-accent: #e91e63;
+  --ion-color-accent-rgb: 233, 30, 99;
+  --ion-color-accent-contrast: #ffffff;
+  --ion-color-accent-contrast-rgb: 255, 255, 255;
+  --ion-color-accent-shade: #d81b60;
+  --ion-color-accent-tint: #ec407a;
+
+  --ion-color-background: #f6f5ef;
+  --button-border-radius: 12px; /* Valor personalizado del redondeo */
+  --ion-header-background: #faefd8;
+
+  --ion-field-background: #f8eed9;
+}
+
+ion-header {
+  --background: var(--ion-header-background);
+}
+
+ion-button {
+  --border-radius: var(
+    --button-border-radius
+  ); /* Valor personalizado del redondeo */
+}
+
+ion-input {
+  --background: var(--ion-field-background);
+}
+
+ion-checkbox {
+  --background: #d1d8e0; /* Color de fondo del checkbox */
+  --checkmark-color: #ffffff; /* Color del checkmark */
+  --border-color: #34495e; /* Color del borde */
+}
+
+ion-toolbar {
+  --background: var(--ion-header-background);
 }
 
 @media (prefers-color-scheme: dark) {

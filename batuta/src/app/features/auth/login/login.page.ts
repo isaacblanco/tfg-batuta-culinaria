@@ -32,4 +32,8 @@ export class LoginPage implements OnInit {
       this.errorMessage = 'Error al iniciar sesión';
     }
   }
+
+  navigateToSignUp() {
+    this.router.navigate(['/sign-up']);
+  }
 }

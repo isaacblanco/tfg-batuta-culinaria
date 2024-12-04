@@ -3,13 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-  IonContent,
-  IonHeader,
-  IonLabel,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 
 @Component({
@@ -17,16 +10,7 @@ import { SupabaseService } from 'src/app/core/services/supabase.service';
   templateUrl: './sign-up.page.html',
   styleUrls: ['./sign-up.page.scss'],
   standalone: true,
-  imports: [
-    IonLabel,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonicModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class SignUpPage implements OnInit {
   email: string = '';
@@ -47,5 +31,9 @@ export class SignUpPage implements OnInit {
     } catch (error: any) {
       this.errorMessage = error.message;
     }
+  }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
   }
 }

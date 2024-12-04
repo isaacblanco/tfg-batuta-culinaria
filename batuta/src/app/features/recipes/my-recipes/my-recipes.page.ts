@@ -2,15 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.page.html',
-  styleUrls: ['./cart.page.scss'],
+  selector: 'app-my-recipes',
+  templateUrl: './my-recipes.page.html',
+  styleUrls: ['./my-recipes.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, IonicModule],
 })
-export class CartPage implements OnInit {
+export class MyRecipesPage implements OnInit {
   constructor() {}
 
   ngOnInit() {}

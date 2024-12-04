@@ -3,14 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IonToolbar } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonToolbar, CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class HomePage implements OnInit {
   constructor(private router: Router) {}

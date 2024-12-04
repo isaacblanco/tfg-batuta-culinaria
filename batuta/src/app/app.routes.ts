@@ -30,7 +30,16 @@ export const routes: Routes = [
       import('./config/settings/settings.page').then((m) => m.SettingsPage),
   },
   {
-    path: 'list',
+    path: 'my-recipes',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./features/recipes/my-recipes/my-recipes.page').then(
+        (m) => m.MyRecipesPage
+      ),
+  },
+
+  {
+    path: 'recipes',
     loadComponent: () =>
       import('./features/recipes/list/list.page').then((m) => m.ListPage),
   },
@@ -64,7 +73,7 @@ export const routes: Routes = [
       import('./features/recipes/ia/ia.page').then((m) => m.IaPage),
   },
   {
-    path: 'planning',
+    path: 'agenda',
     canActivate: [AuthGuard],
     loadComponent: () =>
       import('./features/agenda/planning/planning.page').then(
@@ -80,5 +89,12 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () =>
       import('./features/home/home.page').then((m) => m.HomePage),
+  },
+  {
+    path: 'my-recipes',
+    loadComponent: () =>
+      import('./features/recipes/my-recipes/my-recipes.page').then(
+        (m) => m.MyRecipesPage
+      ),
   },
 ];
