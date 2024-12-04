@@ -1,47 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-  IonApp,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-  IonRouterLink,
-  IonRouterOutlet,
-  IonSplitPane,
-} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-    IonicModule,
-    IonApp,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonListHeader,
-    IonNote,
-    IonMenuToggle,
-    IonItem,
-    IonIcon,
-    IonLabel,
-    IonRouterLink,
-    IonRouterOutlet,
-  ],
+  imports: [RouterLink, RouterLinkActive, CommonModule, IonicModule],
 })
 export class AppComponent implements OnInit {
   isAuthenticated = false;
@@ -53,7 +20,6 @@ export class AppComponent implements OnInit {
     { title: 'New Recipe', url: '/new', icon: 'add' },
     { title: 'Shopping List', url: '/shopping-list', icon: 'cart' },
     { title: 'Agenda', url: '/agenda', icon: 'calendar' },
-    { title: 'Settings', url: '/settings', icon: 'settings' },
   ];
   public labels = [];
   constructor(private router: Router) {}

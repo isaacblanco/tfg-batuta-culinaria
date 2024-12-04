@@ -1,20 +1,30 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import { SupabaseService } from 'src/app/core/services/supabase.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.page.html',
   styleUrls: ['./list.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class ListPage implements OnInit {
+  recipes: any[] = [];
 
-  constructor() { }
+  constructor(private supabaseService: SupabaseService) {}
 
   ngOnInit() {
+    this.loadRecipes();
   }
 
+  async loadRecipes() {
+    try {
+      this.recipes = await this.supabaseService.getRecipes();
+    } catch (error) {
+      console.error('Error al cargar las recetas:', error);
+    }
+  }
 }

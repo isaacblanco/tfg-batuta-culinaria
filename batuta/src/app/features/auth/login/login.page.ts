@@ -1,20 +1,35 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { SupabaseService } from 'src/app/core/services/supabase.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class LoginPage implements OnInit {
+  email: string = '';
+  password: string = '';
+  errorMessage: string = '';
 
-  constructor() { }
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  async login() {
+    try {
+      await this.supabaseService.signIn(this.email, this.password);
+      this.router.navigate(['/recipes']);
+    } catch (error) {
+      this.errorMessage = 'Error al iniciar sesión';
+    }
   }
-
 }

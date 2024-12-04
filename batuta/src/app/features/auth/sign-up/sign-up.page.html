@@ -10,4 +10,26 @@
       <ion-title size="large">signUp</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="email" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input [(ngModel)]="password" type="password"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="errorMessage"
+          >{{ errorMessage }}</ion-text
+        >
+        <ion-button expand="block" (click)="signUp()">Sign Up</ion-button>
+        <ion-button expand="block" color="tertiary" routerLink="/login"
+          >Already have an account?</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

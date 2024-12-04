@@ -10,4 +10,35 @@
       <ion-title size="large">login</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-img src="/assets/logo.svg"></ion-img>
+        <ion-title>Batura culinaria</ion-title>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="email" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input [(ngModel)]="password" type="password"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="errorMessage"
+          >{{ errorMessage }}</ion-text
+        >
+        <ion-button expand="block" (click)="login()">Log In</ion-button>
+        <ion-button expand="block" color="tertiary" routerLink="/sign-up"
+          >Create Account</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
