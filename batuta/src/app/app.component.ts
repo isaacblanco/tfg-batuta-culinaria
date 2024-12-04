@@ -1,28 +1,72 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp } from 'ionicons/icons';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import {
+  IonApp,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonMenu,
+  IonMenuToggle,
+  IonNote,
+  IonRouterLink,
+  IonRouterOutlet,
+  IonSplitPane,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    CommonModule,
+    IonicModule,
+    IonApp,
+    IonSplitPane,
+    IonMenu,
+    IonContent,
+    IonList,
+    IonListHeader,
+    IonNote,
+    IonMenuToggle,
+    IonItem,
+    IonIcon,
+    IonLabel,
+    IonRouterLink,
+    IonRouterOutlet,
+  ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  isAuthenticated = false;
   public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+    { title: 'Home', url: '/home', icon: 'home' },
+    { title: 'Recipes', url: '/recipes', icon: 'book' },
+    { title: 'Favorites', url: '/favorites', icon: 'heart' },
+    { title: 'My Recipes', url: '/my-recipes', icon: 'book' },
+    { title: 'New Recipe', url: '/new', icon: 'add' },
+    { title: 'Shopping List', url: '/shopping-list', icon: 'cart' },
+    { title: 'Agenda', url: '/agenda', icon: 'calendar' },
+    { title: 'Settings', url: '/settings', icon: 'settings' },
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {
-    addIcons({ mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp });
+  public labels = [];
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.isAuthenticated = false;
+  }
+
+  /**
+   * Realiza logout del usuario
+   */
+  logout() {
+    this.isAuthenticated = false;
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 }

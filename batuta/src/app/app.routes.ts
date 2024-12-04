@@ -27,4 +27,40 @@ export const routes: Routes = [
     path: 'settings',
     loadComponent: () => import('./config/settings/settings.page').then( m => m.SettingsPage)
   },
+  {
+    path: 'list',
+    loadComponent: () => import('./recipes/list/list.page').then( m => m.ListPage)
+  },
+  {
+    path: 'favorites',
+    loadComponent: () => import('./recipes/favorites/favorites.page').then( m => m.FavoritesPage)
+  },
+  {
+    path: 'recipe',
+    loadComponent: () => import('./recipes/recipe/recipe.page').then( m => m.RecipePage)
+  },
+  {
+    path: 'new',
+    loadComponent: () => import('./recipes/new/new.page').then( m => m.NewPage)
+  },
+  {
+    path: 'cart',
+    loadComponent: () => import('./shoppingList/cart/cart.page').then( m => m.CartPage)
+  },
+  {
+    path: 'ia',
+    loadComponent: () => import('./recipes/ia/ia.page').then( m => m.IaPage)
+  },
+  {
+    path: 'planning',
+    loadComponent: () => import('./agenda/planning/planning.page').then( m => m.PlanningPage)
+  },
+  {
+    path: 'cook',
+    loadComponent: () => import('./recipes/cook/cook.page').then( m => m.CookPage)
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./home/home.page').then( m => m.HomePage)
+  },
 ];

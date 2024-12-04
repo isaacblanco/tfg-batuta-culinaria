@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">home</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="navigateToRecipes()">
+          <ion-img src="../../assets/sections/recipes.svg"></ion-img>
+          <ion-label>Recipes</ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button>
+          <ion-img src="../../assets/sections/favorites.svg"></ion-img>
+          <ion-label>Favorites</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button>
+          <ion-img src="../../assets/sections/my-recipes.svg"></ion-img>
+          <ion-label>My Recipes</ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button>
+          <ion-img src="../../assets/sections/new-recipe.svg"></ion-img>
+          <ion-label>New Recipe</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="navigateToAgenda()">
+          <ion-img src="../../assets/sections/agenda.svg"></ion-img>
+          <ion-label>Agenda</ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button>
+          <ion-img src="../../assets/sections/shopping-list.svg"></ion-img>
+          <ion-label>Shopping List</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button>
+          <ion-img src="../../assets/sections/ia.svg"></ion-img>
+          <ion-label>IA</ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button>
+          <ion-img src="../../assets/sections/settings.svg"></ion-img>
+          <ion-label>Settings</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -4,12 +4,34 @@ Isaac Blanco Peco
 
 ## Starting the APP
 
-- Go to your new project: cd ./batuta-culinaria
-- Run ionic serve within the app directory to see your app in the browser
-- Run ionic capacitor add to add a native iOS or Android project using Capacitor
-- Generate your app icon and splash screens using cordova-res --skip-config --copy
-- Explore the Ionic docs for components, tutorials, and more: https://ion.link/docs & https://ionicframework.com/docs/components
+Ir a la carpeta del proyecto 'batuta' y ejecutar:
 
 ```
 ionic serve
 ```
+
+## Configuración del API
+
+Utilizandose supabase para la base de datos y el almacenamiento de archivos.
+
+Ruta: https://supabase.com/
+Usuario: isaacblanco@uoc.edu
+
+Project url: https://ilybvqaifwjyrtislcqt.supabase.co
+API key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlseWJ2cWFpZndqeXJ0aXNsY3F0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMxMzkwMjQsImV4cCI6MjA0ODcxNTAyNH0.gbE6ut4uSxvK\_\_lQBNwrxqyptjOENwg7duJFrPCT5Ds
+
+JWT secret: /uLg1HzQzfCE3ySHjoYOVFZGhu3NQXmcn51I35PRIUrblfq1Cr0aOc1vlVxZmQ4AFQk4VW/e5n5EdBJIS3yrtg==
+
+Instalar el cliente de supabase:
+
+```
+npm install @supabase/supabase-js
+```
+
+## Base de datos
+
+supabase.com
+Cuenta UOC de GitHub
+Organization: IsaacBlanco
+Project: Batuta
+Password db: Merid2039\_\_11
