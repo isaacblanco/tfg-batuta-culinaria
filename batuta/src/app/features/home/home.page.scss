@@ -1,0 +1,32 @@
+ion-row {
+  height: 25%;
+  margin-top: 24px;
+}
+
+ion-col {
+  color: #fff;
+  text-align: center;
+}
+
+a {
+  align-items: center;
+  display: flex;
+  flex-direction: column; /* Organiza el contenido en columna */
+  font-weight: 600;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+ion-img {
+  display: block;
+  margin-bottom: 8px; /* Espacio entre el ícono y el texto */
+  color: var(--ion-color-primary); /* Cambia el color del ícono */
+}
+
+p {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--ion-color-dark); /* Cambia el color del texto */
+}

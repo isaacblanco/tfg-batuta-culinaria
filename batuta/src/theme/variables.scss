@@ -39,12 +39,18 @@
   --ion-background-color: #f6f5ef;
   --button-border-radius: 12px; /* Valor personalizado del redondeo */
   --ion-header-background: #faefd8;
+  --ion-menu-background: #faefd8;
 
   --ion-field-background: #f8eed9;
 }
 
 ion-header {
   --background: var(--ion-header-background);
+}
+
+ion-menu,
+ion-menu ion-list ion-item {
+  --background: var(--ion-menu-background);
 }
 
 ion-button {

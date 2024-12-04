@@ -12,8 +12,6 @@ Temas pendientes:
   - Enlace a settings
   - Enlace a cuenta
   - Enlace a logout
-- Pantalla de enlaces: inicio
-  - Iconos con enlaces: recipes, favorites, myrecipes, newrecipe, agenda, shoppinglist, IA y seetings
 - Pantalla de Recetas
   - Lista de recetas
   - Filtrar recetas

@@ -8,67 +8,62 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="navigateToRecipes()">
+  <ion-grid [fixed]="true">
+    <ion-row class="ion-align-items-end">
+      <ion-col size="6">
+        <a [routerLink]="'/recipes'" expand="block" fill="clear">
           <ion-img src="../../assets/sections/recipes.svg"></ion-img>
-          <ion-label>Recipes</ion-label>
-        </ion-button>
+          <p>Recipes</p>
+          <ion-ripple-effect></ion-ripple-effect>
+        </a>
       </ion-col>
-      <ion-col>
-        <ion-button>
+      <ion-col size="6">
+        <a [routerLink]="'/favorites'" expand="block" fill="clear">
           <ion-img src="../../assets/sections/favorites.svg"></ion-img>
-          <ion-label>Favorites</ion-label>
-        </ion-button>
+          <p>Favorites</p>
+        </a>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button>
-          <ion-img src="../../assets/sections/my-recipes.svg"></ion-img>
-          <ion-label>My Recipes</ion-label>
-        </ion-button>
+    <ion-row class="ion-align-items-end">
+      <ion-col size="6">
+        <a [routerLink]="'/my-recipes'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/myrecipes.svg"></ion-img>
+          <p>My Recipes</p>
+        </a>
       </ion-col>
-      <ion-col>
-        <ion-button>
-          <ion-img src="../../assets/sections/new-recipe.svg"></ion-img>
-          <ion-label>New Recipe</ion-label>
-        </ion-button>
+      <ion-col size="6">
+        <a [routerLink]="'/new'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/new_recipe.svg"></ion-img>
+          <p>New Recipe</p>
+        </a>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="navigateToAgenda()">
+    <ion-row class="ion-align-items-end">
+      <ion-col size="6">
+        <a [routerLink]="'/agenda'" expand="block" fill="clear">
           <ion-img src="../../assets/sections/agenda.svg"></ion-img>
-          <ion-label>Agenda</ion-label>
-        </ion-button>
+          <p>Agenda</p>
+        </a>
       </ion-col>
-      <ion-col>
-        <ion-button>
-          <ion-img src="../../assets/sections/shopping-list.svg"></ion-img>
-          <ion-label>Shopping List</ion-label>
-        </ion-button>
+      <ion-col size="6">
+        <a [routerLink]="'/cart'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/cart.svg"></ion-img>
+          <p>Shopping List</p>
+        </a>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button>
-          <ion-img src="../../assets/sections/ia.svg"></ion-img>
-          <ion-label>IA</ion-label>
-        </ion-button>
+    <ion-row class="ion-align-items-end">
+      <ion-col size="6">
+        <a [routerLink]="'/ia'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/IA.svg"></ion-img>
+          <p>IA</p>
+        </a>
       </ion-col>
-      <ion-col>
-        <ion-button>
+      <ion-col size="6">
+        <a [routerLink]="'/settings'" expand="block" fill="clear">
           <ion-img src="../../assets/sections/settings.svg"></ion-img>
-          <ion-label>Settings</ion-label>
-        </ion-button>
+          <p>Settings</p>
+        </a>
       </ion-col>
     </ion-row>
   </ion-grid>

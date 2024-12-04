@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -9,42 +9,10 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonicModule, RouterLink],
 })
 export class HomePage implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {}
-
-  navigateToRecipes() {
-    this.router.navigate(['/recipes']);
-  }
-
-  navigateToFavorites() {
-    this.router.navigate(['/favorites']);
-  }
-
-  navigateToMyRecipes() {
-    this.router.navigate(['/my-recipes']);
-  }
-
-  navigateToNewRecipe() {
-    this.router.navigate(['/new']);
-  }
-
-  navigateToShoppingList() {
-    this.router.navigate(['/shopping-list']);
-  }
-
-  navigateToAgenda() {
-    this.router.navigate(['/agenda']);
-  }
-
-  navigateToIA() {
-    this.router.navigate(['/ia']);
-  }
-
-  navigateToSettings() {
-    this.router.navigate(['/settings']);
-  }
 }
