@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-
+import { IonicModule, MenuController } from '@ionic/angular';
+import { AuthService } from './core/services/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -11,7 +11,7 @@ import { IonicModule } from '@ionic/angular';
   imports: [RouterLink, RouterLinkActive, CommonModule, IonicModule],
 })
 export class AppComponent implements OnInit {
-  isAuthenticated = false;
+  isAuthenticated: boolean = false; // Actualizado automáticamente desde AuthService
   public appPages = [
     { title: 'Home', url: 'home', icon: 'home' },
     { title: 'Recipes', url: 'recipes', icon: 'book' },
@@ -22,17 +22,29 @@ export class AppComponent implements OnInit {
     { title: 'Agenda', url: 'agenda', icon: 'calendar' },
   ];
   public labels = [];
-  constructor(private router: Router) {}
+
+  constructor(
+    private router: Router,
+    private menuController: MenuController,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    this.isAuthenticated = false;
+    // Suscribirse al estado de autenticación
+    this.authService.isAuthenticated$.subscribe(
+      (isAuthenticated) => (this.isAuthenticated = isAuthenticated)
+    );
   }
 
-  /**
-   * Realiza logout del usuario
-   */
-  logout() {
-    this.isAuthenticated = false;
-    this.router.navigate(['/login'], { replaceUrl: true });
+  async navigateTo(url: string): Promise<void> {
+    await this.router.navigate([url]);
+    await this.menuController.close();
+  }
+
+  // Método para cerrar sesión
+  async logout(): Promise<void> {
+    this.authService.logout(); // Actualiza el estado de autenticación
+    await this.menuController.close();
+    this.router.navigate(['/login']); // Redirigir al login
   }
 }

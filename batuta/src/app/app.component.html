@@ -11,7 +11,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content>
+      <ion-content *ngIf="isAuthenticated">
         <ion-list id="inbox-list">
           <ion-menu-toggle
             auto-hide="false"
@@ -62,10 +62,10 @@
             ></ion-icon>
             <ion-label>Log in</ion-label>
           </ion-item>
+
           <ion-item
             *ngIf="isAuthenticated"
-            routerDirection="root"
-            routerLink="account"
+            (click)="navigateTo('account')"
             lines="full"
           >
             <ion-icon
@@ -77,10 +77,10 @@
             ></ion-icon>
             <ion-label>Account</ion-label>
           </ion-item>
+
           <ion-item
             *ngIf="isAuthenticated"
-            routerDirection="root"
-            routerLink="settings"
+            (click)="navigateTo('settings')"
             lines="full"
           >
             <ion-icon

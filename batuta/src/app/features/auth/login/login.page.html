@@ -13,20 +13,33 @@
       <ion-card-subtitle>Welcome back</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <ion-item>
-        <ion-label position="stacked">Email</ion-label>
-        <ion-input [(ngModel)]="email" type="email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Password</ion-label>
-        <ion-input [(ngModel)]="password" type="password"></ion-input>
-      </ion-item>
-      <ion-text color="danger" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </ion-text>
-      <ion-button shape="round" expand="block" (click)="login()">
-        Log In
-      </ion-button>
+      <!-- Formulario HTML estándar -->
+      <form (submit)="login()" autocomplete="on">
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input
+            [(ngModel)]="email"
+            type="email"
+            name="email"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Password</ion-label>
+          <ion-input
+            [(ngModel)]="password"
+            type="password"
+            name="password"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </ion-text>
+        <ion-button shape="round" expand="block" type="submit">
+          Log In
+        </ion-button>
+      </form>
     </ion-card-content>
   </ion-card>
 

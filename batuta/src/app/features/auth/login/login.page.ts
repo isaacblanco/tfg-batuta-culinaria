@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -21,25 +21,22 @@ export class LoginPage implements OnInit {
   constructor(
     private supabaseService: SupabaseService,
     private localStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {}
 
   async login() {
     try {
-      // Iniciar sesión con el email y password
       const user = await this.supabaseService.signIn(this.email, this.password);
       console.log('Usuario logueado:', user);
 
-      // Sincronizar el usuario con la tabla personalizada "Usuarios"
       const userData = await this.syncUserWithDatabase(user);
-
-      // Guardar los datos del usuario en el localStorage
       this.localStorageService.setUserData(userData);
 
-      // Redirigir al usuario a la página principal
-      this.router.navigate(['/recipes']);
+      this.authService.login(); // Actualiza el estado de autenticación
+      this.router.navigate(['/home']);
     } catch (error: any) {
       console.error('Error de inicio de sesión:', error.message);
       this.errorMessage =
@@ -47,31 +44,31 @@ export class LoginPage implements OnInit {
     }
   }
 
-  // Método para sincronizar usuario autenticado con la tabla "Usuarios"
+  // Método para sincronizar usuario autenticado con la tabla "usuarios"
   async syncUserWithDatabase(authUser: any) {
     try {
-      // Verificar si el usuario ya existe en la tabla "Usuarios"
-      const { data: existingUser, error } = await this.supabaseService
-        .selectFromTable('Usuarios', '*')
+      // Verificar si el usuario ya existe en la tabla "usuarios"
+      const existingUser = await this.supabaseService
+        .selectFromTable('usuarios', 'id, username, preferences')
         .then((data) => data.find((user) => user.id === authUser.id));
 
       if (!existingUser) {
         // Crear el registro si el usuario no existe
         const newUser = {
           id: authUser.id, // ID de auth.users
-          username: authUser.email.split('@')[0], // Usar el correo para generar un nombre de usuario básico
+          username: authUser.email.split('@')[0], // Nombre de usuario basado en el email
           preferences: null, // Configuraciones iniciales por defecto
         };
 
         const createdUser = await this.supabaseService.insertIntoTable(
-          'Usuarios',
+          'usuarios',
           newUser
         );
 
-        console.log('Usuario creado en la tabla Usuarios:', createdUser);
-        return createdUser;
+        // console.log('Usuario creado en la tabla usuarios:', createdUser);
+        return createdUser[0]; // Supabase devuelve un array con los datos insertados
       } else {
-        console.log('Usuario ya existe en la tabla Usuarios:', existingUser);
+        // console.log('Usuario ya existe en la tabla usuarios:', existingUser);
         return existingUser;
       }
     } catch (err: any) {
@@ -79,7 +76,9 @@ export class LoginPage implements OnInit {
         'Error sincronizando usuario con la base de datos:',
         err.message
       );
-      throw new Error('Error al sincronizar el usuario con la base de datos.');
+      throw new Error(
+        'Error al sincronizar el usuario con la base de datos. Intentado de nuevo'
+      );
     }
   }
 

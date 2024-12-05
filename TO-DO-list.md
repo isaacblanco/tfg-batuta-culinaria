@@ -2,11 +2,7 @@ Temas pendientes:
 
 === FRONTEND ===
 
-- Pantalla de login
-  - Formulario de login
-  - Validaciones
 - Menu lateral
-  - Lista de paginas (enlaces)
   - Enlace a settings
   - Enlace a cuenta
   - Enlace a logout
@@ -66,3 +62,7 @@ https://supabase.com/dashboard/project/ilybvqaifwjyrtislcqt/auth/url-configurati
 Cambiar el logotipo de la APP
 
 - Usar un gorro de chef, con la paleta y la espiga de la cava
+
+=== ERRORES A SOLUCIONAR ===
+
+- Al crear la cuenta y luego ir al login, no se crea por defecto en la tabla de usuarios --> forzar en signup
