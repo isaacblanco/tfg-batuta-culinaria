@@ -59,8 +59,18 @@ ion-button {
   ); /* Valor personalizado del redondeo */
 }
 
+ion-item-divider {
+  --background: var(--ion-header-background);
+  font-weight: bold;
+  color: var(--ion-color-primary);
+}
+
 ion-input {
   --background: var(--ion-field-background);
+}
+
+ion-button {
+  padding-top: 16px;
 }
 
 ion-checkbox {

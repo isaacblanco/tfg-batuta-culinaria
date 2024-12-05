@@ -2,19 +2,16 @@ Temas pendientes:
 
 === FRONTEND ===
 
-- Pantalla settings
-  - Gestionar categorias
-  - Gestionar unidades
-  - Formulario de settings
-  - Lista de settings
+- Pantalla nueva receta
+
+  - Formulario de receta
+
 - Pantalla de Recetas
   - Lista de recetas
   - Filtrar recetas
 - Pantalla favoritos
   - Lista de recetas
   - Filtrar recetas
-- Pantalla nueva receta
-  - Formulario de receta
 - Pantalla agenda
   - Lista de la semana
 - Pantalla lista de la compra

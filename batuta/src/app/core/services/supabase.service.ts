@@ -94,4 +94,24 @@ export class SupabaseService {
   async getRecipes(): Promise<any[]> {
     return this.selectFromTable('recetas');
   }
+
+  // Método genérico para leer un solo registro
+  async readSingle<T>(
+    tableName: string,
+    match: Record<string, any>
+  ): Promise<T> {
+    const { data, error } = await this.supabase
+      .from(tableName)
+      .select('*')
+      .match(match)
+      .single();
+    if (error) {
+      console.error(
+        `Error al leer el registro en la tabla ${tableName}:`,
+        error.message
+      );
+      throw new Error(`No se pudo leer el registro en la tabla ${tableName}.`);
+    }
+    return data as T;
+  }
 }

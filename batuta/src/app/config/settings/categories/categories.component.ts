@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
-
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
@@ -17,7 +16,10 @@ export class CategoriesComponent implements OnInit {
   newCategory: string = '';
   searchQuery: string = '';
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
     this.loadCategories();
@@ -92,5 +94,9 @@ export class CategoriesComponent implements OnInit {
     } catch (error) {
       console.error('Error al eliminar categoría:', error);
     }
+  }
+
+  closeModal(): void {
+    this.modalController.dismiss();
   }
 }
