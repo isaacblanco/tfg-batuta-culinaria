@@ -10,4 +10,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item button (click)="openCategoriesModal()">
+      <ion-label>Manage Categories</ion-label>
+      <ion-icon slot="end" name="settings-outline"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

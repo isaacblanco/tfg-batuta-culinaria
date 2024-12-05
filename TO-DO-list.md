@@ -2,6 +2,11 @@ Temas pendientes:
 
 === FRONTEND ===
 
+- Pantalla settings
+  - Gestionar categorias
+  - Gestionar unidades
+  - Formulario de settings
+  - Lista de settings
 - Pantalla de Recetas
   - Lista de recetas
   - Filtrar recetas
@@ -19,12 +24,6 @@ Temas pendientes:
 
   - Formulario de IA
 
-- Pantalla settings
-  - Formulario de settings
-  - Lista de settings
-  - Gestionar categorias
-  - Gestionar unidades
-  -
 - Pantalla account
   - Formulario de account
   - Ver cuenta: nombre, email, contraseña
