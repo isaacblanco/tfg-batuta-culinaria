@@ -13,12 +13,12 @@ import { AuthService } from './core/services/auth.service';
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false; // Actualizado automáticamente desde AuthService
   public appPages = [
-    { title: 'Home', url: 'home', icon: 'home' },
-    { title: 'Recipes', url: 'recipes', icon: 'book' },
-    { title: 'Favorites', url: 'favorites', icon: 'heart' },
-    { title: 'My Recipes', url: 'my-recipes', icon: 'book' },
-    { title: 'New Recipe', url: 'new', icon: 'add' },
-    { title: 'Shopping List', url: 'cart', icon: 'cart' },
+    { title: 'Menu', url: 'home', icon: 'home' },
+    { title: 'Recetas', url: 'recipes', icon: 'book' },
+    { title: 'Favoritas', url: 'favorites', icon: 'heart' },
+    { title: 'Mis recetas', url: 'my-recipes', icon: 'book' },
+    { title: 'Crear receta', url: 'new', icon: 'add' },
+    { title: 'Lista de la compra', url: 'cart', icon: 'cart' },
     { title: 'Agenda', url: 'agenda', icon: 'calendar' },
   ];
   public labels = [];

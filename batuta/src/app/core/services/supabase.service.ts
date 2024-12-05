@@ -95,6 +95,20 @@ export class SupabaseService {
     return this.selectFromTable('recetas');
   }
 
+  async getMyRecipes(id: string): Promise<any[]> {
+    const { data, error } = await this.supabase
+      .from('recetas')
+      .select('*')
+      // Filters
+      .eq('user_id', id);
+
+    if (error) {
+      console.error(`Error al cargar mis recetas:`, error.message);
+      throw new Error(`No se pudo obtener mis recetas.`);
+    }
+    return data;
+  }
+
   // Método genérico para leer un solo registro
   async readSingle<T>(
     tableName: string,
