@@ -5,8 +5,6 @@ Temas pendientes:
 - Pantalla de login
   - Formulario de login
   - Validaciones
-- Pantalla de registro
-  - Formulario de registro
 - Menu lateral
   - Lista de paginas (enlaces)
   - Enlace a settings
@@ -39,9 +37,32 @@ Temas pendientes:
 
 === API ===
 
-- Usar supabase
-- Crear endpoints
-- Crear relaciones
-- Crear triggers
-- Crear funciones
-- Crear vistas
+- Poder authenticarse
+- Poder registrar usuario
+- Poder crear receta
+- Poder ver receta
+- Poder ver lista de la compra
+- Poder ver agenda
+- Poder usar IA
+
+-- Uso de google para autenticar
+https://supabase.com/dashboard/project/ilybvqaifwjyrtislcqt/auth/providers
+
+Template de email
+https://supabase.com/dashboard/project/ilybvqaifwjyrtislcqt/email/templates
+
+-- Seguridad en la base de datos y api : PARA NOTA
+https://youtu.be/pi33WDrgfpI?t=636 --> Enable RLS es un punto extra
+
+-- Seguridad en el registro de contraseñas
+https://supabase.com/dashboard/project/ilybvqaifwjyrtislcqt/settings/auth
+
+Explicar que se debe verificar el email
+https://supabase.com/dashboard/project/ilybvqaifwjyrtislcqt/email/verify
+
+-- Poner la aplicación en producción (uso de url en interserver)
+https://supabase.com/dashboard/project/ilybvqaifwjyrtislcqt/auth/url-configuration
+
+Cambiar el logotipo de la APP
+
+- Usar un gorro de chef, con la paleta y la espiga de la cava

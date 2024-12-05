@@ -24,12 +24,30 @@ export class SignUpPage implements OnInit {
 
   ngOnInit() {}
 
+  /**
+   * Comprueba si la contraseña es fuerte
+   * @param password - La contraseña a comprobar: La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas y números
+   * @returns true si la contraseña es fuerte, false en caso contrario
+   */
+  isPasswordStrong(password: string): boolean {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    return regex.test(password);
+  }
+
   async signUp() {
+    if (!this.isPasswordStrong(this.password)) {
+      this.errorMessage =
+        'La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas y números.';
+      return;
+    }
+
     try {
-      await this.supabaseService.signUp(this.email, this.password);
-      this.router.navigate(['/login']); // Redirige al usuario a la página de login
+      const user = await this.supabaseService.signUp(this.email, this.password);
+      console.log('Usuario registrado:', user);
+      this.router.navigate(['/login']);
     } catch (error: any) {
-      this.errorMessage = error.message;
+      console.error('Error de registro:', error.message);
+      this.errorMessage = error.message || 'Error desconocido al registrarse';
     }
   }
 
