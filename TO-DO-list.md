@@ -2,10 +2,6 @@ Temas pendientes:
 
 === FRONTEND ===
 
-- Pantalla nueva receta
-
-  - Formulario de receta
-
 - Pantalla de Recetas
   - Lista de recetas
   - Filtrar recetas
@@ -22,10 +18,14 @@ Temas pendientes:
   - Formulario de IA
 
 - Pantalla account
+
   - Formulario de account
   - Ver cuenta: nombre, email, contraseña
   - Cambiar contraseña
   - Borrar cuenta
+
+- Pantalla de nueva receta
+  - Formulario de receta: al guardar, debe cogerse el ID de la receta y redirigir a la pantalla de la receta con el ID
 
 === API ===
 

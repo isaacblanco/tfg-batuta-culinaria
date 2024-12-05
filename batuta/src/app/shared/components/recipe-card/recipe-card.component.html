@@ -1,3 +1,14 @@
-<p>
-  recipe-card works!
-</p>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{ recipe.name }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4"> Dificultad: {{ recipe.difficulty }} </ion-col>
+        <ion-col size="4"> Tiempo: {{ recipe.preparation_time }} </ion-col>
+        <ion-col size="4"> Porciones: {{ recipe.num_portions }} </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
