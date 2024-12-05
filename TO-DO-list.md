@@ -2,10 +2,6 @@ Temas pendientes:
 
 === FRONTEND ===
 
-- Menu lateral
-  - Enlace a settings
-  - Enlace a cuenta
-  - Enlace a logout
 - Pantalla de Recetas
   - Lista de recetas
   - Filtrar recetas
@@ -20,16 +16,20 @@ Temas pendientes:
   - Lista de la compra por recetas
   - Lista de la compra por ingredientes
 - Pantalla IA
+
   - Formulario de IA
+
 - Pantalla settings
   - Formulario de settings
   - Lista de settings
-
-=== BASE DE DATOS ===
-
-- Crear base de datos
-- Crear tablas
-- Crear relaciones
+  - Gestionar categorias
+  - Gestionar unidades
+  -
+- Pantalla account
+  - Formulario de account
+  - Ver cuenta: nombre, email, contraseña
+  - Cambiar contraseña
+  - Borrar cuenta
 
 === API ===
 
