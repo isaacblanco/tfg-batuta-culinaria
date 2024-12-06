@@ -4,25 +4,22 @@ Temas pendientes:
 
 - Pantalla de Recetas
   - Lista de recetas
-  - Filtrar recetas
-- Pantalla favoritos
-  - Lista de recetas
-  - Filtrar recetas
+  - Enlace a la receta --> routerLink con ID
+  - Mejorar la card de receta
 - Pantalla agenda
   - Lista de la semana
 - Pantalla lista de la compra
   - Lista de la compra por recetas
   - Lista de la compra por ingredientes
+- Pantalla favoritos
+
+  - Lista de recetas
+  - Filtrar recetas
+
 - Pantalla IA
 
   - Formulario de IA
-
-- Pantalla account
-
-  - Formulario de account
-  - Ver cuenta: nombre, email, contraseña
-  - Cambiar contraseña
-  - Borrar cuenta
+  -
 
 - Pantalla de nueva receta
   - Formulario de receta: al guardar, debe cogerse el ID de la receta y redirigir a la pantalla de la receta con el ID
@@ -62,3 +59,4 @@ Cambiar el logotipo de la APP
 === ERRORES A SOLUCIONAR ===
 
 - Al crear la cuenta y luego ir al login, no se crea por defecto en la tabla de usuarios --> forzar en signup
+- Pantalla account: borrado de usuario no lo hace en la tabla de Auth.users, aunque si en la de usuarios, revisar

@@ -16,10 +16,11 @@ export class AppComponent implements OnInit {
     { title: 'Menu', url: 'home', icon: 'home' },
     { title: 'Recetas', url: 'recipes', icon: 'book' },
     { title: 'Favoritas', url: 'favorites', icon: 'heart' },
-    { title: 'Mis recetas', url: 'my-recipes', icon: 'book' },
-    { title: 'Crear receta', url: 'new', icon: 'add' },
+    { title: 'Mis recetas', url: 'my-recipes', icon: 'albums' },
+    { title: 'Crear receta', url: 'new', icon: 'add-circle' },
+    { title: 'IA', url: 'ia', icon: 'sparkles' },
     { title: 'Lista de la compra', url: 'cart', icon: 'cart' },
-    { title: 'Agenda', url: 'agenda', icon: 'calendar' },
+    { title: 'Agenda semanal', url: 'agenda', icon: 'calendar' },
   ];
   public labels = [];
 

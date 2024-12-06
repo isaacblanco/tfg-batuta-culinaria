@@ -2,10 +2,56 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <a [routerLink]="'/home'" routerDirection="back">
+        <ion-icon name="home"></ion-icon>
+      </a>
     </ion-buttons>
     <ion-title>Account</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Nombre de usuario</ion-label>
+      <ion-input type="text" [(ngModel)]="user.username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <div class="ion-text-center">
+        <ion-button fill="outline" (click)="updateUsername()">
+          Actualizar nombre
+        </ion-button>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-list-header>
+    <ion-label>Borrar usuario</ion-label>
+  </ion-list-header>
+
+  <ion-item>
+    <ion-label>Estoy seguro de lo que hago</ion-label>
+    <ion-toggle [(ngModel)]="deleteToggle" slot="end"></ion-toggle>
+  </ion-item>
+  <ion-item *ngIf="deleteToggle" lines="full">
+    <ion-icon name="warning" slot="start"></ion-icon>
+    <ion-label color="danger">
+      <p>
+        Esta acción es irreversible y eliminará todos los datos del usuario. Las
+        recetas no se podrán recuperar.
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <div class="ion-text-center">
+    <ion-button
+      color="danger"
+      [disabled]="!deleteToggle"
+      (click)="deleteUser()"
+      size="small"
+    >
+      Eliminar usuario
+    </ion-button>
+  </div>
+</ion-footer>

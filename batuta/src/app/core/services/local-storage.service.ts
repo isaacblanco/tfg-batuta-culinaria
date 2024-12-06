@@ -22,6 +22,11 @@ export class LocalStorageService {
     return userData ? userData.id : null;
   }
 
+  getUsername(): string {
+    const userData = this.getUserData();
+    return userData ? userData.username : null;
+  }
+
   // Limpiar datos del usuario
   clearUserData(): void {
     localStorage.removeItem(this.userKey);

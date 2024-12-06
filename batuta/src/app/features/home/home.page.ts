@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { LocalStorageService } from './../../core/services/local-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,14 @@ import { IonicModule } from '@ionic/angular';
   imports: [CommonModule, FormsModule, IonicModule, RouterLink],
 })
 export class HomePage implements OnInit {
-  constructor(private router: Router) {}
+  username: string = 'Usuario';
 
-  ngOnInit() {}
+  constructor(
+    private router: Router,
+    private localStorageService: LocalStorageService
+  ) {}
+
+  ngOnInit() {
+    this.username = this.localStorageService.getUsername();
+  }
 }

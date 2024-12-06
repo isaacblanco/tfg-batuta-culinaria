@@ -10,12 +10,12 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./features/auth/login/login.page').then((m) => m.LoginPage),
+      import('./auth/login/login.page').then((m) => m.LoginPage),
   },
   {
     path: 'sign-up',
     loadComponent: () =>
-      import('./features/auth/sign-up/sign-up.page').then((m) => m.SignUpPage),
+      import('./auth/sign-up/sign-up.page').then((m) => m.SignUpPage),
   },
   {
     path: 'account',

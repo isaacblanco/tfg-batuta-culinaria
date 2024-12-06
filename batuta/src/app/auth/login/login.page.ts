@@ -25,7 +25,9 @@ export class LoginPage implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.localStorageService.clearUserData();
+  }
 
   async login() {
     try {

@@ -128,4 +128,70 @@ export class SupabaseService {
     }
     return data as T;
   }
+
+  async updateUsername(
+    id: string | undefined,
+    username: string | undefined
+  ): Promise<void> {
+    if (!id || !username) {
+      console.error('ID o nombre de usuario no proporcionados');
+      throw new Error('ID o nombre de usuario no válidos');
+    }
+
+    const { error } = await this.supabase
+      .from('usuarios')
+      .update({ username })
+      .eq('id', id);
+
+    if (error) {
+      console.error(`Error al actualizar el nombre de usuario:`, error.message);
+      throw new Error(`No se pudo actualizar el nombre de usuario.`);
+    }
+
+    console.log(
+      `Nombre de usuario actualizado correctamente para el ID: ${id}`
+    );
+  }
+
+  // Método para eliminar un usuario de la base de datos y de auth.users
+  async deleteUser(id: string): Promise<void> {
+    // Eliminar usuario de la tabla 'usuarios'
+    const { error: deleteError } = await this.supabase
+      .from('usuarios')
+      .delete()
+      .eq('id', id);
+
+    if (deleteError) {
+      console.error(
+        `Error al eliminar el usuario en la tabla 'usuarios':`,
+        deleteError.message
+      );
+      throw new Error(`No se pudo eliminar el usuario de la tabla 'usuarios'.`);
+    }
+
+    // Si la eliminación en 'usuarios' fue exitosa, eliminarlo en 'auth.users'
+    const authEndpoint = `https://${environment.supabaseUrl.replace(
+      'https://',
+      ''
+    )}/rest/v1/auth.users?id=eq.${id}`;
+
+    const response = await fetch(authEndpoint, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${environment.supabaseKey}`, // Asegúrate de que este sea tu key con permisos adecuados
+        apikey: environment.supabaseKey,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Error al eliminar el usuario en 'auth.users':`, errorText);
+      throw new Error(`No se pudo eliminar el usuario de 'auth.users'.`);
+    }
+
+    console.log(
+      `Usuario con ID ${id} eliminado correctamente de ambos lugares.`
+    );
+  }
 }
