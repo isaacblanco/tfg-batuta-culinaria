@@ -109,6 +109,26 @@ export class SupabaseService {
     return data;
   }
 
+  async readSingleById<T>(tableName: string, id: number): Promise<T> {
+    const { data, error } = await this.supabase
+      .from(tableName)
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      console.error(
+        `Error al leer el registro con ID ${id} en la tabla ${tableName}:`,
+        error.message
+      );
+      throw new Error(
+        `No se pudo leer el registro con ID ${id} en la tabla ${tableName}.`
+      );
+    }
+
+    return data as T;
+  }
+
   // Método genérico para leer un solo registro
   async readSingle<T>(
     tableName: string,

@@ -2,24 +2,42 @@ Temas pendientes:
 
 === FRONTEND ===
 
+- Pantalla de receta
+  - Mostrar los datos de la receta
+  - Agregar las opciones asociadas a la receta
+    - Agregar a favoritos
+    - Agregar a lista de la compra
+    - Agregar a agenda
+    - Empezar a seguir la receta
 - Pantalla de Recetas
-  - Lista de recetas
-  - Enlace a la receta --> routerLink con ID
   - Mejorar la card de receta
 - Pantalla agenda
-  - Lista de la semana
+  - Lista de la semana, separada por días
+    - Mostrar en la cabecera el día de la semana y la fecha
+  - Incorporar un botón para eliminar una receta de la agenda
 - Pantalla lista de la compra
   - Lista de la compra por recetas
   - Lista de la compra por ingredientes
+  - Usar el local storage para guardar la lista de la compra
+  - Poner un botón para vaciar la lista de la compra
+  - Incorporar un botón para eliminar una receta de la lista de la compra
+  - Poner un botón de compartir lista de la compra
+    - Ver como se puede compartir
 - Pantalla favoritos
+  - Lista de recetas asociadas a favoritos
+    - Poner por bloques
+  - Ordenadr recetas
+- Pantalla de seguimiento de una receta
 
-  - Lista de recetas
-  - Filtrar recetas
+  - Mostrar los pasos de la receta
+  - Incorporar el temporizador
 
 - Pantalla IA
 
   - Formulario de IA
-  -
+  - Probar contra el servidor interno de Jan
+    - Hacer funcionar el servidor interno de Jan
+    - Probar desde el frontend
 
 - Pantalla de nueva receta
   - Formulario de receta: al guardar, debe cogerse el ID de la receta y redirigir a la pantalla de la receta con el ID
@@ -33,6 +51,18 @@ Temas pendientes:
 - Poder ver lista de la compra
 - Poder ver agenda
 - Poder usar IA
+
+=== MOBILES ===
+
+- Montar una distribución en la nube
+  - Usar el servidor de interserver
+  - Probar en los moviles
+  - Revisa la parte de base en el index.html, no debe apuntar al \
+- Compilar para Android
+- Compilar para iOS
+  - Probar en un dispositivo físico
+
+=== NOTAS ===
 
 -- Uso de google para autenticar
 https://supabase.com/dashboard/project/ilybvqaifwjyrtislcqt/auth/providers
@@ -60,3 +90,6 @@ Cambiar el logotipo de la APP
 
 - Al crear la cuenta y luego ir al login, no se crea por defecto en la tabla de usuarios --> forzar en signup
 - Pantalla account: borrado de usuario no lo hace en la tabla de Auth.users, aunque si en la de usuarios, revisar
+- Listado de recetas: limitar las 20 primeras, ordendas por ID descendente??
+  - O poner un listado de categorias
+    - Y luego filtrar por categoría

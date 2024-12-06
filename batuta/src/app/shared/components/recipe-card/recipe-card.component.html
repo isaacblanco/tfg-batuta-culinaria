@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card [routerLink]="['/recipe', recipe.id]">
   <ion-card-header>
     <ion-card-title>{{ recipe.name }}</ion-card-title>
   </ion-card-header>
@@ -7,7 +7,7 @@
       <ion-row>
         <ion-col size="4"> Dificultad: {{ recipe.difficulty }} </ion-col>
         <ion-col size="4"> Tiempo: {{ recipe.preparation_time }} </ion-col>
-        <ion-col size="4"> Porciones: {{ recipe.num_portions }} </ion-col>
+        <ion-col size="4"> Porciones: {{ recipe.num_people }} </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card-content>

@@ -51,7 +51,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'recipe',
+    path: 'recipe/:id',
     loadComponent: () =>
       import('./features/recipes/recipe/recipe.page').then((m) => m.RecipePage),
   },

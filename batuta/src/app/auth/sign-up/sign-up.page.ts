@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 
 @Component({
@@ -19,7 +19,8 @@ export class SignUpPage implements OnInit {
 
   constructor(
     private supabaseService: SupabaseService,
-    private router: Router
+    private router: Router,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {}
