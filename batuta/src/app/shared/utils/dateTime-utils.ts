@@ -19,3 +19,21 @@ export function formatDateTime(dateString: Date | string): string {
 
   return date.toLocaleString('es-ES', options).replace(',', ''); // 'es-ES' para formato en español
 }
+
+/**
+ * Convierte un tiempo en formato 'HH:MM:SS' a un formato amigable como '1h 34m'
+ * @param timeString - Tiempo en formato 'HH:MM:SS'
+ * @returns Tiempo formateado como cadena
+ */
+export function timeFormat(timeString: string): string {
+  if (!timeString) {
+    return '';
+  }
+
+  const [hours, minutes] = timeString.split(':').map(Number);
+
+  const hourPart = hours > 0 ? `${hours}h` : '';
+  const minutePart = `${minutes}m`;
+
+  return [hourPart, minutePart].filter(Boolean).join(' ');
+}

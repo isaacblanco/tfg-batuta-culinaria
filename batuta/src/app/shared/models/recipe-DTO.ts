@@ -1,8 +1,8 @@
 export interface RecipeDTO {
   id: number;
-  user_id: number;
+  user_id: string;
   name: string;
-  steps: { duration: number; instructions: string }[]; // Pasos con duración e instrucciones
+  steps: { duration: number; instructions: string; durationUnit: string }[]; // Pasos con duración e instrucciones
   preparation_time: string; // Tiempo de preparación en formato HH:MM:SS
   category_id: number; // ID de categoría
   image_url: string; // URL de la imagen

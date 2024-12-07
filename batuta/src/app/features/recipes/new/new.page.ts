@@ -6,23 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { UNITS } from 'src/app/shared/enums/units';
-
-interface Recipe {
-  name: string;
-  preparation_time: string;
-  ingredients: Array<{ name: string; quantity: string; unit: string }>;
-  steps: Array<{
-    duration: number;
-    instructions: string;
-    durationUnit: string;
-  }>;
-  labels: string;
-  difficulty: number;
-  category_id: number;
-  num_people: number;
-  image_url: string;
-  user_id?: string;
-}
+import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
 
 @Component({
   selector: 'app-new',
@@ -37,16 +21,19 @@ export class NewPage implements OnInit {
   userId: string = '';
   categories: Array<{ id: number; name: string }> = [];
 
-  recipe: Recipe = {
-    name: 'Demo',
+  recipe: RecipeDTO = {
+    name: '',
+    intro: '',
     preparation_time: '00:30:00',
-    ingredients: [{ name: 'uno', quantity: '1', unit: 'grs' }],
-    steps: [{ duration: 3, instructions: 'Paso 1', durationUnit: 'minutes' }],
-    labels: 'Pasta, Salado',
+    ingredients: [{ name: '', quantity: 1, unit: 'grs' }],
+    steps: [{ duration: 1, instructions: '', durationUnit: 'minutes' }],
+    labels: '',
     difficulty: 1,
     category_id: 1,
     num_people: 1,
-    image_url: 'https://www.isaacblanco.com/UOC/TFG/no-image.jpg',
+    image_url: 'assets/no-image.svg',
+    id: 0,
+    user_id: '',
   };
 
   constructor(
@@ -59,6 +46,7 @@ export class NewPage implements OnInit {
     const userData = this.localStorageService.getUserData();
     if (userData) {
       this.userId = userData.id;
+      this.recipe.user_id = this.userId;
     }
 
     this.recipeId = this.route.snapshot.paramMap.get('id');
@@ -85,9 +73,12 @@ export class NewPage implements OnInit {
 
   async loadRecipe(id: string) {
     try {
-      const recipe = await this.supabaseService.readSingle<Recipe>('recetas', {
-        id,
-      });
+      const recipe = await this.supabaseService.readSingle<RecipeDTO>(
+        'recetas',
+        {
+          id,
+        }
+      );
       if (recipe.user_id !== this.userId) {
         alert('No tienes permiso para editar esta receta.');
         return;
@@ -129,7 +120,7 @@ export class NewPage implements OnInit {
   }
 
   addIngredient() {
-    this.recipe.ingredients.push({ name: '', quantity: '', unit: '' });
+    this.recipe.ingredients.push({ name: '', quantity: 1, unit: 'grs' });
   }
 
   removeIngredient(index: number) {

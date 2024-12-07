@@ -12,48 +12,111 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!-- Hero image -->
+  <!--
+  <div class="ion-text-center img-hero">
+    <ion-img [src]="recipe?.image_url || 'assets/no-image.png'"></ion-img>
+  </div>
+  -->
   <!-- <ion-img [src]="recipe?.image_url || 'assets/no-image.png'"></ion-img> -->
   <ion-img src="assets/no-image.svg" style="margin: 0 auto; max-width: 40%" />
 
   <ion-list>
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>
         <h1>{{ recipe?.name }}</h1>
-        <ion-note>{{ recipe?.intro }}</ion-note>
+        <ion-note>By </ion-note>
+        <ion-note *ngIf="recipe?.intro">{{ recipe?.intro }}</ion-note>
         <p>{{ recipe?.intro }}</p>
       </ion-label>
     </ion-item>
-    <ion-item>
-      <div class="ion-text-center">
-        <ion-button>
+
+    <div class="ion-text-center">
+      <ion-item>
+        <ion-button slot="start" size="normal">
           <ion-label>Cocinar</ion-label>
         </ion-button>
-        <ion-button fill="outline">
-          <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-button
+          id="add-to-menu-trigger"
+          fill="outline"
+          slot="end"
+          size="normal"
+        >
+          <ion-icon name="add-circle"></ion-icon>
           <ion-label>Añadir a</ion-label>
         </ion-button>
-      </div>
-    </ion-item>
+      </ion-item>
+    </div>
+
     <ion-item>
+      <ion-button
+        *ngIf="favorite === false"
+        (click)="addToFavorites()"
+        slot="end"
+        fill="clear"
+        size="big"
+      >
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
+      <ion-button
+        *ngIf="favorite === true"
+        (click)="removeFromFavorites()"
+        slot="end"
+        fill="clear"
+        size="big"
+      >
+        <ion-icon name="heart"></ion-icon>
+      </ion-button>
+
       <ion-label>
         <p>Dificultad: {{ recipe?.difficulty }}</p>
-        <p>Tiempo de preparación: {{ recipe?.preparation_time }}</p>
+        <p>Tiempo de preparación: {{ duration }}</p>
         <p>Porciones: {{ recipe?.num_people }}</p>
       </ion-label>
     </ion-item>
     <ion-list-header>Ingredientes</ion-list-header>
-    <ion-item *ngFor="let ingredient of recipe?.ingredients">
+    <ion-item>
+      <ion-icon name="add-circle-outline" slot="end"></ion-icon>
+      Raciones: {{ recipe?.num_people }}
+      <ion-icon name="person" slot="end"></ion-icon>
+      <ion-icon name="remove-circle-outline" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item *ngFor="let ingredient of recipe?.ingredients" lines="none">
       <ion-label>
         {{ ingredient.quantity }} {{ ingredient.unit }} - {{ ingredient.name }}
       </ion-label>
     </ion-item>
     <ion-list-header>Pasos</ion-list-header>
-    <ion-item *ngFor="let step of recipe?.steps; let i = index">
-      <ion-label slot="stacked">Paso {{ i + 1 }}</ion-label>
+    <ion-item *ngFor="let step of recipe?.steps; let i = index" lines="none">
+      <ion-label slot="stacked"></ion-label>
       <ion-label>
-        <h3>{{ step.instructions }}</h3>
+        <b style="font-size: 1.2rem">{{ i + 1 }}</b>. {{ step.instructions }}
+        <br />
         <small>Duración: {{ step.duration }} segundos</small>
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <!-- Popover menu -->
+  <ion-popover trigger="add-to-menu-trigger" side="bottom" alignment="start">
+    <ng-template>
+      <ion-list>
+        <ion-item (click)="addToAgenda()">
+          <ion-label>Añadir a la agenda</ion-label>
+        </ion-item>
+        <ion-item (click)="addToShoppingList()">
+          <ion-label>Añadir a la lista de la compra</ion-label>
+        </ion-item>
+        <ion-item (click)="addToFavorites()">
+          <ion-label>Añadir a favoritos</ion-label>
+        </ion-item>
+        <ion-item (click)="duplicateRecipe()">
+          <ion-label>Duplicar</ion-label>
+        </ion-item>
+        <ion-item (click)="editRecipe()">
+          <ion-label>Editar</ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-template>
+  </ion-popover>
 </ion-content>
