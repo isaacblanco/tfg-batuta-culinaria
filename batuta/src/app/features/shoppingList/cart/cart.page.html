@@ -49,7 +49,14 @@
         Añadir Ingrediente
       </ion-button>
     </div>
-    <ion-item-divider>Ingredientes en las recetas</ion-item-divider>
+
+    
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <h2>Ingredientes en las recetas</h2>
+    </ion-list-header>
   </ion-list>
 
   <!-- Selector de vista -->
@@ -58,25 +65,26 @@
     <ion-segment-button value="ingredients">Por Ingrediente</ion-segment-button>
   </ion-segment>
 
-  <!-- Vista por receta -->
-  <ng-container *ngIf="viewMode === 'recipe' && shoppingList !== null">
-    <div *ngFor="let recipe of shoppingList.shopping_list">
-      <ion-item-divider>{{ recipe.recipe_name }}</ion-item-divider>
-      <ion-item *ngFor="let ingredient of recipe.ingredients">
-        <ion-label>{{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})</ion-label>
-      </ion-item>
-    </div>
-  </ng-container>
-
-  <!-- Vista por ingrediente -->
-  <ng-container *ngIf="viewMode === 'ingredients'">
-    <ion-list>
-      <ion-item *ngFor="let ingredient of allIngredients">
-        <ion-checkbox slot="start" [(ngModel)]="ingredient.checked"></ion-checkbox>
-        <ion-label [ngStyle]="{ 'text-decoration': ingredient.checked ? 'line-through' : 'none' }">
-          {{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </ng-container>
+  
+    <!-- Vista por receta -->
+    <ng-container *ngIf="viewMode === 'recipe' && cart !== null">
+      <div *ngFor="let recipe of cart.shopping_list">
+        <ion-item-divider>{{ recipe.recipe_name }}</ion-item-divider>
+        <ion-item *ngFor="let ingredient of recipe.ingredients">
+          <ion-label>{{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})</ion-label>
+        </ion-item>
+      </div>
+    </ng-container>
+  
+    <!-- Vista por ingrediente -->
+    <ng-container *ngIf="viewMode === 'ingredients'">
+      <ion-list>
+        <ion-item *ngFor="let ingredient of allIngredients">
+          <ion-checkbox slot="start" [(ngModel)]="ingredient.checked"></ion-checkbox>
+          <ion-label [ngStyle]="{ 'text-decoration': ingredient.checked ? 'line-through' : 'none' }">
+            {{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-container>
 </ion-content>

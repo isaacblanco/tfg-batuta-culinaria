@@ -15,7 +15,7 @@ import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.servi
 })
 export class CartPage implements OnInit {
   units = UNITS;
-  shoppingList: any = null;
+  cart: any = null;
   localStorageIngredients: { name: string; quantity: number; unit: string }[] =  [];
   allIngredients: { name: string; quantity: number; unit: string; checked: boolean }[] = [];
   viewMode: 'recipe' | 'ingredients' = 'recipe';
@@ -23,33 +23,33 @@ export class CartPage implements OnInit {
   constructor(private shoppingCartService: ShoppingCartService, private localStorageService: LocalStorageService, private navCtrl: NavController) {}
 
   async ngOnInit() {
-    const userId = this.localStorageService.getUserData()?.id;
+    const userId = this.localStorageService.getUserId();
     await this.shoppingCartService.initializeCart(userId);
-
-    // Leer los datos desde el servicio de la cesta
-    this.shoppingList = this.shoppingCartService.getCart(userId);
-    if (this.shoppingList?.shopping_list?.length > 0) {
+  
+    // Resolver la Promise correctamente
+    this.cart = await this.shoppingCartService.getCart(userId);
+  
+    if (this.cart?.shopping_list?.length > 0) {
       this.aggregateIngredients();
     } else {
-      this.shoppingList = { shopping_list: [] };
+      this.cart = { shopping_list: [] };
     }
-
-    // Cargamos los ingredientes del local storage
-    if ( localStorage.getItem('ingredients') !== null) {
+  
+    // Cargar ingredientes del Local Storage
+    if (localStorage.getItem('ingredients') !== null) {
       this.localStorageIngredients = JSON.parse(localStorage.getItem('ingredients') || '[]');
     } else {
       this.localStorageIngredients = [];
     }
-
-    // Calculamos los ingredientes totales
-    this.aggregateIngredients();
   }
+  
 
+  // Actualiza el localStorage
   updateLocalStorage() {
     localStorage.setItem('ingredients', JSON.stringify(this.localStorageIngredients));
   }
   
-
+  // Añade un ingrediente al localStorage
   addLocalIngredient() {
     this.localStorageIngredients.push({
       name: '',
@@ -58,17 +58,18 @@ export class CartPage implements OnInit {
     });
     this.updateLocalStorage(); // Actualiza el localStorage
   }
-  
 
+  // Elimina un ingrediente del localStorage
   removeLocalIngredient(index: number) {
     this.localStorageIngredients.splice(index, 1);
     this.updateLocalStorage(); // Actualiza el localStorage
   }
-  
- 
+   
+  // Calcula los ingredientes totales
   aggregateIngredients() {
     const ingredients: any = {};
-    this.shoppingList.shopping_list.forEach((recipe: any) => {
+
+    this.cart.shopping_list.forEach((recipe: any) => {
       recipe.ingredients.forEach((ingredient: any) => {
         const key = `${ingredient.name}-${ingredient.unit}`;
         if (ingredients[key]) {
@@ -78,10 +79,10 @@ export class CartPage implements OnInit {
         }
       });
     });
-
     this.allIngredients = Object.values(ingredients);
   }
 
+  // Navega hacia atrás
   navigateBack() {
     this.navCtrl.back();
   }

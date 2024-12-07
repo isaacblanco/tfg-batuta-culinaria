@@ -14,7 +14,7 @@ export class ShoppingCartService {
     try {
       const { data, error } = await this.supabaseService.client
         .from('cesta')
-        .select('*')
+        .select('shopping_list')
         .eq('user_id', userId)
         .single();
 
@@ -33,7 +33,10 @@ export class ShoppingCartService {
         }
         this.cart = newCart;
       } else if (data) {
-        this.cart = data;
+        this.cart = {
+          user_id: userId,
+          shopping_list: data.shopping_list || [],
+        };
       }
     } catch (error) {
       console.error('Error al inicializar la lista de la compra:', error);
@@ -59,6 +62,7 @@ export class ShoppingCartService {
     } else {
       this.cart?.shopping_list.push({
         recipe_id: recipe.id,
+        recipe_name: recipe.name,
         multiplier: 1,
         ingredients: recipe.ingredients,
       });
@@ -79,9 +83,9 @@ export class ShoppingCartService {
 
       if (existingRecipe.multiplier <= 0) {
         if (this.cart?.shopping_list) {
-        this.cart.shopping_list = this.cart.shopping_list.filter(
+          this.cart.shopping_list = this.cart.shopping_list.filter(
             (item) => item.recipe_id !== recipeId
-        );
+          );
         }
       }
 

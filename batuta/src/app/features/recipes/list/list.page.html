@@ -7,6 +7,11 @@
       </a>
     </ion-buttons>
     <ion-title>Recipes</ion-title>
+    <ion-buttons slot="end" fill="clear">
+      <a [routerLink]="'/cart'" routerDirection="forward">
+        <ion-icon name="cart"></ion-icon>
+      </a>
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar

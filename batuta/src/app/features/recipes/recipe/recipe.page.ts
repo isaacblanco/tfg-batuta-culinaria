@@ -169,6 +169,7 @@ export class RecipePage implements OnInit {
       const agendaData = agenda?.data || [];
       agendaData.push({
         date: formattedDate,
+        recipe_name: this.recipe.name,
         recipe_id: this.recipe.id,
         recipe_title: this.recipe.name,
       });

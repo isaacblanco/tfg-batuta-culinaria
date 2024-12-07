@@ -4,16 +4,9 @@ Temas pendientes:
 
 - Pantalla de receta
   - Agregar las opciones asociadas a la receta
-    - Agregar a lista de la compra
     - Empezar a seguir la receta
 - Pantalla de Recetas
   - Mejorar la card de receta
-- Pantalla agenda
-  - Lista de la semana, separada por días
-    - Mostrar en la cabecera el día de la semana y la fecha
-    - Usar el deslizar para eliminar una receta de la agenda
-    - Opcion para mover entre díass
-  - Incorporar un botón para eliminar una receta de la agenda
 - Pantalla lista de la compra
   - Lista de la compra por recetas
   - Lista de la compra por ingredientes
