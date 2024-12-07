@@ -33,9 +33,13 @@
 
     <div class="ion-text-center">
       <ion-item>
-        <ion-button slot="start" size="normal">
+        <ion-button
+          slot="start"
+          size="normal"
+          [routerLink]="['/cook', recipe?.id]"
+        >
           <ion-label>Cocinar</ion-label>
-        </ion-button>
+      </ion-button>
         <ion-button
           id="add-to-menu-trigger"
           fill="outline"

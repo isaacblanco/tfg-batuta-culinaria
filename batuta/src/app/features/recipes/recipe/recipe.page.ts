@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IonicModule, NavController, ToastController } from '@ionic/angular';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
@@ -12,7 +12,7 @@ import { timeFormat } from 'src/app/shared/utils/dateTime-utils';
   templateUrl: './recipe.page.html',
   styleUrls: ['./recipe.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, RouterLink],
 })
 export class RecipePage implements OnInit {
   recipe: RecipeDTO | null = null;

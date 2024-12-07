@@ -30,22 +30,12 @@ Temas pendientes:
 - Pantalla de nueva receta
   - Formulario de receta: al guardar, debe cogerse el ID de la receta y redirigir a la pantalla de la receta con el ID
 
-=== API ===
-
-- Poder authenticarse
-- Poder registrar usuario
-- Poder crear receta
-- Poder ver receta
-- Poder ver lista de la compra
-- Poder ver agenda
-- Poder usar IA
-
 === MOBILES ===
 
 - Montar una distribución en la nube
   - Usar el servidor de interserver
   - Probar en los moviles
-  - Revisa la parte de base en el index.html, no debe apuntar al \
+  - Revisa la parte de BASE en el index.html, no debe apuntar al \
 - Compilar para Android
 - Compilar para iOS
   - Probar en un dispositivo físico

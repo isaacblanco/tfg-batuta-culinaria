@@ -1,20 +1,113 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IonicModule, NavController } from '@ionic/angular';
+import { SupabaseService } from 'src/app/core/services/supabase.service';
+import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
+import { TimeFormatPipe } from 'src/app/shared/pipes/time-format.pipe';
 
 @Component({
   selector: 'app-cook',
   templateUrl: './cook.page.html',
   styleUrls: ['./cook.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, TimeFormatPipe],
 })
-export class CookPage implements OnInit {
+export class CookPage implements OnInit, OnDestroy {
+  recipe: RecipeDTO | null = null;
+  currentStepIndex: number = 0;
+  remainingTime: number = 0;
+  timer: any = null;
+  timerRunning: boolean = false;
+  userId: string = '';
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private supabaseService: SupabaseService,
+    private navCtrl: NavController
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    const recipeId = this.route.snapshot.paramMap.get('id');
+    const userData = await this.supabaseService.getUser();
+    if (userData) {
+      this.userId = userData.id;
+    }
+    if (recipeId) {
+      await this.loadRecipe(parseInt(recipeId, 10));
+      this.setRemainingTime();
+    }
   }
 
+  ngOnDestroy() {
+    this.clearTimer();
+  }
+
+  async loadRecipe(id: number) {
+    try {
+      const data = await this.supabaseService.readSingleById<RecipeDTO>(
+        'recetas',
+        id
+      );
+      this.recipe = data;
+      
+    } catch (error) {
+      console.error('Error al cargar la receta:', error);
+    }
+  }
+
+  navigateBack() {
+    this.navCtrl.back();
+  }
+
+  nextStep() {
+    if (this.currentStepIndex < this.recipe!.steps.length - 1) {
+      this.currentStepIndex++;
+      this.resetTimer();
+      this.setRemainingTime();
+    }
+  }
+
+  previousStep() {
+    if (this.currentStepIndex > 0) {
+      this.currentStepIndex--;
+      this.resetTimer();
+      this.setRemainingTime();
+    }
+  }
+
+  closeCooking() {
+    this.router.navigate(['/recipe', this.recipe?.id]);
+  }
+
+  setRemainingTime() {
+    this.remainingTime = this.recipe?.steps[this.currentStepIndex]?.duration || 0;
+  }
+
+  startTimer() {
+    if (this.remainingTime > 0 && !this.timerRunning) {
+      this.timerRunning = true;
+      this.timer = setInterval(() => {
+        if (this.remainingTime > 0) {
+          this.remainingTime--;
+        } else {
+          this.clearTimer();
+        }
+      }, 1000);
+    }
+  }
+
+  resetTimer() {
+    this.clearTimer();
+    this.setRemainingTime();
+  }
+
+  clearTimer() {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+    this.timerRunning = false;
+  }
 }

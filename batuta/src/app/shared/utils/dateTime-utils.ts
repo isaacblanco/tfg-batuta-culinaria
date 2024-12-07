@@ -37,3 +37,22 @@ export function timeFormat(timeString: string): string {
 
   return [hourPart, minutePart].filter(Boolean).join(' ');
 }
+
+/**
+ * Convierte un número de segundos a un formato amigable 'X min X seg'
+ * @param seconds - Tiempo en segundos
+ * @returns Tiempo formateado como cadena
+ */
+export function secondsToTimeFormat(seconds: number): string {
+  if (seconds < 0) {
+    return '0 min 0 seg';
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  const minutePart = `${minutes} min`;
+  const secondPart = `${remainingSeconds} seg`;
+
+  return [minutePart, secondPart].join(' ');
+}

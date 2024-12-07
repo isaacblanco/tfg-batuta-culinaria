@@ -81,7 +81,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'cook',
+    path: 'cook/:id',
     loadComponent: () =>
       import('./features/recipes/cook/cook.page').then((m) => m.CookPage),
   },
