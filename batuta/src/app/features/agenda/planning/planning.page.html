@@ -11,57 +11,50 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  
-  <!-- Agenda semanal -->
+  <!-- Botón para mover ingredientes a la lista de compra -->
+  <ion-item>
+    <ion-checkbox
+      slot="start"
+      [(ngModel)]="clearShoppingListEnabled"
+    ><ion-label>Vaciar carrito</ion-label></ion-checkbox>
+    <ion-button expand="block" (click)="moveIngredientsToShoppingList()">
+      Crear lista de la compra
+    </ion-button>
+    
+    
+  </ion-item>
+
   <ion-list>
-    <ion-item>
-      <div class="ion-text-center">
-        <ion-button (click)="moveIngredientsToShoppingList()">
-          Crear lista de la compra
-          <ion-icon name="cart-outline"></ion-icon>
-        </ion-button>
-      </div>
-    </ion-item>
     <div *ngFor="let day of upcomingWeek">
-      <ion-item-divider>
+      <ion-list-header>
         {{ day.dayName }}, {{ day.formattedDate }}
-      </ion-item-divider>
-      <ion-item-sliding *ngFor="let recipe of day.recipes">
-        <ion-item [routerLink]="['/recipe', recipe.recipe_id]">
-          <ion-label>{{ recipe.recipe_title }}</ion-label>
-          <ion-icon name="restaurant-outline" slot="end"></ion-icon>
-        </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option (click)="deleteRecipeFromAgenda(recipe)" color="danger">
-            Delete
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
+      </ion-list-header>
+      <ion-reorder-group
+        disabled="false"
+        (ionItemReorder)="reorderRecipes($event, day)"
+      >
+        <ion-item-sliding *ngFor="let recipe of day.recipes">
+          <ion-item [routerLink]="['/recipe', recipe.recipe_id]">
+            <ion-reorder slot="start">
+              <ion-icon name="reorder-three-outline"></ion-icon>
+            </ion-reorder>
+            <ion-label>{{ recipe.recipe_title }}</ion-label>
+            <ion-icon name="restaurant-outline" slot="end"></ion-icon>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option
+              color="danger"
+              (click)="deleteRecipeFromAgenda(recipe)"
+            >
+              Eliminar
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-reorder-group>
       <ion-item *ngIf="day.recipes.length === 0">
         <ion-label>No hay recetas planificadas para este día</ion-label>
       </ion-item>
     </div>
   </ion-list>
-
-  <!-- Resto de los platos -->
-  <ion-list>
-    <ion-list-header>
-      <h2>Platos futuros</h2>
-    </ion-list-header>
-    <ion-item-sliding *ngFor="let recipe of futureRecipes">
-      <ion-item [routerLink]="['/recipe', recipe.recipe_id]">
-        <ion-label>
-          {{ recipe.recipe_title }} - {{ recipe.date | date: 'dd/MM/yyyy' }}
-        </ion-label>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option (click)="deleteRecipeFromAgenda(recipe)" color="danger">
-          Delete
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-    <ion-item *ngIf="futureRecipes.length === 0">
-      <ion-label>No hay platos planificados más adelante</ion-label>
-    </ion-item>
-  </ion-list>
+  
 </ion-content>

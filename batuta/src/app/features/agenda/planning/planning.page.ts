@@ -17,9 +17,10 @@ export class PlanningPage implements OnInit {
   agenda: agendaDTO | null = null;
   upcomingWeek: { dayName: string; formattedDate: string; recipes: any[] }[] =
     [];
-  futureRecipes: { date: string; recipe_id: number; recipe_title: string }[] =
-    [];
+  
   userId: string = '';
+  clearShoppingListEnabled: boolean = true; // Checkbox state
+
 
   constructor(
     private supabaseService: SupabaseService,
@@ -34,7 +35,7 @@ export class PlanningPage implements OnInit {
     }
 
     this.generateUpcomingWeek();
-    this.filterFutureRecipes();
+    
   }
 
   async loadAgenda() {
@@ -58,6 +59,11 @@ export class PlanningPage implements OnInit {
   }
 
   generateUpcomingWeek() {
+    if (!this.agenda || !this.agenda.data) {
+      console.warn('No agenda data available.');
+      return;
+    }
+  
     const today = new Date();
     const daysOfWeek = [
       'Domingo',
@@ -82,35 +88,31 @@ export class PlanningPage implements OnInit {
       'noviembre',
       'diciembre',
     ];
-
+  
     for (let i = 0; i < 7; i++) {
       const date = new Date();
       date.setDate(today.getDate() + i);
-
+  
       const dayName = daysOfWeek[date.getDay()];
       const formattedDate = `${date.getDate()} de ${
         monthsOfYear[date.getMonth()]
       } de ${date.getFullYear()}`;
-
+  
+      // Filtrar recetas por fecha
       const recipes =
-        this.agenda?.data.filter(
-          (item) =>
-            new Date(item.date).toDateString() === date.toDateString()
-        ) || [];
-
+        this.agenda.data.filter((item) => {
+          const agendaDate = new Date(item.date).toDateString();
+          const targetDate = date.toDateString();
+          return agendaDate === targetDate;
+        }) || [];
+  
       this.upcomingWeek.push({ dayName, formattedDate, recipes });
     }
+  
+    console.log('Generated upcoming week:', this.upcomingWeek);
   }
+  
 
-  filterFutureRecipes() {
-    const today = new Date();
-
-    this.futureRecipes =
-      this.agenda?.data.filter(
-        (item) =>
-          new Date(item.date).getTime() > today.getTime() + 7 * 24 * 60 * 60 * 1000
-      ) || [];
-  }
 
   async deleteRecipeFromAgenda(recipe: {
     date: string;
@@ -121,15 +123,19 @@ export class PlanningPage implements OnInit {
       const agendaData = this.agenda?.data.filter(
         (item) => item.recipe_id !== recipe.recipe_id || item.date !== recipe.date
       );
-
+  
       if (agendaData) {
         await this.supabaseService.client
           .from('agenda')
           .update({ data: agendaData })
           .eq('user_id', this.userId);
-
+  
         this.agenda!.data = agendaData;
-        this.filterFutureRecipes();
+  
+        // Regenerar la lista de la semana
+        this.upcomingWeek = [];
+        this.generateUpcomingWeek();
+  
         this.showToast('Receta eliminada de la agenda.');
       }
     } catch (error) {
@@ -137,11 +143,41 @@ export class PlanningPage implements OnInit {
       this.showToast('Error al eliminar la receta de la agenda.');
     }
   }
+  
 
   async moveIngredientsToShoppingList() {
     try {
-      // Recorremos las recetas de la agenda semanal
+      if (this.clearShoppingListEnabled) {
+        await this.clearShoppingList();
+      }
+      await this.addIngredientsToShoppingList();
+    } catch (error) {
+      console.error('Error al mover ingredientes a la lista de la compra:', error);
+    }
+  }
+
+  private async clearShoppingList() {
+    try {
+      const { error } = await this.supabaseService.client
+        .from('shopping_list')
+        .delete()
+        .eq('user_id', this.userId);
+
+      if (error) {
+        console.error('Error al limpiar la lista de la compra:', error);
+        return;
+      }
+
+      console.log('Cesta de la compra limpiada con éxito.');
+    } catch (error) {
+      console.error('Error al limpiar la lista de la compra:', error);
+    }
+  }
+
+  private async addIngredientsToShoppingList() {
+    try {
       const ingredients: { name: string; quantity: number; unit: string }[] = [];
+
       this.upcomingWeek.forEach(day => {
         day.recipes.forEach(recipe => {
           if (recipe.ingredients) {
@@ -158,30 +194,28 @@ export class PlanningPage implements OnInit {
           }
         });
       });
-  
-      // Lógica para mover los ingredientes a la cesta de la compra
+
       if (ingredients.length === 0) {
         console.log('No hay ingredientes para mover a la cesta de la compra.');
         return;
       }
-  
-      // Llamada al servicio para añadir los ingredientes a la lista de la compra
+
       const { error } = await this.supabaseService.client
         .from('shopping_list')
         .insert({ user_id: this.userId, items: ingredients });
-  
+
       if (error) {
         console.error('Error al mover los ingredientes a la lista de la compra:', error);
         return;
       }
-  
+
       console.log('Ingredientes movidos a la lista de la compra:', ingredients);
       this.showToast('Ingredientes añadidos a la cesta de la compra.');
     } catch (error) {
       console.error('Error al mover ingredientes a la lista de la compra:', error);
     }
   }
-  
+
   async showToast(message: string) {
     const toast = document.createElement('ion-toast');
     toast.message = message;
@@ -190,4 +224,68 @@ export class PlanningPage implements OnInit {
     return toast.present();
   }
   
+  async reorderRecipes(event: any, day: { dayName: string; formattedDate: string; recipes: any[] }) {
+    const fromIndex = event.detail.from;
+    const toIndex = event.detail.to;
+  
+  // Mueve la receta dentro del mismo día
+  const movedRecipe = day.recipes.splice(fromIndex, 1)[0];
+  day.recipes.splice(toIndex, 0, movedRecipe);
+
+  event.detail.complete();
+
+  // Actualiza la agenda en la base de datos
+  await this.updateAgendaInDatabase();
+  }
+  
+  private calculateTargetDayIndex(toIndex: number, currentDayIndex: number): number {
+    let cumulativeIndex = 0;
+  
+    for (let i = 0; i < this.upcomingWeek.length; i++) {
+      if (i === currentDayIndex) continue;
+  
+      const recipesCount = this.upcomingWeek[i].recipes.length;
+      if (toIndex >= cumulativeIndex && toIndex < cumulativeIndex + recipesCount) {
+        return i;
+      }
+  
+      cumulativeIndex += recipesCount;
+    }
+  
+    return currentDayIndex;
+  }
+  
+  private async updateAgendaInDatabase() {
+    try {
+      const updatedAgendaData: { date: string; recipe_id: number; recipe_title: string }[] = [];
+  
+      // Recolecta los datos actualizados de la agenda
+      this.upcomingWeek.forEach((day) => {
+        day.recipes.forEach((recipe) => {
+          updatedAgendaData.push({
+            date: recipe.date,
+            recipe_id: recipe.recipe_id,
+            recipe_title: recipe.recipe_title,
+          });
+        });
+      });
+  
+      // Actualiza la agenda en la base de datos
+      const { error } = await this.supabaseService.client
+        .from('agenda')
+        .update({ data: updatedAgendaData })
+        .eq('user_id', this.userId);
+  
+      if (error) {
+        console.error('Error al actualizar la agenda:', error);
+        this.showToast('Error al actualizar la agenda.');
+      } else {
+        this.showToast('Agenda actualizada.');
+      }
+    } catch (error) {
+      console.error('Error al actualizar la agenda:', error);
+      this.showToast('Error al actualizar la agenda.');
+    }
+  }
+
 }
