@@ -8,6 +8,21 @@
     </ion-buttons>
     <ion-title>Favorites</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="Buscar receta"
+      [(ngModel)]="searchTerm"
+      (ionInput)="filterFavorites()"
+    ></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <app-recipe-card
+      *ngFor="let favorite of filteredFavorites"
+      [recipe]="favorite.recetas"
+    >
+    </app-recipe-card>
+  </ion-list>
+</ion-content>

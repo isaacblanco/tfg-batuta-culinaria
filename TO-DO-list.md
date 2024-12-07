@@ -3,7 +3,6 @@ Temas pendientes:
 === FRONTEND ===
 
 - Pantalla de receta
-  - Mostrar los datos de la receta
   - Agregar las opciones asociadas a la receta
     - Agregar a favoritos
     - Agregar a lista de la compra

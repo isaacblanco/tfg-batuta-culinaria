@@ -17,6 +17,7 @@ export class RecipePage implements OnInit {
   recipe: RecipeDTO | null = null;
   duration: string = '';
   favorite: boolean = false;
+  userId: string = ''; // ID del usuario autenticado
 
   constructor(
     private route: ActivatedRoute,
@@ -25,10 +26,16 @@ export class RecipePage implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    const userData = await this.supabaseService.getUser();
+    if (userData) {
+      this.userId = userData.id;
+    }
+
     const recipeId = this.route.snapshot.paramMap.get('id');
     if (recipeId) {
-      this.loadRecipe(parseInt(recipeId, 10));
+      await this.loadRecipe(parseInt(recipeId, 10));
+      await this.checkIfFavorite();
     }
   }
 
@@ -53,14 +60,83 @@ export class RecipePage implements OnInit {
     }
   }
 
-  addToAgenda() {}
+  async checkIfFavorite() {
+    if (!this.recipe || !this.userId) {
+      return;
+    }
+    try {
+      const { data, error } = await this.supabaseService.client
+        .from('favoritos')
+        .select('*')
+        .eq('user_id', this.userId)
+        .eq('recipe_id', this.recipe.id);
 
-  removeFromFavorites() {
-    console.log('Eliminar de favoritos:', this.recipe);
+      if (error) {
+        console.error(
+          'Error al comprobar si la receta está en favoritos:',
+          error.message
+        );
+        return;
+      }
+
+      this.favorite = (data && data.length > 0) || false;
+    } catch (error) {
+      console.error('Error al comprobar favoritos:', error);
+    }
   }
 
-  addToFavorites() {
-    console.log('Añadir a favoritos:', this.recipe);
+  async addToFavorites() {
+    if (!this.recipe || !this.userId) {
+      console.warn(
+        'No se pudo agregar a favoritos: receta o usuario no disponibles.'
+      );
+      return;
+    }
+    try {
+      const { data, error } = await this.supabaseService.client
+        .from('favoritos')
+        .insert([{ user_id: this.userId, recipe_id: this.recipe.id }]);
+
+      if (error) {
+        console.error('Error al añadir a favoritos:', error.message);
+        return;
+      }
+
+      console.log('Receta añadida a favoritos:', data);
+      this.favorite = true;
+    } catch (error) {
+      console.error('Error al añadir a favoritos:', error);
+    }
+  }
+
+  async removeFromFavorites() {
+    if (!this.recipe || !this.userId) {
+      console.warn(
+        'No se pudo eliminar de favoritos: receta o usuario no disponibles.'
+      );
+      return;
+    }
+    try {
+      const { error } = await this.supabaseService.client
+        .from('favoritos')
+        .delete()
+        .eq('user_id', this.userId)
+        .eq('recipe_id', this.recipe.id);
+
+      if (error) {
+        console.error('Error al eliminar de favoritos:', error.message);
+        return;
+      }
+
+      console.log('Receta eliminada de favoritos.');
+      this.favorite = false;
+    } catch (error) {
+      console.error('Error al eliminar de favoritos:', error);
+    }
+  }
+
+  addToAgenda() {
+    console.log('Añadir a la agenda:', this.recipe);
   }
 
   addToShoppingList() {
