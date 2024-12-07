@@ -101,8 +101,19 @@
   <ion-popover trigger="add-to-menu-trigger" side="bottom" alignment="start">
     <ng-template>
       <ion-list>
-        <ion-item (click)="addToAgenda()">
+        <ion-item lines="none">
           <ion-label>Añadir a la agenda</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="3" *ngFor="let day of weekDays">
+                <ion-button fill="outline" size="small" (click)="addRecipeToAgenda(day)">
+                  {{ day.label }}
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-item>
         <ion-item (click)="addToShoppingList()">
           <ion-label>Añadir a la lista de la compra</ion-label>
@@ -119,4 +130,6 @@
       </ion-list>
     </ng-template>
   </ion-popover>
+
+
 </ion-content>

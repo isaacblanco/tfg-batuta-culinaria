@@ -4,7 +4,6 @@ Temas pendientes:
 
 - Pantalla de receta
   - Agregar las opciones asociadas a la receta
-    - Agregar a favoritos
     - Agregar a lista de la compra
     - Agregar a agenda
     - Empezar a seguir la receta
@@ -22,10 +21,6 @@ Temas pendientes:
   - Incorporar un botón para eliminar una receta de la lista de la compra
   - Poner un botón de compartir lista de la compra
     - Ver como se puede compartir
-- Pantalla favoritos
-  - Lista de recetas asociadas a favoritos
-    - Poner por bloques
-  - Ordenadr recetas
 - Pantalla de seguimiento de una receta
 
   - Mostrar los pasos de la receta
@@ -92,3 +87,4 @@ Cambiar el logotipo de la APP
 - Listado de recetas: limitar las 20 primeras, ordendas por ID descendente??
   - O poner un listado de categorias
     - Y luego filtrar por categoría
+    - Ordenar por bloques

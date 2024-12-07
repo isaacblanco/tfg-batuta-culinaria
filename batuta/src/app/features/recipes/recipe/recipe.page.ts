@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule, NavController, ToastController } from '@ionic/angular';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
 import { timeFormat } from 'src/app/shared/utils/dateTime-utils';
@@ -17,13 +17,16 @@ export class RecipePage implements OnInit {
   recipe: RecipeDTO | null = null;
   duration: string = '';
   favorite: boolean = false;
-  userId: string = ''; // ID del usuario autenticado
+  userId: string = '';
+  weekDays: { label: string; dayIndex: number }[] = []; // Botones con los días de la semana
+
 
   constructor(
     private route: ActivatedRoute,
     private supabaseService: SupabaseService,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private toastController: ToastController
   ) {}
 
   async ngOnInit() {
@@ -37,10 +40,26 @@ export class RecipePage implements OnInit {
       await this.loadRecipe(parseInt(recipeId, 10));
       await this.checkIfFavorite();
     }
+
+    this.generateWeekDays();
   }
 
   navigateBack() {
     this.navCtrl.back();
+  }
+
+  generateWeekDays() {
+    const today = new Date();
+    const daysOfWeek = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
+
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      this.weekDays.push({
+        label: daysOfWeek[date.getDay()],
+        dayIndex: i,
+      });
+    }
   }
 
   async loadRecipe(id: number) {
@@ -51,37 +70,24 @@ export class RecipePage implements OnInit {
       );
       this.recipe = data;
       this.duration = timeFormat(data.preparation_time);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error('Error al cargar la receta:', error.message);
-      } else {
-        console.error('Error al cargar la receta:', String(error));
-      }
+    } catch (error) {
+      console.error('Error al cargar la receta:', error);
     }
   }
 
   async checkIfFavorite() {
-    if (!this.recipe || !this.userId) {
-      return;
-    }
-    try {
-      const { data, error } = await this.supabaseService.client
-        .from('favoritos')
-        .select('*')
-        .eq('user_id', this.userId)
-        .eq('recipe_id', this.recipe.id);
+    if (!this.recipe || !this.userId) return;
 
-      if (error) {
-        console.error(
-          'Error al comprobar si la receta está en favoritos:',
-          error.message
-        );
-        return;
-      }
+    const { data, error } = await this.supabaseService.client
+      .from('favoritos')
+      .select('*')
+      .eq('user_id', this.userId)
+      .eq('recipe_id', this.recipe.id);
 
-      this.favorite = (data && data.length > 0) || false;
-    } catch (error) {
+    if (error) {
       console.error('Error al comprobar favoritos:', error);
+    } else {
+      this.favorite = !!data?.length;
     }
   }
 
@@ -135,8 +141,73 @@ export class RecipePage implements OnInit {
     }
   }
 
-  addToAgenda() {
-    console.log('Añadir a la agenda:', this.recipe);
+
+  async addRecipeToAgenda(day: { label: string; dayIndex: number }) {
+    if (!this.recipe || !this.userId) {
+      console.warn('Información insuficiente para agregar a la agenda.');
+      return;
+    }
+
+    try {
+      const selectedDate = new Date();
+      selectedDate.setDate(new Date().getDate() + day.dayIndex);
+      const formattedDate = selectedDate.toISOString().split('T')[0];
+
+      const { data: agenda, error } = await this.supabaseService.client
+        .from('agenda')
+        .select('*')
+        .eq('user_id', this.userId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error al verificar la agenda existente:', error);
+        return;
+      }
+
+      const agendaData = agenda?.data || [];
+      agendaData.push({
+        date: formattedDate,
+        recipe_id: this.recipe.id,
+        recipe_title: this.recipe.name,
+      });
+
+      if (agenda) {
+        const { error: updateError } = await this.supabaseService.client
+          .from('agenda')
+          .update({ data: agendaData })
+          .eq('user_id', this.userId);
+
+        if (updateError) {
+          console.error('Error al actualizar la agenda:', updateError.message);
+          return;
+        }
+      } else {
+        const { error: insertError } = await this.supabaseService.client
+          .from('agenda')
+          .insert({
+            user_id: this.userId,
+            data: agendaData,
+          });
+
+        if (insertError) {
+          console.error('Error al crear una nueva agenda:', insertError.message);
+          return;
+        }
+      }
+
+      this.showToast(`Receta añadida a la agenda para el ${formattedDate}`);
+    } catch (error) {
+      console.error('Error al agregar la receta a la agenda:', error);
+    }
+  }
+
+  async showToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+    });
+    await toast.present();
   }
 
   addToShoppingList() {
