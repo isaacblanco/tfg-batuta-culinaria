@@ -2,30 +2,11 @@ Temas pendientes:
 
 === FRONTEND ===
 
-- Pantalla de receta
-  - Agregar las opciones asociadas a la receta
-    - Empezar a seguir la receta
 - Pantalla de Recetas
   - Mejorar la card de receta
 - Pantalla lista de la compra
-  - Lista de la compra por recetas
-  - Lista de la compra por ingredientes
-  - Usar el local storage para guardar la lista de la compra
-  - Poner un botón para vaciar la lista de la compra
-  - Incorporar un botón para eliminar una receta de la lista de la compra
   - Poner un botón de compartir lista de la compra
     - Ver como se puede compartir
-- Pantalla de seguimiento de una receta
-
-  - Mostrar los pasos de la receta
-  - Incorporar el temporizador
-
-- Pantalla IA
-
-  - Formulario de IA
-  - Probar contra el servidor interno de Jan
-    - Hacer funcionar el servidor interno de Jan
-    - Probar desde el frontend
 
 - Pantalla de nueva receta
   - Formulario de receta: al guardar, debe cogerse el ID de la receta y redirigir a la pantalla de la receta con el ID
