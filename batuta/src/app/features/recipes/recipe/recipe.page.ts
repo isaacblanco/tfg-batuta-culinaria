@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonicModule, NavController, ToastController } from '@ionic/angular';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
+import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.service';
 import { timeFormat } from 'src/app/shared/utils/dateTime-utils';
 
 @Component({
@@ -24,6 +25,7 @@ export class RecipePage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private supabaseService: SupabaseService,
+    private shoppingCartService: ShoppingCartService,
     private navCtrl: NavController,
     private router: Router,
     private toastController: ToastController
@@ -210,8 +212,18 @@ export class RecipePage implements OnInit {
     await toast.present();
   }
 
-  addToShoppingList() {
-    console.log('Añadir a la lista de la compra:', this.recipe);
+  async addToShoppingList() {
+    if (!this.recipe || !this.userId) {
+      console.warn('Receta o usuario no disponible.');
+      return;
+    }
+
+    try {
+      await this.shoppingCartService.addRecipeToCart(this.userId, this.recipe);
+      this.showToast('Receta añadida a la lista de la compra.');
+    } catch (error) {
+      console.error('Error al añadir a la lista de la compra:', error);
+    }
   }
 
   duplicateRecipe() {
