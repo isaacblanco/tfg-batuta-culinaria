@@ -17,9 +17,9 @@ import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
 })
 export class NewPage implements OnInit {
   units = UNITS;
-  recipeId: string | null = null;
-  userId: string = '';
-  categories: Array<{ id: number; name: string }> = [];
+  recipeId: string | null = null; // ID de la receta (opcional)
+  userId: string = ''; // ID del usuario autenticado
+  categories: Array<{ id: number; name: string }> = []; // Categorías disponibles
 
   recipe: RecipeDTO = {
     name: '',
@@ -36,6 +36,8 @@ export class NewPage implements OnInit {
     user_id: '',
   };
 
+  isEditMode = false; // Indica si estamos en modo edición
+
   constructor(
     private route: ActivatedRoute,
     private supabaseService: SupabaseService,
@@ -43,20 +45,24 @@ export class NewPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Obtener datos del usuario autenticado
     const userData = this.localStorageService.getUserData();
     if (userData) {
       this.userId = userData.id;
       this.recipe.user_id = this.userId;
     }
 
+    // Comprobar si estamos en modo edición o creación
     this.recipeId = this.route.snapshot.paramMap.get('id');
     if (this.recipeId) {
-      this.loadRecipe(this.recipeId);
+      this.isEditMode = true;
+      this.loadRecipe(this.recipeId); // Cargar receta existente
     }
 
     this.loadCategories();
   }
 
+  // Cargar las categorías disponibles
   async loadCategories() {
     try {
       const data = await this.supabaseService.selectFromTable(
@@ -71,62 +77,56 @@ export class NewPage implements OnInit {
     }
   }
 
+  // Cargar receta existente para edición
   async loadRecipe(id: string) {
     try {
       const recipe = await this.supabaseService.readSingle<RecipeDTO>(
         'recetas',
-        {
-          id,
-        }
+        { id }
       );
+
       if (recipe.user_id !== this.userId) {
         alert('No tienes permiso para editar esta receta.');
         return;
       }
 
-      this.recipe = {
-        ...this.recipe,
-        ...recipe,
-      };
+      this.recipe = { ...recipe };
     } catch (error: any) {
       console.error('Error al cargar la receta:', error.message || error);
     }
   }
 
+  // Guardar receta (crear o actualizar)
   async saveRecipe() {
     const payload = { ...this.recipe, user_id: this.userId };
 
     try {
-      if (this.recipeId) {
-        await this.supabaseService.insertIntoTable('recetas', payload);
+      if (this.isEditMode) {
+        // Actualizar receta existente
+        await this.supabaseService.updateTable('recetas', payload, this.recipeId!);
+        alert('Receta actualizada con éxito.');
       } else {
-        const existingRecipe = await this.supabaseService.selectFromTable(
-          'recetas',
-          '*'
-        );
-        const match = existingRecipe.find((r: any) => r.id === this.recipeId);
-
-        if (match) {
-          await this.supabaseService.insertIntoTable('recetas', payload);
-        } else {
-          await this.supabaseService.insertIntoTable('recetas', payload);
-        }
+        // Crear nueva receta
+        await this.supabaseService.insertIntoTable('recetas', payload);
+        alert('Receta creada con éxito.');
       }
-
-      alert('Receta guardada con éxito.');
     } catch (error: any) {
       console.error('Error al guardar la receta:', error.message || error);
+      alert('Ocurrió un error al guardar la receta. Inténtalo de nuevo.');
     }
   }
 
+  // Añadir un nuevo ingrediente
   addIngredient() {
     this.recipe.ingredients.push({ name: '', quantity: 1, unit: 'grs' });
   }
 
+  // Eliminar un ingrediente existente
   removeIngredient(index: number) {
     this.recipe.ingredients.splice(index, 1);
   }
 
+  // Añadir un nuevo paso
   addStep() {
     this.recipe.steps.push({
       duration: 1,
@@ -135,10 +135,12 @@ export class NewPage implements OnInit {
     });
   }
 
+  // Eliminar un paso existente
   removeStep(index: number) {
     this.recipe.steps.splice(index, 1);
   }
 
+  // Validar si el formulario está completo
   isFormValid(): boolean {
     return (
       !!this.recipe.name &&

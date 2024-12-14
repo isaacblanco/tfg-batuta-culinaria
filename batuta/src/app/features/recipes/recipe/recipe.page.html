@@ -25,7 +25,7 @@
     <ion-item lines="none">
       <ion-label>
         <h1>{{ recipe?.name }}</h1>
-        <ion-note>By </ion-note>
+        <ion-note>By {{ author || 'Autor desconocido' }}</ion-note>
         <ion-note *ngIf="recipe?.intro">{{ recipe?.intro }}</ion-note>
         <p>{{ recipe?.intro }}</p>
       </ion-label>
@@ -33,19 +33,10 @@
 
     <div class="ion-text-center">
       <ion-item>
-        <ion-button
-          slot="start"
-          size="normal"
-          [routerLink]="['/cook', recipe?.id]"
-        >
+        <ion-button slot="start" size="normal" [routerLink]="['/cook', recipe?.id]">
           <ion-label>Cocinar</ion-label>
-      </ion-button>
-        <ion-button
-          id="add-to-menu-trigger"
-          fill="outline"
-          slot="end"
-          size="normal"
-        >
+        </ion-button>
+        <ion-button id="add-to-menu-trigger" fill="outline" slot="end" size="normal">
           <ion-icon name="add-circle"></ion-icon>
           <ion-label>Añadir a</ion-label>
         </ion-button>
@@ -53,22 +44,10 @@
     </div>
 
     <ion-item>
-      <ion-button
-        *ngIf="favorite === false"
-        (click)="addToFavorites()"
-        slot="end"
-        fill="clear"
-        size="big"
-      >
+      <ion-button *ngIf="favorite === false" (click)="addToFavorites()" slot="end" fill="clear" size="big">
         <ion-icon name="heart-outline"></ion-icon>
       </ion-button>
-      <ion-button
-        *ngIf="favorite === true"
-        (click)="removeFromFavorites()"
-        slot="end"
-        fill="clear"
-        size="big"
-      >
+      <ion-button *ngIf="favorite === true" (click)="removeFromFavorites()" slot="end" fill="clear" size="big">
         <ion-icon name="heart"></ion-icon>
       </ion-button>
 
@@ -125,7 +104,7 @@
         <ion-item (click)="duplicateRecipe()">
           <ion-label>Duplicar</ion-label>
         </ion-item>
-        <ion-item (click)="editRecipe()">
+        <ion-item *ngIf="isAuthor" (click)="editRecipe()">
           <ion-label>Editar</ion-label>
         </ion-item>
       </ion-list>

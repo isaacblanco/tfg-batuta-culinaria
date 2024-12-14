@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { IonicModule, NavController, ToastController } from '@ionic/angular';
+import { IonicModule, MenuController, NavController, ToastController } from '@ionic/angular';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
 import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.service';
@@ -19,8 +19,9 @@ export class RecipePage implements OnInit {
   duration: string = '';
   favorite: boolean = false;
   userId: string = '';
+  isAuthor: boolean = false; // Indica si el usuario es el autor
+  author: string = ''; // Nombre del autor
   weekDays: { label: string; dayIndex: number }[] = []; // Botones con los días de la semana
-
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +29,8 @@ export class RecipePage implements OnInit {
     private shoppingCartService: ShoppingCartService,
     private navCtrl: NavController,
     private router: Router,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private menuController: MenuController // Añadido para controlar el menú
   ) {}
 
   async ngOnInit() {
@@ -65,15 +67,35 @@ export class RecipePage implements OnInit {
   }
 
   async loadRecipe(id: number) {
+    console.log('Cargando receta con ID:', id);
     try {
-      const data = await this.supabaseService.readSingleById<RecipeDTO>(
+      // Paso 1: Cargar la receta
+      const recipeData = await this.supabaseService.readSingleById<RecipeDTO>(
         'recetas',
         id
       );
-      this.recipe = data;
-      this.duration = timeFormat(data.preparation_time);
+      console.log('Datos de la receta:', recipeData);
+  
+      this.recipe = { ...recipeData };
+      this.duration = timeFormat(this.recipe.preparation_time);
+  
+      // Paso 2: Verificar si el usuario actual es el autor
+      this.isAuthor = this.recipe?.user_id === this.userId;
+  
+      // Paso 3: Obtener el nombre del autor desde la tabla usuarios
+      if (this.recipe.user_id) {
+        const authorData = await this.supabaseService.readSingle<any>('usuarios', {
+          id: this.recipe.user_id,
+        });
+  
+        this.author = authorData?.username || 'Autor desconocido';
+        console.log('Nombre del autor:', this.author);
+      } else {
+        this.author = 'Autor desconocido';
+        console.warn('No se encontró user_id en la receta.');
+      }
     } catch (error) {
-      console.error('Error al cargar la receta:', error);
+      console.error('Error al cargar la receta o el autor:', error);
     }
   }
 
@@ -142,7 +164,6 @@ export class RecipePage implements OnInit {
       console.error('Error al eliminar de favoritos:', error);
     }
   }
-
 
   async addRecipeToAgenda(day: { label: string; dayIndex: number }) {
     if (!this.recipe || !this.userId) {
@@ -232,10 +253,11 @@ export class RecipePage implements OnInit {
     // Implementa la lógica para duplicar la receta
   }
 
-  editRecipe() {
+  async editRecipe() {
     console.log('Editar receta:', this.recipe);
     if (this.recipe) {
-      this.router.navigate(['/edit', this.recipe.id]);
+      await this.menuController.close(); // Cierra el menú antes de navegar
+      this.router.navigate(['/new', this.recipe.id]);
     }
   }
 }

@@ -149,6 +149,31 @@ export class SupabaseService {
     return data as T;
   }
 
+  // Método genérico para actualizar datos en una tabla
+async updateTable(
+  tableName: string,
+  values: any,
+  id: string | number
+): Promise<any> {
+  const { data, error } = await this.supabase
+    .from(tableName)
+    .update(values)
+    .eq('id', id);
+
+  if (error) {
+    console.error(
+      `Error al actualizar el registro con ID ${id} en la tabla ${tableName}:`,
+      error.message
+    );
+    throw new Error(
+      `No se pudo actualizar el registro con ID ${id} en la tabla ${tableName}.`
+    );
+  }
+
+  return data;
+}
+
+
   async updateUsername(
     id: string | undefined,
     username: string | undefined

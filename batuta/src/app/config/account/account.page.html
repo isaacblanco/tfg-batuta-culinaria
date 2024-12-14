@@ -12,16 +12,22 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
+    <ion-item-divider>Datos del usuario</ion-item-divider>
     <ion-item>
       <ion-label position="stacked">Nombre de usuario</ion-label>
       <ion-input type="text" [(ngModel)]="user.username"></ion-input>
     </ion-item>
+  </ion-list>
+  <div class="ion-text-center">
+    <ion-button fill="outline" (click)="updateUsername()" size="small">
+      Actualizar nombre
+    </ion-button>
+  </div>
+  <ion-list>
+    <ion-item-divider>Referencia</ion-item-divider>
     <ion-item>
-      <div class="ion-text-center">
-        <ion-button fill="outline" (click)="updateUsername()">
-          Actualizar nombre
-        </ion-button>
-      </div>
+      <ion-label>ID</ion-label>
+      <ion-note>{{ user.id }}</ion-note>
     </ion-item>
   </ion-list>
 </ion-content>
@@ -45,12 +51,7 @@
   </ion-item>
 
   <div class="ion-text-center">
-    <ion-button
-      color="danger"
-      [disabled]="!deleteToggle"
-      (click)="deleteUser()"
-      size="small"
-    >
+    <ion-button color="danger" [disabled]="!deleteToggle" (click)="deleteUser()" size="small">
       Eliminar usuario
     </ion-button>
   </div>

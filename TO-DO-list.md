@@ -2,14 +2,35 @@ Temas pendientes:
 
 === FRONTEND ===
 
+- Editar receta:
+  - Confirmar que el formulario de receta funciona correctamente
+  - Formulario de receta: al guardar, debe cogerse el ID de la receta y redirigir a la pantalla de la receta con el ID
+
 - Pantalla de Recetas
   - Mejorar la card de receta
+
 - Pantalla lista de la compra
   - Poner un botón de compartir lista de la compra
     - Ver como se puede compartir
 
-- Pantalla de nueva receta
-  - Formulario de receta: al guardar, debe cogerse el ID de la receta y redirigir a la pantalla de la receta con el ID
+=== Recetas de la IA ===
+
+- Utilizar un sistema externo para generar recetas de la IA
+  - Ver como se puede hacer
+
+=== Pruebas unitarias ===
+
+- Crear pruebas unitarias de la API
+- Crear pruebas unitarias de la aplicación
+
+
+- Actualizar el TFG con las pruebas unitarias
+  - Punto 4.8.3 Estrategia de pruebas
+    - Hay que razonar porque se han hecho las pruebas que se han hecho, justificación
+- Montar un ejemplo de como se lanzan las pruebas unitarias
+- Punto 4.8.4 Resultados de las pruebas
+  - Hay que poner los resultados de las pruebas
+  
 
 === MOBILES ===
 
@@ -17,9 +38,29 @@ Temas pendientes:
   - Usar el servidor de interserver
   - Probar en los moviles
   - Revisa la parte de BASE en el index.html, no debe apuntar al \
+
+APK
 - Compilar para Android
-- Compilar para iOS
+  - Usar una clave de firma para el APK sin restringir
   - Probar en un dispositivo físico
+- Compilar para iOS (lo ultimo)
+  - Probar en un dispositivo físico
+
+=== MEJORA EN LA SEGURIDAD DE LA BASE DE DATOS ===
+
+- Usar el RLS para restringir las tablas
+- Indicar en la documentación
+
+=== ENTREGA ===
+
+- Mejorar el README.md
+  - Explicar la configuración de la aplicación
+- Revisar el documento de los anexos, mejorar el formato
+- Crear un documento de entrega con el TFG
+- Poner el APK en la carpeta de entrega
+- Poner el código en la carpeta de entrega
+
+- Subir ficheros a REC --> dar como finalizada la entrega
 
 === NOTAS ===
 

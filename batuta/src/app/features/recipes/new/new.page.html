@@ -164,15 +164,12 @@
     </ion-item>
 
     <!-- Botón para guardar -->
-    <div class="ion-text-center">
-      <ion-button
-        size="small"
-        type="submit"
-        expand="block"
-        [disabled]="!isFormValid()"
-      >
-        Guardar Receta
-      </ion-button>
-    </div>
+    <ion-button
+      size="small"
+      type="submit"
+      expand="block"
+      [disabled]="!isFormValid()">
+      {{ recipeId ? 'Actualizar receta' : 'Guardar nueva receta' }}
+    </ion-button>
   </form>
 </ion-content>

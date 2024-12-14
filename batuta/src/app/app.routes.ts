@@ -62,6 +62,12 @@ export const routes: Routes = [
       import('./features/recipes/new/new.page').then((m) => m.NewPage),
   },
   {
+    path: 'new/:id',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./features/recipes/new/new.page').then((m) => m.NewPage),
+  },
+  {
     path: 'cart',
     canActivate: [AuthGuard],
     loadComponent: () =>

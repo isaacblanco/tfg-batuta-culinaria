@@ -39,12 +39,24 @@ export class AccountPage implements OnInit {
     this.user = userData;
   }
 
-  updateUsername() {
+  async updateUsername(): Promise<void> {
     if (!this.user) {
-      console.error('User data is not available.');
+      console.error('No hay datos de usuario disponibles.');
       return;
     }
-    this.supabase.updateUsername(this.user?.id, this.user?.username);
+
+    try {
+      await this.supabase.updateUsername(this.user.id, this.user.username);
+
+      // Actualizar localStorage con el nuevo nombre de usuario
+      const updatedUser = { ...this.user };
+      this.localStorageService.setUserData(updatedUser);
+
+      alert('Nombre de usuario actualizado correctamente.');
+    } catch (error) {
+      console.error('Error al actualizar el nombre de usuario:', error);
+      alert('No se pudo actualizar el nombre de usuario. Inténtelo más tarde.');
+    }
   }
 
   async deleteUser(): Promise<void> {
