@@ -6,20 +6,6 @@ Temas pendientes:
 - Utilizar un sistema externo para generar recetas de la IA
   - Ver como se puede hacer
 
-=== Pruebas unitarias ===
-
-- Crear pruebas unitarias de la API
-- Crear pruebas unitarias de la aplicación
-
-
-- Actualizar el TFG con las pruebas unitarias
-  - Punto 4.8.3 Estrategia de pruebas
-    - Hay que razonar porque se han hecho las pruebas que se han hecho, justificación
-- Montar un ejemplo de como se lanzan las pruebas unitarias
-- Punto 4.8.4 Resultados de las pruebas
-  - Hay que poner los resultados de las pruebas
-  
-
 === MOBILES ===
 
 - Montar una distribución en la nube
