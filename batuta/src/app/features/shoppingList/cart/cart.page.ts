@@ -20,7 +20,10 @@ export class CartPage implements OnInit {
   allIngredients: { name: string; quantity: number; unit: string; checked: boolean }[] = [];
   viewMode: 'recipe' | 'ingredients' = 'recipe';
 
-  constructor(private shoppingCartService: ShoppingCartService, private localStorageService: LocalStorageService, private navCtrl: NavController) {}
+  constructor(
+    private shoppingCartService: ShoppingCartService, 
+    private localStorageService: LocalStorageService, 
+    private navCtrl: NavController) {}
 
   async ngOnInit() {
     const userId = this.localStorageService.getUserId();
@@ -32,7 +35,7 @@ export class CartPage implements OnInit {
     if (this.cart?.shopping_list?.length > 0) {
       this.aggregateIngredients();
     } else {
-      this.cart = { shopping_list: [] };
+      this.cart = { shopping_list: [] }; 
     }
   
     // Cargar ingredientes del Local Storage
@@ -85,5 +88,59 @@ export class CartPage implements OnInit {
   // Navega hacia atrás
   navigateBack() {
     this.navCtrl.back();
+  }
+
+  // Genera texto plano de la lista de la compra
+  generateShoppingListText(): string {
+    let shoppingListText = `Lista de la compra:\n\n`;
+
+    // Ingredientes del Local Storage
+    if (this.localStorageIngredients.length > 0) {
+      shoppingListText += `Elementos sueltos:\n`;
+      this.localStorageIngredients.forEach((ingredient) => {
+        shoppingListText += `- ${ingredient.name}: ${ingredient.quantity} ${ingredient.unit}\n`;
+      });
+      shoppingListText += `\n`;
+    }
+
+    if (this.viewMode === 'recipe') {
+      // Ingredientes por receta
+      shoppingListText += `Ingredientes por receta:\n`;
+      this.cart.shopping_list.forEach((recipe: any) => {
+        shoppingListText += `${recipe.recipe_name}:\n`;
+        recipe.ingredients.forEach((ingredient: any) => {
+          shoppingListText += `- ${ingredient.name}: ${ingredient.quantity} ${ingredient.unit}\n`;
+        });
+        shoppingListText += `\n`;
+      });
+    } else {
+      // Ingredientes agregados
+      shoppingListText += `Ingredientes combinados:\n`;
+      this.allIngredients.forEach((ingredient) => {
+        shoppingListText += `- ${ingredient.name}: ${ingredient.quantity} ${ingredient.unit}\n`;
+      });
+    }
+
+    return shoppingListText;
+  }
+
+  // Método para compartir la lista de la compra
+  async shareShoppingList() {
+    const shoppingListText = this.generateShoppingListText();
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Lista de la Compra',
+          text: shoppingListText,
+        });
+        console.log('Lista de la compra compartida con éxito.');
+      } catch (error) {
+        console.error('Error al compartir la lista de la compra:', error);
+      }
+    } else {
+      console.warn('La API de compartir no está disponible en este navegador.');
+      alert('La funcionalidad de compartir no está disponible en este dispositivo.');
+    }
   }
 }

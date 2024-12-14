@@ -1,17 +1,5 @@
 Temas pendientes:
 
-=== FRONTEND ===
-
-- Editar receta:
-  - Confirmar que el formulario de receta funciona correctamente
-  - Formulario de receta: al guardar, debe cogerse el ID de la receta y redirigir a la pantalla de la receta con el ID
-
-- Pantalla de Recetas
-  - Mejorar la card de receta
-
-- Pantalla lista de la compra
-  - Poner un botón de compartir lista de la compra
-    - Ver como se puede compartir
 
 === Recetas de la IA ===
 

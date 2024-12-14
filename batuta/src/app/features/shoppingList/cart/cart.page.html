@@ -7,6 +7,11 @@
       </ion-button>
     </ion-buttons>
     <ion-title>Lista de la compra</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="shareShoppingList()" fill="clear">
+        <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -15,34 +20,17 @@
   <ion-item-divider>Elementos sueltos</ion-item-divider>
   <ion-list>
     <ion-item *ngFor="let ingredient of localStorageIngredients; let i = index">
-      <ion-input
-        placeholder="Ingrediente"
-        [(ngModel)]="ingredient.name"
-        (ngModelChange)="updateLocalStorage()"
-        name="local-ingredient-{{ i }}-name"
-      ></ion-input>
-      <ion-input
-        placeholder="Cantidad"
-        [(ngModel)]="ingredient.quantity"
-        (ngModelChange)="updateLocalStorage()"
-        name="local-ingredient-{{ i }}-quantity"
-        type="number"
-      ></ion-input>
-      <ion-select
-        [(ngModel)]="ingredient.unit"
-        (ngModelChange)="updateLocalStorage()"
-        name="local-ingredient-{{ i }}-unit"
-      >
+      <ion-input placeholder="Ingrediente" [(ngModel)]="ingredient.name" (ngModelChange)="updateLocalStorage()"
+        name="local-ingredient-{{ i }}-name"></ion-input>
+      <ion-input placeholder="Cantidad" [(ngModel)]="ingredient.quantity" (ngModelChange)="updateLocalStorage()"
+        name="local-ingredient-{{ i }}-quantity" type="number"></ion-input>
+      <ion-select [(ngModel)]="ingredient.unit" (ngModelChange)="updateLocalStorage()"
+        name="local-ingredient-{{ i }}-unit">
         <ion-select-option *ngFor="let unit of units" [value]="unit.value">
           {{ unit.label }}
         </ion-select-option>
       </ion-select>
-      <ion-icon
-        name="trash"
-        color="danger"
-        slot="end"
-        (click)="removeLocalIngredient(i)"
-      ></ion-icon>
+      <ion-icon name="trash" color="danger" slot="end" (click)="removeLocalIngredient(i)"></ion-icon>
     </ion-item>
     <div class="ion-text-center">
       <ion-button fill="outline" size="small" (click)="addLocalIngredient()">
@@ -50,7 +38,7 @@
       </ion-button>
     </div>
 
-    
+
   </ion-list>
 
   <ion-list>
@@ -65,26 +53,26 @@
     <ion-segment-button value="ingredients">Por Ingrediente</ion-segment-button>
   </ion-segment>
 
-  
-    <!-- Vista por receta -->
-    <ng-container *ngIf="viewMode === 'recipe' && cart !== null">
-      <div *ngFor="let recipe of cart.shopping_list">
-        <ion-item-divider>{{ recipe.recipe_name }}</ion-item-divider>
-        <ion-item *ngFor="let ingredient of recipe.ingredients">
-          <ion-label>{{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})</ion-label>
-        </ion-item>
-      </div>
-    </ng-container>
-  
-    <!-- Vista por ingrediente -->
-    <ng-container *ngIf="viewMode === 'ingredients'">
-      <ion-list>
-        <ion-item *ngFor="let ingredient of allIngredients">
-          <ion-checkbox slot="start" [(ngModel)]="ingredient.checked"></ion-checkbox>
-          <ion-label [ngStyle]="{ 'text-decoration': ingredient.checked ? 'line-through' : 'none' }">
-            {{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ng-container>
+
+  <!-- Vista por receta -->
+  <ng-container *ngIf="viewMode === 'recipe' && cart !== null">
+    <div *ngFor="let recipe of cart.shopping_list">
+      <ion-item-divider>{{ recipe.recipe_name }}</ion-item-divider>
+      <ion-item *ngFor="let ingredient of recipe.ingredients">
+        <ion-label>{{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})</ion-label>
+      </ion-item>
+    </div>
+  </ng-container>
+
+  <!-- Vista por ingrediente -->
+  <ng-container *ngIf="viewMode === 'ingredients'">
+    <ion-list>
+      <ion-item *ngFor="let ingredient of allIngredients">
+        <ion-checkbox slot="start" [(ngModel)]="ingredient.checked"></ion-checkbox>
+        <ion-label [ngStyle]="{ 'text-decoration': ingredient.checked ? 'line-through' : 'none' }">
+          {{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
 </ion-content>
