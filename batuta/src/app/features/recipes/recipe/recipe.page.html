@@ -57,7 +57,7 @@
         <p>Porciones: {{ recipe?.num_people }}</p>
       </ion-label>
     </ion-item>
-    <ion-list-header>Ingredientes</ion-list-header>
+    <ion-item-divider>Ingredientes</ion-item-divider>
     <ion-item>
       <ion-icon name="add-circle-outline" slot="end"></ion-icon>
       Raciones: {{ recipe?.num_people }}
@@ -69,7 +69,7 @@
         {{ ingredient.quantity }} {{ ingredient.unit }} - {{ ingredient.name }}
       </ion-label>
     </ion-item>
-    <ion-list-header>Pasos</ion-list-header>
+    <ion-item-divider>Pasos</ion-item-divider>
     <ion-item *ngFor="let step of recipe?.steps; let i = index" lines="none">
       <ion-label slot="stacked"></ion-label>
       <ion-label>

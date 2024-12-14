@@ -5,7 +5,7 @@
       <a [routerLink]="'/home'" routerDirection="back">
         <ion-icon name="home"></ion-icon>
       </a>
-      
+
     </ion-buttons>
     <ion-title>Agenda semanal</ion-title>
     <ion-buttons slot="end" fill="clear">
@@ -19,26 +19,21 @@
 <ion-content [fullscreen]="true">
   <!-- Botón para mover ingredientes a la lista de compra -->
   <ion-item>
-    <ion-checkbox
-      slot="start"
-      [(ngModel)]="clearShoppingListEnabled"
-    ><ion-label>Vaciar carrito</ion-label></ion-checkbox>
+    <ion-checkbox slot="start" [(ngModel)]="clearShoppingListEnabled"><ion-label>Vaciar
+        carrito</ion-label></ion-checkbox>
     <ion-button expand="block" (click)="moveIngredientsToShoppingList()">
       Crear lista de la compra
     </ion-button>
-    
-    
+
+
   </ion-item>
 
   <ion-list>
     <div *ngFor="let day of upcomingWeek">
-      <ion-list-header>
-        {{ day.dayName }}, {{ day.formattedDate }}
-      </ion-list-header>
-      <ion-reorder-group
-        disabled="false"
-        (ionItemReorder)="reorderRecipes($event, day)"
-      >
+      <ion-item-divider>
+        {{ day.dayName }}<span class="day-date">, {{ day.formattedDate }}</span>
+      </ion-item-divider>
+      <ion-reorder-group disabled="false" (ionItemReorder)="reorderRecipes($event, day)">
         <ion-item-sliding *ngFor="let recipe of day.recipes">
           <ion-item [routerLink]="['/recipe', recipe.recipe_id]">
             <ion-reorder slot="start">
@@ -48,10 +43,7 @@
             <ion-icon name="restaurant-outline" slot="end"></ion-icon>
           </ion-item>
           <ion-item-options side="end">
-            <ion-item-option
-              color="danger"
-              (click)="deleteRecipeFromAgenda(recipe)"
-            >
+            <ion-item-option color="danger" (click)="deleteRecipeFromAgenda(recipe)">
               Eliminar
             </ion-item-option>
           </ion-item-options>
@@ -62,5 +54,5 @@
       </ion-item>
     </div>
   </ion-list>
-  
+
 </ion-content>
