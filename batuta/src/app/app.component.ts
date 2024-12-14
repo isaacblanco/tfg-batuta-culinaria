@@ -32,9 +32,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // Suscribirse al estado de autenticación
-    this.authService.isAuthenticated$.subscribe(
-      (isAuthenticated) => (this.isAuthenticated = isAuthenticated)
-    );
+    this.authService.isAuthenticated$.subscribe((isAuthenticated) => {
+      this.isAuthenticated = isAuthenticated;
+      if (!isAuthenticated) {
+        this.menuController.enable(false); // Deshabilitar el menú
+      } else {
+        this.menuController.enable(true); // Habilitar el menú
+      }
+    });
   }
 
   async navigateTo(url: string): Promise<void> {

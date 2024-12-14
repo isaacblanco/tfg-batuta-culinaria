@@ -33,18 +33,18 @@ export class LoginPage implements OnInit {
     try {
       const user = await this.supabaseService.signIn(this.email, this.password);
       console.log('Usuario logueado:', user);
-
+  
       const userData = await this.syncUserWithDatabase(user);
       this.localStorageService.setUserData(userData);
-
+  
       this.authService.login(); // Actualiza el estado de autenticación
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home']); // Redirigir a la página principal
     } catch (error: any) {
       console.error('Error de inicio de sesión:', error.message);
-      this.errorMessage =
-        error.message || 'Error desconocido al iniciar sesión';
+      this.errorMessage = error.message || 'Error desconocido al iniciar sesión';
     }
   }
+  
 
   // Método para sincronizar usuario autenticado con la tabla "usuarios"
   async syncUserWithDatabase(authUser: any) {

@@ -8,17 +8,19 @@ Temas pendientes:
 
 === MOBILES ===
 
-- Montar una distribución en la nube
-  - Usar el servidor de interserver
-  - Probar en los moviles
-  - Revisa la parte de BASE en el index.html, no debe apuntar al \
-
 APK
 - Compilar para Android
   - Usar una clave de firma para el APK sin restringir
   - Probar en un dispositivo físico
 - Compilar para iOS (lo ultimo)
   - Probar en un dispositivo físico
+
+
+- Montar una distribución en la nube
+  - Usar el servidor de interserver
+  - Probar en los moviles
+  - Revisa la parte de BASE en el index.html, no debe apuntar al \
+
 
 === MEJORA EN LA SEGURIDAD DE LA BASE DE DATOS ===
 
