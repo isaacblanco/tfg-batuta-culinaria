@@ -3,6 +3,10 @@
 
 /** Ionic CSS Variables **/
 :root {
+  --ion-background-color: #faefd8; /* Fondo claro */
+  --ion-text-color: #191919; /* Texto oscuro */
+
+
   /** primary **/
   --ion-color-primary: #452e17;
   --ion-color-primary-rgb: 69, 47, 23;
@@ -83,16 +87,10 @@ ion-toolbar {
   --background: var(--ion-header-background);
 }
 
+/* Elimina cualquier configuración para modo oscuro */
 @media (prefers-color-scheme: dark) {
-  body {
-    /* global app variables */
-  }
-
-  .ios body {
-    /* global ios app variables */
-  }
-
-  .md body {
-    /* global md app variables */
+  :root {
+    --ion-background-color: unset;
+    --ion-text-color: unset;
   }
 }
