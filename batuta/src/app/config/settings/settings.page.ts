@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { CategoriesComponent } from './categories/categories.component';
 
 @Component({
@@ -10,7 +10,7 @@ import { CategoriesComponent } from './categories/categories.component';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar],
 })
 export class SettingsPage implements OnInit {
   constructor(private modalController: ModalController) {}

@@ -10,7 +10,13 @@ recorrer_directorio() {
   for elemento in "$1"/*; do
     if [ -d "$elemento" ]; then
       if [[ "$(basename "$elemento")" != "node_modules" ]]; then
-        recorrer_directorio "$elemento"
+        if [[ "$(basename "$elemento")" != "www" ]]; then
+          if [[ "$(basename "$elemento")" != "android" ]]; then
+            if [[ "$(basename "$elemento")" != ".vscode" ]]; then
+              recorrer_directorio "$elemento"
+            fi
+          fi
+        fi
       fi
     elif [ -f "$elemento" ]; then
       echo "Archivo: $elemento" >> "$archivo_salida"

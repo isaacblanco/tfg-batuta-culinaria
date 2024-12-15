@@ -2,16 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
+import { IonButton, IonButtons, IonCheckbox, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenuButton, IonReorder, IonReorderGroup, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { agendaDTO } from 'src/app/shared/models/agenda-DTO';
-
 @Component({
   selector: 'app-planning',
   templateUrl: './planning.page.html',
   styleUrls: ['./planning.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, IonButton, IonButtons, IonMenuButton,IonCheckbox, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonListHeader, IonReorder, IonReorderGroup, IonTitle, IonToolbar],
 })
 export class PlanningPage implements OnInit {
   agenda: agendaDTO | null = null;

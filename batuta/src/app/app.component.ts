@@ -1,14 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { IonicModule, MenuController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
+import { IonApp, IonBadge, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonRouterOutlet, IonSegment, IonSegmentButton, IonSelectOption, IonSplitPane, IonThumbnail, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { AuthService } from './core/services/auth.service';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule, IonicModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule, IonIcon, IonApp, IonSplitPane, IonRouterOutlet, IonMenu, IonHeader, IonToolbar, IonThumbnail, IonTitle, IonContent, IonList, IonItem, IonLabel, IonFooter, IonListHeader, IonToggle, IonSegmentButton, IonSelectOption, IonItemDivider, IonSegment, IonBadge, IonButton, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCol, IonGrid, IonImg, IonInput, IonMenuToggle],
 })
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false; // Actualizado automáticamente desde AuthService
@@ -43,8 +46,8 @@ export class AppComponent implements OnInit {
   }
 
   async navigateTo(url: string): Promise<void> {
-    await this.router.navigate([url]);
     await this.menuController.close();
+    this.router.navigate([url]);
   }
 
   // Método para cerrar sesión

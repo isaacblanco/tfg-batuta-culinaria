@@ -1,24 +1,31 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; // <-- Importa FormsModule
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonSearchbar, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { RecipeCardComponent } from 'src/app/shared/components/recipe-card/recipe-card.component';
-
 @Component({
   selector: 'app-favorites',
   templateUrl: './favorites.page.html',
   styleUrls: ['./favorites.page.scss'],
   standalone: true,
   imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    RouterLink,
+    IonSearchbar,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonMenuButton,
+    IonIcon,
+    IonContent,
+    IonList,
     RecipeCardComponent,
-  ],
+    RouterLink,
+    CommonModule,
+    FormsModule
+],
 })
 export class FavoritesPage implements OnInit {
   favorites: any[] = []; // Array para guardar los favoritos

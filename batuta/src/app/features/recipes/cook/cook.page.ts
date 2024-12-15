@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenuButton, IonReorder, IonReorderGroup, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
 import { TimeFormatPipe } from 'src/app/shared/pipes/time-format.pipe';
@@ -11,7 +12,7 @@ import { TimeFormatPipe } from 'src/app/shared/pipes/time-format.pipe';
   templateUrl: './cook.page.html',
   styleUrls: ['./cook.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, TimeFormatPipe],
+  imports: [ CommonModule, TimeFormatPipe, IonHeader, IonToolbar, IonTitle,IonSpinner, IonButton, IonButtons, IonMenuButton, IonButton, IonIcon, IonContent, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonListHeader, IonReorder, IonReorderGroup, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonListHeader, IonReorder, IonReorderGroup, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonListHeader, IonReorder, IonReorderGroup],
 })
 export class CookPage implements OnInit, OnDestroy {
   recipe: RecipeDTO | null = null;

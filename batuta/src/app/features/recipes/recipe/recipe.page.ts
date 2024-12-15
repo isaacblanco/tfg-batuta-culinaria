@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { IonicModule, MenuController, NavController, ToastController } from '@ionic/angular';
+import { MenuController, NavController, ToastController } from '@ionic/angular';
+import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonNote, IonPopover, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
 import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.service';
@@ -12,7 +13,7 @@ import { timeFormat } from 'src/app/shared/utils/dateTime-utils';
   templateUrl: './recipe.page.html',
   styleUrls: ['./recipe.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, RouterLink],
+  imports: [CommonModule, RouterLink,IonItemDivider,IonGrid, IonRow, IonCol, IonPopover,IonImg, IonList, IonNote,IonButton,IonButtons,IonContent,IonHeader,IonIcon,IonItem,IonLabel,IonMenuButton,IonTitle,IonToolbar],
 })
 export class RecipePage implements OnInit {
   recipe: RecipeDTO | null = null;

@@ -18,44 +18,29 @@
       <p>Paso {{ currentStepIndex + 1 }} de {{ recipe.steps.length }}</p>
       <h2>{{ recipe.steps[currentStepIndex].instructions }}</h2>
       <p>Duración del paso: <b>{{ recipe.steps[currentStepIndex].duration | timeFormat }}</b></p>
-      
+
       <p>Tiempo restante:</p>
       <h2 class="clock" *ngIf="remainingTime > 0"> {{ remainingTime | timeFormat }}</h2>
     </div>
 
     <div class="ion-text-center">
-      <ion-button
-        [disabled]="timerRunning"
-        (click)="startTimer()"
-        size="small"
-      >
+      <ion-button [disabled]="timerRunning" (click)="startTimer()" size="small">
         <ion-icon name="play-outline" slot="start"></ion-icon>
         Empezar
       </ion-button>
-      <ion-button
-        [disabled]="!timerRunning"
-        (click)="resetTimer()"
-        size="small"
-        fill="outline"
-      >
+      <ion-button [disabled]="!timerRunning" (click)="resetTimer()" size="small" fill="outline">
         <ion-icon name="refresh-outline" slot="start"></ion-icon>
         Resetear
       </ion-button>
     </div>
 
     <div class="ion-text-center">
-      <ion-button
-        [disabled]="currentStepIndex === 0"
-        (click)="previousStep()"
-      >
+      <ion-button [disabled]="currentStepIndex === 0" (click)="previousStep()">
         <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
         Anterior
       </ion-button>
 
-      <ion-button
-        [disabled]="currentStepIndex === recipe.steps.length - 1"
-        (click)="nextStep()"
-      >
+      <ion-button [disabled]="currentStepIndex === recipe.steps.length - 1" (click)="nextStep()">
         Siguiente
         <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
       </ion-button>

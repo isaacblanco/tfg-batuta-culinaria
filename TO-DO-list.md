@@ -1,5 +1,16 @@
 Temas pendientes:
 
+Falla 
+
+- Recipes
+- My recipes
+- Shopping List
+- IA
+- Account
+
+- Cerrar menu al seleccionar cuenta
+- O ir a settings
+
 
 === Recetas de la IA ===
 
@@ -9,12 +20,8 @@ Temas pendientes:
 === MOBILES ===
 
 APK
-- Compilar para Android
-  - Usar una clave de firma para el APK sin restringir
-  - Probar en un dispositivo físico
 - Compilar para iOS (lo ultimo)
   - Probar en un dispositivo físico
-
 
 - Montar una distribución en la nube
   - Usar el servidor de interserver

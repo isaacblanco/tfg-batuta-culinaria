@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonNote, IonRow, IonTitle, IonToggle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [ CommonModule, FormsModule, IonButton, IonButtons, IonIcon, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonNote, IonList, IonItemDivider, IonInput, IonItem, IonLabel, IonListHeader, IonToggle, IonFooter, IonItem],
 })
 export class CategoriesComponent implements OnInit {
   categories: any[] = [];

@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonicModule, ToastController } from '@ionic/angular';
-
+import { ToastController } from '@ionic/angular';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenuButton, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 @Component({
   selector: 'app-ia',
   templateUrl: './ia.page.html',
   styleUrls: ['./ia.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, IonSpinner,IonCardContent, IonCardTitle,IonToolbar, IonTitle, IonCard, IonCardHeader, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenuButton, IonLabel, IonList, IonListHeader, IonLabel, IonList, IonListHeader],
 })
 export class IaPage implements OnInit {
   ingredients: string = ''; // Contiene los ingredientes ingresados por el usuario

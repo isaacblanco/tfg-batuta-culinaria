@@ -92,15 +92,19 @@ export const routes: Routes = [
       import('./features/recipes/cook/cook.page').then((m) => m.CookPage),
   },
   {
-    path: 'home',
-    loadComponent: () =>
-      import('./features/home/home.page').then((m) => m.HomePage),
-  },
-  {
     path: 'my-recipes',
     loadComponent: () =>
       import('./features/recipes/my-recipes/my-recipes.page').then(
         (m) => m.MyRecipesPage
       ),
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
 ];

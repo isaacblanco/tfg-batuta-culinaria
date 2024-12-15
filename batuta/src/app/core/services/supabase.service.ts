@@ -9,10 +9,15 @@ export class SupabaseService {
   private supabase: SupabaseClient;
 
   constructor() {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
-    );
+    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+      },
+      global: {
+        fetch: window.fetch.bind(window),
+      },
+    });
   }
 
   get client(): SupabaseClient {
@@ -34,15 +39,19 @@ export class SupabaseService {
 
   // Método para inicio de sesión
   async signIn(email: string, password: string): Promise<any> {
-    const { data, error } = await this.supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) {
-      console.error('Login error:', error.message);
-      throw new Error('Error al iniciar sesión: ' + error.message);
+    try {
+      const { data, error } = await this.supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+      return data.user;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('Login error:', error.message);
+      }
+      throw new Error('Error al iniciar sesión.');
     }
-    return data.user;
   }
 
   // Método para cerrar sesión

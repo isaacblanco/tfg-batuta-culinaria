@@ -2,18 +2,23 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonSegmentButton, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { UNITS } from 'src/app/shared/enums/units';
 import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
+
 
 @Component({
   selector: 'app-new',
   templateUrl: './new.page.html',
   styleUrls: ['./new.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink,
+    IonSegmentButton,IonButton,
+    IonSelectOption, IonItemDivider, IonToggle, IonList, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonMenuButton, IonTitle, IonToolbar
+    
+    ],
 })
 export class NewPage implements OnInit {
   units = UNITS;

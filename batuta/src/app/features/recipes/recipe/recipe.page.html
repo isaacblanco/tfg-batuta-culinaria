@@ -19,7 +19,7 @@
   </div>
   -->
   <!-- <ion-img [src]="recipe?.image_url || 'assets/no-image.png'"></ion-img> -->
-  <ion-img src="assets/no-image.svg" style="margin: 0 auto; max-width: 40%" />
+  <ion-img src="assets/no-image.svg" style="margin: 0 auto; max-width: 100%" />
 
   <ion-list>
     <ion-item lines="none">
@@ -101,9 +101,11 @@
         <ion-item (click)="addToShoppingList()">
           <ion-label>Añadir a la lista de la compra</ion-label>
         </ion-item>
+        <!--
         <ion-item (click)="duplicateRecipe()">
           <ion-label>Duplicar</ion-label>
         </ion-item>
+        -->
         <ion-item *ngIf="isAuthor" (click)="editRecipe()">
           <ion-label>Editar</ion-label>
         </ion-item>

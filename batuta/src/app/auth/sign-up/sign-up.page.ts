@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonNote, IonText, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { SupabaseService } from 'src/app/core/services/supabase.service';
   templateUrl: './sign-up.page.html',
   styleUrls: ['./sign-up.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonToolbar, IonButtons, IonButton, IonInput, IonItem, IonLabel, IonCardTitle, IonTitle, IonContent, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonNote, IonText, IonIcon, IonHeader],
 })
 export class SignUpPage implements OnInit {
   email: string = '';

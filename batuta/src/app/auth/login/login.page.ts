@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCol, IonContent, IonGrid, IonImg, IonInput, IonItem, IonLabel, IonRow, IonText } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
@@ -11,7 +11,7 @@ import { SupabaseService } from 'src/app/core/services/supabase.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonText, IonButton, IonInput, IonItem, IonLabel, IonContent, IonGrid, IonRow, IonCol, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle],
 })
 export class LoginPage implements OnInit {
   email: string = '';
@@ -26,7 +26,11 @@ export class LoginPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.localStorageService.clearUserData();
+    console.log('LoginPage');
+    const user = this.localStorageService.getUserData();
+    if (!user) {
+      this.localStorageService.clearUserData();
+    }
   }
 
   async login() {
@@ -37,13 +41,15 @@ export class LoginPage implements OnInit {
       const userData = await this.syncUserWithDatabase(user);
       this.localStorageService.setUserData(userData);
   
-      this.authService.login(); // Actualiza el estado de autenticación
-      this.router.navigate(['/home']); // Redirigir a la página principal
+      this.authService.login();
+      // Confirmar datos críticos antes de redirigir
+      this.router.navigate(['/home']);
     } catch (error: any) {
       console.error('Error de inicio de sesión:', error.message);
       this.errorMessage = error.message || 'Error desconocido al iniciar sesión';
     }
   }
+  
   
 
   // Método para sincronizar usuario autenticado con la tabla "usuarios"

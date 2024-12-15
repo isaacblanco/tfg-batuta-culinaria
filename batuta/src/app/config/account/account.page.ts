@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AlertController, IonicModule } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonMenuButton, IonNote, IonRow, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { LocalStorageService } from './../../core/services/local-storage.service';
 import { SupabaseService } from './../../core/services/supabase.service';
 import { UserDataDTO } from './../../shared/models/userData-DTO';
@@ -12,7 +13,7 @@ import { UserDataDTO } from './../../shared/models/userData-DTO';
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, IonHeader, IonToolbar, IonButtons, IonButton, IonMenuButton, IonIcon, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonNote, IonList, IonItemDivider, IonInput, IonItem, IonLabel, IonListHeader, IonToggle, IonFooter],
 })
 export class AccountPage implements OnInit {
   user: UserDataDTO = {
