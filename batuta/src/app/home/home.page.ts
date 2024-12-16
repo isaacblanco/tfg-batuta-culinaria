@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonMenuButton, IonNote, IonRippleEffect, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonMenuButton, IonNote, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { LocalStorageService } from './../core/services/local-storage.service';
 @Component({
   selector: 'app-home',
@@ -9,7 +9,7 @@ import { LocalStorageService } from './../core/services/local-storage.service';
   standalone: true,
   imports: [
     IonHeader,
-    IonToolbar, 
+    IonToolbar,
     IonTitle,
     IonContent,
     IonGrid,
@@ -19,9 +19,8 @@ import { LocalStorageService } from './../core/services/local-storage.service';
     IonImg,
     RouterLink,
     IonButtons,
-    IonMenuButton,
-    IonRippleEffect
-  ],
+    IonMenuButton
+],
   providers: [LocalStorageService]
 })
 export class HomePage {

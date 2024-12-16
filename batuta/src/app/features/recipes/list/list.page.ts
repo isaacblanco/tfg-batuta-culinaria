@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+
+import { IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonSearchbar, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { RecipeCardComponent } from 'src/app/shared/components/recipe-card/recipe-card.component';
 import { RecipeFilterPipe } from 'src/app/shared/pipes/recipe-filter.pipe';
@@ -14,7 +15,7 @@ import { RecipeFilterPipe } from 'src/app/shared/pipes/recipe-filter.pipe';
   standalone: true,
   imports: [
     RecipeCardComponent,
-    IonTitle, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonIcon, IonContent, IonList,
+    IonTitle, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonIcon, IonContent, IonList, IonSearchbar,
     CommonModule,
     FormsModule,
     RouterLink,

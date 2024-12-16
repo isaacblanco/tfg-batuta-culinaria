@@ -1,8 +1,7 @@
 Temas pendientes:
 
-Falla 
+Falla el primer click
 
-- Recipes
 - My recipes
 - Shopping List
 - IA

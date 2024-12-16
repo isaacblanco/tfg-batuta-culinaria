@@ -13,7 +13,7 @@
 
       <ion-content *ngIf="isAuthenticated">
         <ion-list id="inbox-list">
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+          <ion-menu-toggle auto-hide="true" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="full" detail="false"
               routerLinkActive="selected">
               <ion-icon slot="start" name="{{ p.icon }}"></ion-icon>
@@ -25,22 +25,21 @@
       <ion-footer>
         <ion-list>
           <ion-item *ngIf="isAuthenticated" (click)="logout()" routerDirection="root" lines="full">
-            <ion-icon aria-hidden="true" slot="start" ios="log-out-outline" md="log-out-outline"
-              color="primary"></ion-icon>
+            <ion-icon slot="start" ios="log-out-outline" md="log-out-outline" color="primary"></ion-icon>
             <ion-label>Cerrar sesión</ion-label>
           </ion-item>
           <ion-item *ngIf="!isAuthenticated" routerDirection="root" routerLink="login" lines="full" auto-hide="true">
-            <ion-icon aria-hidden="true" slot="start" ios="log-in" md="log-in" color="primary"></ion-icon>
+            <ion-icon slot="start" ios="log-in" md="log-in" color="primary"></ion-icon>
             <ion-label>Logarse</ion-label>
           </ion-item>
 
           <ion-item *ngIf="isAuthenticated" (click)="navigateTo('account')" lines="full">
-            <ion-icon aria-hidden="true" slot="start" ios="person-circle" md="person-circle" color="primary"></ion-icon>
+            <ion-icon slot="start" ios="person-circle" md="person-circle" color="primary"></ion-icon>
             <ion-label>Cuenta</ion-label>
           </ion-item>
 
           <ion-item *ngIf="isAuthenticated" (click)="navigateTo('settings')" lines="full">
-            <ion-icon aria-hidden="true" slot="start" ios="settings" md="settings" color="primary"></ion-icon>
+            <ion-icon slot="start" ios="settings" md="settings" color="primary"></ion-icon>
             <ion-label>Configuración</ion-label>
           </ion-item>
         </ion-list>

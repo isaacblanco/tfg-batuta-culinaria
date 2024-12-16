@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ToastController } from '@ionic/angular';
 import { IonButton, IonButtons, IonCheckbox, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenuButton, IonReorder, IonReorderGroup, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { agendaDTO } from 'src/app/shared/models/agenda-DTO';
@@ -23,9 +22,7 @@ export class PlanningPage implements OnInit {
 
 
   constructor(
-    private supabaseService: SupabaseService,
-    private toastController: ToastController
-  ) {}
+    private supabaseService: SupabaseService  ) {}
 
   async ngOnInit() {
     const userData = await this.supabaseService.getUser();

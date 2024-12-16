@@ -1,22 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenuButton, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenuButton, IonSpinner, IonTextarea, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 @Component({
   selector: 'app-ia',
   templateUrl: './ia.page.html',
   styleUrls: ['./ia.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, IonSpinner,IonCardContent, IonCardTitle,IonToolbar, IonTitle, IonCard, IonCardHeader, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenuButton, IonLabel, IonList, IonListHeader, IonLabel, IonList, IonListHeader],
+  imports: [CommonModule, FormsModule, RouterLink, 
+    IonSpinner,IonCardContent, IonCardTitle,IonToolbar, IonTitle, 
+    IonCard, IonCardHeader, IonButton, IonButtons, IonContent, 
+    IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, 
+    IonMenuButton, IonLabel, IonList, IonListHeader, IonLabel, 
+    IonList, IonListHeader, IonTextarea],
 })
 export class IaPage implements OnInit {
   ingredients: string = ''; // Contiene los ingredientes ingresados por el usuario
   recipes: string[] = []; // Almacena los resultados sugeridos
   loading: boolean = false; // Indica si la IA está generando resultados
 
-  constructor(private toastController: ToastController) {}
+  constructor(
+    private route: ActivatedRoute,
+    private toastController: ToastController) {}
 
   ngOnInit() {}
 

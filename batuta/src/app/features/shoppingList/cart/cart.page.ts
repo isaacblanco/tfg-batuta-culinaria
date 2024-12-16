@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavController } from '@ionic/angular';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonMenuButton, IonSegmentButton, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { RouterLink } from '@angular/router';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonMenuButton, IonSegmentButton, IonSelectOption, IonTitle, IonToolbar, NavController } from '@ionic/angular/standalone';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { UNITS } from 'src/app/shared/enums/units';
 import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.service';
@@ -12,7 +12,7 @@ import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.servi
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule,IonSelectOption, IonSegmentButton,IonListHeader,IonButton,IonButtons,IonContent,IonHeader,IonIcon,IonItem,IonItemDivider,IonLabel,IonList,IonMenuButton,IonTitle,IonToolbar],
+  imports: [CommonModule, FormsModule, RouterLink, IonSelectOption, IonSegmentButton, IonListHeader, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar],
 })
 export class CartPage implements OnInit {
   units = UNITS;
