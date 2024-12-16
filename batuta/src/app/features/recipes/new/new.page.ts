@@ -16,7 +16,9 @@ import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink,
     IonSegmentButton,IonButton,
-    IonSelectOption, IonItemDivider, IonToggle, IonList, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonMenuButton, IonTitle, IonToolbar
+    IonSelectOption, IonItemDivider, IonToggle, IonList, 
+    IonButtons, IonContent, IonHeader, IonIcon, IonItem, 
+    IonLabel, IonMenuButton, IonTitle, IonToolbar
     
     ],
 })
