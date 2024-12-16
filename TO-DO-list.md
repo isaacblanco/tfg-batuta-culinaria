@@ -1,32 +1,9 @@
 Temas pendientes:
 
-Falla el primer click
-
-- My recipes
-- Shopping List
-- IA
-- Account
-
-- Cerrar menu al seleccionar cuenta
-- O ir a settings
-
-
 === Recetas de la IA ===
 
 - Utilizar un sistema externo para generar recetas de la IA
   - Ver como se puede hacer
-
-=== MOBILES ===
-
-APK
-- Compilar para iOS (lo ultimo)
-  - Probar en un dispositivo físico
-
-- Montar una distribución en la nube
-  - Usar el servidor de interserver
-  - Probar en los moviles
-  - Revisa la parte de BASE en el index.html, no debe apuntar al \
-
 
 === MEJORA EN LA SEGURIDAD DE LA BASE DE DATOS ===
 

@@ -1,14 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { CategoriesComponent } from './categories.component';
 
 describe('CategoriesComponent', () => {
   let component: CategoriesComponent;
   let fixture: ComponentFixture<CategoriesComponent>;
 
+  const modalControllerMock = jasmine.createSpyObj('ModalController', ['create', 'dismiss']);
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), CategoriesComponent], // Moved to imports
+      imports: [CategoriesComponent],
+      providers: [
+        { provide: ModalController, useValue: modalControllerMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CategoriesComponent);

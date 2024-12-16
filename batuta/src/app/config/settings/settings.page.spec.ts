@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { SettingsPage } from './settings.page';
 
 describe('SettingsPage', () => {
   let component: SettingsPage;
   let fixture: ComponentFixture<SettingsPage>;
 
+  const modalControllerMock = jasmine.createSpyObj('ModalController', ['create', 'dismiss']);
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), SettingsPage],
+      imports: [SettingsPage],
       providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: { snapshot: { paramMap: { get: () => null } } }, // Mock ActivatedRoute
-        },
+        { provide: ModalController, useValue: modalControllerMock },
       ],
     }).compileComponents();
 

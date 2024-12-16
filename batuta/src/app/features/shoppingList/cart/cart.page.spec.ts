@@ -1,27 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { LocalStorageService } from 'src/app/core/services/local-storage.service';
-import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.service';
 import { CartPage } from './cart.page';
 
 describe('CartPage', () => {
   let component: CartPage;
   let fixture: ComponentFixture<CartPage>;
 
-  const shoppingCartServiceMock = jasmine.createSpyObj('ShoppingCartService', [
-    'initializeCart',
-    'getCart',
-  ]);
-  const localStorageServiceMock = jasmine.createSpyObj('LocalStorageService', [
-    'getUserId',
-  ]);
+  const activatedRouteMock = { snapshot: { paramMap: { get: () => null } } };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), CartPage], // CartPage en imports
+      imports: [IonicModule.forRoot(), CartPage],
       providers: [
-        { provide: ShoppingCartService, useValue: shoppingCartServiceMock },
-        { provide: LocalStorageService, useValue: localStorageServiceMock },
+        { provide: ActivatedRoute, useValue: activatedRouteMock },
       ],
     }).compileComponents();
 
