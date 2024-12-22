@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+      <a [routerLink]="'/home'" routerDirection="back">
+        <ion-icon name="home"></ion-icon>
+      </a>
+    </ion-buttons>
+    <ion-title>IA</ion-title>
+    <ion-buttons slot="end" fill="clear">
+      <a [routerLink]="'/cart'" routerDirection="forward">
+        <ion-icon name="cart"></ion-icon>
+      </a>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Escribe los ingredientes que tienes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea
+        placeholder="Ejemplo: tomate, queso, harina..."
+        [(ngModel)]="ingredients"
+        rows="6"
+      ></ion-textarea>
+      <ion-button expand="block" (click)="generateRecipes()">Generar recetas</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="recipes.length > 0">
+    <ion-list-header>
+      <ion-label>Resultados sugeridos</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let recipe of recipes">
+      <ion-label>{{ recipe }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="loading">
+    <ion-spinner slot="start"></ion-spinner>
+    <ion-label>Generando recetas...</ion-label>
+  </ion-item>
+</ion-content>

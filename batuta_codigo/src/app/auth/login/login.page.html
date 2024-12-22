@@ -1,0 +1,49 @@
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-img src="/assets/logo.svg"></ion-img>
+        <ion-img src="/assets/public/login.svg"></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Welcome back</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Formulario HTML estándar -->
+      <form (submit)="login()" autocomplete="on">
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input
+            [(ngModel)]="email"
+            type="email"
+            name="email"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Password</ion-label>
+          <ion-input
+            [(ngModel)]="password"
+            type="password"
+            name="password"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </ion-text>
+        <ion-button shape="round" expand="block" type="submit" size="small">
+          Log In
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item lines="none" (click)="navigateToSignUp()">
+    <ion-label>No account yet? <strong>Create one!</strong></ion-label>
+  </ion-item>
+</ion-content>

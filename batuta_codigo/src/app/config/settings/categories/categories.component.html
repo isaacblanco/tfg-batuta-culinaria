@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Manage Categories</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Caja de búsqueda -->
+  <ion-item>
+    <ion-label position="floating">Buscar categorías</ion-label>
+    <ion-input
+      [(ngModel)]="searchQuery"
+      (ionInput)="filterCategories()"
+    ></ion-input>
+  </ion-item>
+
+  <!-- Formulario para añadir categoría -->
+  <ion-item>
+    <ion-input
+      placeholder="Nueva categoría"
+      [(ngModel)]="newCategory"
+    ></ion-input>
+    <ion-button (click)="addCategory()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <!-- Lista de categorías existentes -->
+  <ion-list>
+    <ion-item *ngFor="let category of filteredCategories">
+      <ion-label>{{ category.name }}</ion-label>
+      <ion-icon
+        name="trash-bin-outline"
+        color="danger"
+        slot="end"
+        (click)="deleteCategory(category.name)"
+      ></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Batuta culinaria</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid [fixed]="true">
+    <ion-row class="ion-align-items-end">
+      <ion-col size="6">
+        <a [routerLink]="'/recipes'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/recipes.svg"></ion-img>
+          <p>Recipes</p>
+        </a>
+      </ion-col>
+      <ion-col size="6">
+        <a [routerLink]="'/favorites'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/favorites.svg"></ion-img>
+          <p>Favorites</p>
+        </a>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-end">
+      <ion-col size="6">
+        <a [routerLink]="'/my-recipes'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/myrecipes.svg"></ion-img>
+          <p>My Recipes</p>
+        </a>
+      </ion-col>
+      <ion-col size="6">
+        <a [routerLink]="'/new'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/new_recipe.svg"></ion-img>
+          <p>New Recipe</p>
+        </a>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-end">
+      <ion-col size="6">
+        <a [routerLink]="'/agenda'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/agenda.svg"></ion-img>
+          <p>Agenda</p>
+        </a>
+      </ion-col>
+      <ion-col size="6">
+        <a [routerLink]="'/cart'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/cart.svg"></ion-img>
+          <p>Shopping List</p>
+        </a>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-end">
+      <ion-col size="6">
+        <a [routerLink]="'/ia'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/IA.svg"></ion-img>
+          <p>IA</p>
+        </a>
+      </ion-col>
+      <ion-col size="6">
+        <a [routerLink]="'/settings'" expand="block" fill="clear">
+          <ion-img src="../../assets/sections/settings.svg"></ion-img>
+          <p>Settings</p>
+        </a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="ion-text-center">
+    <ion-note>{{username}}</ion-note>
+  </div>
+</ion-content>

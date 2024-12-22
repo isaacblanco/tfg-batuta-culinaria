@@ -1,0 +1,32 @@
+<ion-card [routerLink]="['/recipe', recipe.id]" class="recipe-card-content">
+  <ion-card-header>
+    <ion-card-title>{{ recipe.name }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          Dificultad: <br />
+          <span *ngIf="recipe.difficulty === 1">
+            <ion-icon src="assets/icons/dif_easy.svg"></ion-icon>
+            Easy
+          </span>
+          <span *ngIf="recipe.difficulty === 2">
+            <ion-icon src="assets/icons/dif_medium.svg"></ion-icon>
+            Medium
+          </span>
+          <span *ngIf="recipe.difficulty === 3">
+            <ion-icon src="assets/icons/dif_hard.svg"></ion-icon>
+            Hard
+          </span>
+        </ion-col>
+        <ion-col size="4"> Tiempo: <br />{{ duration }} </ion-col>
+        <ion-col size="4">
+          Porciones: <br />
+          <ion-icon name="person"></ion-icon>
+          {{ recipe.num_people }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

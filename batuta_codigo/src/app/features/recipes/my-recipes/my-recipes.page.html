@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+      <a [routerLink]="'/home'" routerDirection="back">
+        <ion-icon name="home"></ion-icon>
+      </a>
+    </ion-buttons>
+    <ion-title>My recipes</ion-title>
+    <ion-buttons slot="end" fill="clear">
+      <a [routerLink]="'/cart'" routerDirection="forward">
+        <ion-icon name="cart"></ion-icon>
+      </a>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="Buscar receta"
+      [(ngModel)]="searchTerm"
+      (ionInput)="filterRecipes()"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <app-recipe-card
+      *ngFor="let recipe of recipes | recipeFilter: searchTerm "
+      [recipe]="recipe"
+    >
+    </app-recipe-card>
+  </ion-list>
+
+  <div class="ion-text-center" *ngIf="recipes.length === 0">
+    <h2>No tienes recetas creadas</h2>
+
+    <ion-button [routerLink]="'/new'">Crear receta</ion-button>
+  </div>
+</ion-content>
