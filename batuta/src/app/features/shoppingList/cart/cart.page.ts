@@ -2,7 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonMenuButton, IonSegmentButton, IonSelectOption, IonTitle, IonToolbar, NavController } from '@ionic/angular/standalone';
+
+import {
+  IonButton, IonButtons,
+  IonCheckbox,
+  IonContent, IonHeader, IonIcon,
+  IonInput,
+  IonItem,
+  IonItemDivider, IonLabel, IonList, IonListHeader, IonMenuButton,
+  IonSegment,
+  IonSegmentButton,
+  IonSelect,
+  IonSelectOption, IonTitle, IonToolbar,
+  NavController
+} from '@ionic/angular/standalone';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { UNITS } from 'src/app/shared/enums/units';
 import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.service';
@@ -12,7 +25,10 @@ import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.servi
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, IonSelectOption, IonSegmentButton, IonListHeader, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar],
+  imports: [CommonModule, FormsModule, RouterLink, IonSelectOption, IonSegmentButton, 
+    IonListHeader,  IonToolbar, IonSelect, IonSegment, IonCheckbox,IonInput,
+    IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, 
+    IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar],
 })
 export class CartPage implements OnInit {
   units = UNITS;
@@ -141,7 +157,7 @@ export class CartPage implements OnInit {
       }
     } else {
       console.warn('La API de compartir no está disponible en este navegador.');
-      alert('La funcionalidad de compartir no está disponible en este dispositivo.');
+      // alert('La funcionalidad de compartir no está disponible en este dispositivo.');
     }
   }
 }
