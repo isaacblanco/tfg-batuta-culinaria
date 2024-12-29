@@ -56,7 +56,9 @@
     <div *ngFor="let recipe of cart.shopping_list">
       <ion-item-divider>{{ recipe.recipe_name }}</ion-item-divider>
       <ion-item *ngFor="let ingredient of recipe.ingredients">
-        <ion-label>{{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="ingredient.checked"></ion-checkbox>
+        <ion-label [ngStyle]="{ 'text-decoration': ingredient.checked ? 'line-through' : 'none' }">{{ ingredient.name }}
+          ({{ ingredient.quantity }} {{ ingredient.unit }})</ion-label>
       </ion-item>
     </div>
   </ng-container>
