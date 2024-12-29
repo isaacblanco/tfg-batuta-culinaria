@@ -1,5 +1,6 @@
 # Build and deployment artifacts
 
+batuta_codigo/
 node_modules/
 dist/
 build/

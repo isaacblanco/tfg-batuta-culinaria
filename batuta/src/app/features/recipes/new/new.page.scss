@@ -1,3 +1,21 @@
 ion-label {
   font-weight: bold;
 }
+
+.input-number {
+  max-width: 64px;
+}
+
+ion-grid.no-padding {
+  padding: 0 !important; /* Elimina el padding del grid */
+}
+
+ion-row.no-padding {
+  margin: 0 !important; /* Elimina el margen del row */
+  padding: 0 !important; /* Elimina el padding del row */
+}
+
+ion-col.no-padding {
+  margin: 0 !important; /* Elimina el margen del col */
+  padding: 0 !important; /* Elimina el padding del col */
+}
