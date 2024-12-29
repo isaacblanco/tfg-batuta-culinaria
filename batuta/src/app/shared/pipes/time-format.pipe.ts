@@ -1,20 +1,24 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
   name: 'timeFormat',
-  standalone: true, // Habilitar standalone
+  standalone: true,
 })
 export class TimeFormatPipe implements PipeTransform {
-  transform(seconds: number): string {
-    if (seconds < 0 || isNaN(seconds)) {
+  transform(value: number, unit: string = 'minutes'): string {
+    if (value < 0 || isNaN(value)) {
       return '0 min';
     }
 
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
+    if (unit === 'minutes') {
+      return `${value} min`;
+    }
 
-    if (remainingSeconds === 0) {
-      return `${minutes} min`;
+    const minutes = Math.floor(value / 60);
+    const remainingSeconds = value % 60;
+
+    if (minutes === 0) {
+      return `${remainingSeconds} seg`;
     }
 
     return `${minutes} min ${remainingSeconds} seg`;

@@ -17,10 +17,11 @@
     <div class="ion-text-center">
       <p>Paso {{ currentStepIndex + 1 }} de {{ recipe.steps.length }}</p>
       <h2>{{ recipe.steps[currentStepIndex].instructions }}</h2>
-      <p>Duración del paso: <b>{{ recipe.steps[currentStepIndex].duration | timeFormat }}</b></p>
+      <p>Duración del paso: <b>{{ recipe.steps[currentStepIndex].duration |
+          timeFormat:recipe.steps[currentStepIndex].durationUnit }}</b></p>
 
       <p>Tiempo restante:</p>
-      <h2 class="clock" *ngIf="remainingTime > 0"> {{ remainingTime | timeFormat }}</h2>
+      <h2 class="clock" *ngIf="remainingTime > 0"> {{ remainingTime | timeFormat:'seconds' }}</h2>
     </div>
 
     <div class="ion-text-center">
