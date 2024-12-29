@@ -106,7 +106,7 @@ export class ShoppingCartService {
         throw new Error('Error al actualizar la lista de la compra.');
       }
     } catch (error) {
-      console.error('Error al actualizar la lista de la compra:', error);
+      // console.error('Error al actualizar la lista de la compra:', error);
     }
   }
 
@@ -124,7 +124,7 @@ export class ShoppingCartService {
 
       // Limpiar la referencia local del carrito
       this.cart = { user_id: userId, shopping_list: [] };
-      console.log('Lista de la compra vaciada con éxito.');
+      // console.log('Lista de la compra vaciada con éxito.');
     } catch (error) {
       console.error('Error al vaciar la lista de la compra:', error);
       throw error;
