@@ -6,8 +6,13 @@ import {
   IonButton, IonButtons,
   IonCol,
   IonContent, IonGrid, IonHeader, IonIcon,
-  IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonRow, IonSegmentButton,
-  IonSelectOption, IonTitle, IonToggle, IonToolbar
+  IonInput,
+  IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonRow,
+  IonSegment, IonSegmentButton,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea,
+  IonTitle, IonToggle, IonToolbar
 } from '@ionic/angular/standalone';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
@@ -30,6 +35,11 @@ import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
     CommonModule,
     FormsModule,
     RouterLink,
+    IonSegmentButton,
+    IonInput,
+    IonSelect,
+    IonTextarea,
+    IonSegment,
     IonSegmentButton,
     IonButton,
     IonSelectOption,
@@ -156,8 +166,12 @@ export class NewPage implements OnInit {
     }
   }
 
-  updateDurationUnit(index: number, isChecked: boolean) {
+  updateDurationUnit(index: number, event: any) {
+    const isChecked = event.detail.checked;
     this.recipe.steps[index].durationUnit = isChecked ? 'seconds' : 'minutes';
+    
+    // Forzar la detección de cambios
+    this.recipe.steps = [...this.recipe.steps];
   }
 
   trackByIndex(index: number, item: any): number {

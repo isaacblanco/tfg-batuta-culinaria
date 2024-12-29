@@ -16,134 +16,133 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form (ngSubmit)="saveRecipe()">
-    <!-- Título de la receta -->
-    <ion-item>
-      <ion-label position="stacked">Título</ion-label>
-      <ion-input type="text" [(ngModel)]="recipe.name" name="nameRecipe" required></ion-input>
+
+  <!-- Título de la receta -->
+  <ion-item>
+    <ion-label position="stacked">Título</ion-label>
+    <ion-input type="text" [(ngModel)]="recipe.name" name="nameRecipe" required></ion-input>
+  </ion-item>
+
+  <!-- Tiempo de preparación -->
+  <ion-item>
+    <ion-label position="stacked">Tiempo de preparación (HH:mm:ss)</ion-label>
+    <ion-input [(ngModel)]="recipe.preparation_time" name="preparation_time" placeholder="00:30:00"
+      required></ion-input>
+  </ion-item>
+
+  <!-- Número de personas -->
+  <ion-item>
+    <ion-label>#personas</ion-label>
+    <ion-input type="number" [(ngModel)]="recipe.num_people" name="num_people" required
+      class="input-number"></ion-input>
+  </ion-item>
+
+  <!-- Categoría -->
+  <ion-item>
+    <ion-label>Categoría</ion-label>
+    <ion-select [(ngModel)]="recipe.category_id" name="category_id" required>
+      <ion-select-option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Ingredientes -->
+  <ion-item-divider>Ingredientes</ion-item-divider>
+  <ion-list>
+    <ion-item *ngFor="let ingredient of recipe.ingredients; let i = index; trackBy: trackByIndex">
+      <ion-grid class="no-padding">
+        <ion-row class="no-padding">
+          <ion-col size="3" class="no-padding">
+            <ion-input placeholder="Cantidad" [(ngModel)]="ingredient.quantity" name="ingredient-{{ i }}-quantity"
+              type="number">
+            </ion-input>
+          </ion-col>
+          <ion-col size="3" class="no-padding">
+            <ion-select [(ngModel)]="ingredient.unit" name="ingredient-{{ i }}-unit">
+              <ion-select-option *ngFor="let unit of units" [value]="unit.value">
+                {{ unit.label }}
+              </ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ion-col size="6" class="no-padding">
+            <ion-input placeholder="Ingrediente" [(ngModel)]="ingredient.name" name="ingredient-{{ i }}-name">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-icon name="trash" color="danger" slot="end" (click)="removeIngredient(i)"></ion-icon>
     </ion-item>
+    <div class="ion-text-center">
+      <ion-button fill="outline" size="small" (click)="addIngredient()">
+        Añadir Ingrediente
+      </ion-button>
+    </div>
+  </ion-list>
 
-    <!-- Tiempo de preparación -->
-    <ion-item>
-      <ion-label position="stacked">Tiempo de preparación (HH:mm:ss)</ion-label>
-      <ion-input [(ngModel)]="recipe.preparation_time" name="preparation_time" placeholder="00:30:00"
-        required></ion-input>
-    </ion-item>
-
-    <!-- Número de personas -->
-    <ion-item>
-      <ion-label>#personas</ion-label>
-      <ion-input type="number" [(ngModel)]="recipe.num_people" name="num_people" type="number" required
-        class="input-number"></ion-input>
-    </ion-item>
-
-    <!-- Categoría -->
-    <ion-item>
-      <ion-label>Categoría</ion-label>
-      <ion-select [(ngModel)]="recipe.category_id" name="category_id" required>
-        <ion-select-option *ngFor="let category of categories" [value]="category.id">
-          {{ category.name }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <!-- Ingredientes -->
-    <ion-item-divider>Ingredientes</ion-item-divider>
-    <ion-list>
-      <ion-item *ngFor="let ingredient of recipe.ingredients; let i = index; trackBy: trackByIndex">
-        <ion-grid class="no-padding">
-          <ion-row class="no-padding">
-            <ion-col size="3" class="no-padding">
-              <ion-input placeholder="Cantidad" [(ngModel)]="ingredient.quantity" name="ingredient-{{ i }}-quantity"
-                type="number">
-              </ion-input>
-            </ion-col>
-            <ion-col size="3" class="no-padding">
-              <ion-select [(ngModel)]="ingredient.unit" name="ingredient-{{ i }}-unit">
-                <ion-select-option *ngFor="let unit of units" [value]="unit.value">
-                  {{ unit.label }}
-                </ion-select-option>
-              </ion-select>
-            </ion-col>
-            <ion-col size="6" class="no-padding">
-              <ion-input placeholder="Ingrediente" [(ngModel)]="ingredient.name" name="ingredient-{{ i }}-name">
-              </ion-input>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-
-        <ion-icon name="trash" color="danger" slot="end" (click)="removeIngredient(i)"></ion-icon>
+  <!-- Pasos -->
+  <ion-item-divider>Pasos</ion-item-divider>
+  <ion-list>
+    <div *ngFor="let step of recipe.steps; let i = index">
+      <ion-item>
+        <ion-label>
+          <h3>Paso {{ i + 1 }}</h3>
+        </ion-label>
+        <ion-icon name="trash" color="danger" slot="end" (click)="removeStep(i)"></ion-icon>
       </ion-item>
-      <div class="ion-text-center">
-        <ion-button fill="outline" size="small" (click)="addIngredient()">
-          Añadir Ingrediente
-        </ion-button>
-      </div>
-    </ion-list>
+      <ion-item>
+        <ion-label>Duración</ion-label>
+        <ion-input [(ngModel)]="step.duration" name="step-{{ i }}-duration" type="number" required class="input-number">
+        </ion-input>
 
-    <!-- Pasos -->
-    <ion-item-divider>Pasos</ion-item-divider>
-    <ion-list>
-      <div *ngFor="let step of recipe.steps; let i = index">
-        <ion-item>
-          <ion-label>
-            <h3>Paso {{ i + 1 }}</h3>
-          </ion-label>
-          <ion-icon name="trash" color="danger" slot="end" (click)="removeStep(i)"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-label>Duración</ion-label>
-          <ion-input [(ngModel)]="step.duration" name="step-{{ i }}-duration" type="number" required
-            class="input-number">
-          </ion-input>
+        <ion-toggle [(ngModel)]="step.durationUnit" [checked]="step.durationUnit === 'seconds'"
+          (ionChange)="updateDurationUnit(i, $event)" #durationToggle name="step-{{ i }}-durationUnit">
+        </ion-toggle>
 
-          <ion-toggle [(ngModel)]="step.durationUnit" [checked]="step.durationUnit === 'seconds'"
-            (ionChange)="updateDurationUnit(i, $event.detail.checked)" name="step-{{ i }}-durationUnit">
-          </ion-toggle>
+        <ion-label>
+          {{ durationToggle.checked ? 'Segundos' : 'Minutos' }}
+        </ion-label>
+      </ion-item>
 
-          <ion-label>
-            {{ step.durationUnit === 'seconds' ? 'Segundos' : 'Minutos' }}
-          </ion-label>
-        </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Instrucciones</ion-label>
+        <ion-textarea [(ngModel)]="step.instructions" name="step-{{ i }}-instructions" required></ion-textarea>
+      </ion-item>
+    </div>
+    <div class="ion-text-center">
+      <ion-button (click)="addStep()" fill="outline" size="small">
+        Añadir Paso
+      </ion-button>
+    </div>
+  </ion-list>
 
-        <ion-item>
-          <ion-label position="stacked">Instrucciones</ion-label>
-          <ion-textarea [(ngModel)]="step.instructions" name="step-{{ i }}-instructions" required></ion-textarea>
-        </ion-item>
-      </div>
-      <div class="ion-text-center">
-        <ion-button (click)="addStep()" fill="outline" size="small">
-          Añadir Paso
-        </ion-button>
-      </div>
-    </ion-list>
-
-    <!-- Imagen de la receta -->
-    <ion-item>
-      <ion-label position="stacked">Imagen</ion-label>
-      <ion-input type="text" [(ngModel)]="recipe.image_url" name="image_url"></ion-input>
-    </ion-item>
+  <!-- Imagen de la receta -->
+  <ion-item>
+    <ion-label position="stacked">Imagen</ion-label>
+    <ion-input type="text" [(ngModel)]="recipe.image_url" name="image_url"></ion-input>
+  </ion-item>
 
 
-    <!-- Etiquetas -->
-    <ion-item>
-      <ion-label position="stacked">Etiquetas</ion-label>
-      <ion-input [(ngModel)]="recipe.labels" name="labels"></ion-input>
-    </ion-item>
+  <!-- Etiquetas -->
+  <ion-item>
+    <ion-label position="stacked">Etiquetas</ion-label>
+    <ion-input [(ngModel)]="recipe.labels" name="labels"></ion-input>
+  </ion-item>
 
-    <!-- Dificultad -->
-    <ion-item>
-      <ion-label position="stacked">Dificultad</ion-label>
-      <ion-segment [(ngModel)]="recipe.difficulty" name="difficulty">
-        <ion-segment-button value="1">Baja</ion-segment-button>
-        <ion-segment-button value="2">Media</ion-segment-button>
-        <ion-segment-button value="3">Alta</ion-segment-button>
-      </ion-segment>
-    </ion-item>
+  <!-- Dificultad -->
+  <ion-item>
+    <ion-label position="stacked">Dificultad</ion-label>
+    <ion-segment [(ngModel)]="recipe.difficulty" name="difficulty">
+      <ion-segment-button [value]="1">Baja</ion-segment-button>
+      <ion-segment-button [value]="2">Media</ion-segment-button>
+      <ion-segment-button [value]="3">Alta</ion-segment-button>
+    </ion-segment>
+  </ion-item>
 
-    <!-- Botón para guardar -->
-    <ion-button size="small" type="submit" expand="block" [disabled]="!isFormValid()">
-      {{ recipeId ? 'Actualizar receta' : 'Guardar nueva receta' }}
-    </ion-button>
-  </form>
+  <!-- Botón para guardar -->
+  <ion-button size="small" type="submit" expand="block" [disabled]="!isFormValid()" (click)="saveRecipe()">
+    {{ recipeId ? 'Actualizar receta' : 'Guardar nueva receta' }}
+  </ion-button>
+
 </ion-content>

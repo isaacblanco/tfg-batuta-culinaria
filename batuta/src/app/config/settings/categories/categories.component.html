@@ -10,20 +10,14 @@
 <ion-content [fullscreen]="true">
   <!-- Caja de búsqueda -->
   <ion-item>
-    <ion-label position="floating">Buscar categorías</ion-label>
-    <ion-input
-      [(ngModel)]="searchQuery"
-      (ionInput)="filterCategories()"
-    ></ion-input>
+    <ion-label>Buscar categorías</ion-label>
+    <ion-input [(ngModel)]="searchQuery" (ionInput)="filterCategories()" class="input-50"></ion-input>
   </ion-item>
 
   <!-- Formulario para añadir categoría -->
   <ion-item>
-    <ion-input
-      placeholder="Nueva categoría"
-      [(ngModel)]="newCategory"
-    ></ion-input>
-    <ion-button (click)="addCategory()">
+    <ion-input placeholder="Nueva categoría" [(ngModel)]="newCategory"></ion-input>
+    <ion-button slot="end" (click)="addCategory()">
       <ion-icon name="add-circle-outline"></ion-icon>
     </ion-button>
   </ion-item>
@@ -32,12 +26,7 @@
   <ion-list>
     <ion-item *ngFor="let category of filteredCategories">
       <ion-label>{{ category.name }}</ion-label>
-      <ion-icon
-        name="trash-bin-outline"
-        color="danger"
-        slot="end"
-        (click)="deleteCategory(category.name)"
-      ></ion-icon>
+      <ion-icon name="trash-bin-outline" color="danger" slot="end" (click)="deleteCategory(category.name)"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>
