@@ -238,6 +238,8 @@ async updateTable(
       },
     });
 
+    
+
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`Error al eliminar el usuario en 'auth.users':`, errorText);
@@ -248,4 +250,25 @@ async updateTable(
       `Usuario con ID ${id} eliminado correctamente de ambos lugares.`
     );
   }
+
+    // Método genérico para eliminar datos de una tabla
+    async deleteFromTable(tableName: string, filters: Record<string, any>): Promise<void> {
+      const query = this.supabase.from(tableName).delete();
+      
+      Object.entries(filters).forEach(([key, value]) => {
+        query.eq(key, value);
+      });
+  
+      const { error } = await query;
+  
+      if (error) {
+        console.error(
+          `Error al eliminar datos de la tabla ${tableName}:`,
+          error.message
+        );
+        throw new Error(`No se pudo eliminar datos de la tabla ${tableName}.`);
+      }
+  
+      console.log(`Datos eliminados con éxito de la tabla ${tableName}.`);
+    }
 }

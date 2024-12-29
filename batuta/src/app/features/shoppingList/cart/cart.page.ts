@@ -43,6 +43,14 @@ export class CartPage implements OnInit {
     private navCtrl: NavController) {}
 
   async ngOnInit() {
+    this.initializate();
+  }
+
+  async ionViewWillEnter() {
+    this.initializate();
+  }
+
+  async initializate() {
     const userId = this.localStorageService.getUserId();
     await this.shoppingCartService.initializeCart(userId);
   
@@ -63,7 +71,6 @@ export class CartPage implements OnInit {
     }
   }
   
-
   // Actualiza el localStorage
   updateLocalStorage() {
     localStorage.setItem('ingredients', JSON.stringify(this.localStorageIngredients));
@@ -83,6 +90,41 @@ export class CartPage implements OnInit {
   removeLocalIngredient(index: number) {
     this.localStorageIngredients.splice(index, 1);
     this.updateLocalStorage(); // Actualiza el localStorage
+  }
+
+  async emptyAllIndredients() {
+    try {
+      const userId = this.localStorageService.getUserId(); // Obtener el user_id del localStorage
+  
+      if (!userId) {
+        console.warn('No se pudo obtener el ID de usuario.');
+        return;
+      }
+  
+      // Usar el servicio Supabase para eliminar todos los ingredientes de la tabla `cesta`
+      
+      await this.shoppingCartService.clearCart(userId);
+  
+      // Limpiar el carrito en la aplicación
+      this.cart = { shopping_list: [] };
+      this.localStorageIngredients = [];
+      this.allIngredients = [];
+  
+      console.log('Todos los ingredientes fueron eliminados con éxito.');
+      this.showToast('Todos los ingredientes fueron eliminados.');
+    } catch (error) {
+      console.error('Error inesperado al vaciar los ingredientes:', error);
+      this.showToast('Error inesperado al vaciar los ingredientes.');
+    }
+  }
+  
+
+  async showToast(message: string) {
+    const toast = document.createElement('ion-toast');
+    toast.message = message;
+    toast.duration = 2000;
+    document.body.appendChild(toast);
+    await toast.present();
   }
    
   // Calcula los ingredientes totales

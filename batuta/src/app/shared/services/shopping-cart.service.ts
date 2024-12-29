@@ -110,6 +110,27 @@ export class ShoppingCartService {
     }
   }
 
+  // Nuevo método para eliminar todos los ingredientes de la tabla `cesta` para un usuario
+  async clearCart(userId: string): Promise<void> {
+    try {
+      const { error } = await this.supabaseService.client
+        .from('cesta')
+        .delete()
+        .eq('user_id', userId);
+
+      if (error) {
+        throw new Error('Error al vaciar la lista de la compra.');
+      }
+
+      // Limpiar la referencia local del carrito
+      this.cart = { user_id: userId, shopping_list: [] };
+      console.log('Lista de la compra vaciada con éxito.');
+    } catch (error) {
+      console.error('Error al vaciar la lista de la compra:', error);
+      throw error;
+    }
+  }
+
   getLocalStorageItems(): { name: string; quantity: number; unit: string }[] {
     return JSON.parse(localStorage.getItem('ingredients') || '[]');
   }

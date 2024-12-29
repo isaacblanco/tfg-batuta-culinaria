@@ -40,9 +40,14 @@
   </ion-list>
 
   <ion-list>
+
     <ion-list-header>
       <h2>Ingredientes en las recetas</h2>
+      <ion-item>
+        <ion-icon name="trash-bin" color="danger" (click)="emptyAllIndredients()" slot="end"></ion-icon>
+      </ion-item>
     </ion-list-header>
+
   </ion-list>
 
   <!-- Selector de vista -->

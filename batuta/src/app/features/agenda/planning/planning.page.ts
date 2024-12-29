@@ -34,6 +34,14 @@ export class PlanningPage implements OnInit {
   private toastController: ToastController  ) {}
 
   async ngOnInit() {
+    this.initializate();
+  }
+
+  async ionViewWillEnter() {
+    this.initializate();
+  }
+
+  async initializate() {
     const userData = await this.supabaseService.getUser();
     if (userData) {
       this.userId = userData.id;
@@ -41,7 +49,6 @@ export class PlanningPage implements OnInit {
     }
 
     this.generateUpcomingWeek();
-    
   }
 
   async loadAgenda() {
