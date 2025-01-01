@@ -22,8 +22,7 @@ import { agendaDTO } from 'src/app/shared/models/agenda-DTO';
 })
 export class PlanningPage implements OnInit {
   agenda: agendaDTO | null = null;
-  upcomingWeek: { dayName: string; formattedDate: string; recipes: any[] }[] =
-    [];
+  upcomingWeek: { dayName: string; formattedDate: string; recipes: any[] }[] = [];
   
   userId: string = '';
   clearShoppingListEnabled: boolean = true; // Checkbox state
@@ -42,6 +41,8 @@ export class PlanningPage implements OnInit {
   }
 
   async initializate() {
+    this.agenda = { user_id: '', data: [] }; // Reinicia la agenda a un estado vacío
+    this.upcomingWeek = []; // Reinicia el array como vacío
     const userData = await this.supabaseService.getUser();
     if (userData) {
       this.userId = userData.id;
