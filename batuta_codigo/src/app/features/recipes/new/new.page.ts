@@ -1,28 +1,67 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, forwardRef, OnInit } from '@angular/core';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonSegmentButton, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
+import {
+  IonButton, IonButtons,
+  IonCol,
+  IonContent, IonGrid, IonHeader, IonIcon,
+  IonInput,
+  IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonRow,
+  IonSegment, IonSegmentButton,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea,
+  IonTitle, IonToggle, IonToolbar
+} from '@ionic/angular/standalone';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { UNITS } from 'src/app/shared/enums/units';
 import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
 
-
 @Component({
   selector: 'app-new',
   templateUrl: './new.page.html',
   styleUrls: ['./new.page.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => NewPage),
+      multi: true,
+    }
+  ],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink,
-    IonSegmentButton,IonButton,
-    IonSelectOption, IonItemDivider, IonToggle, IonList, 
-    IonButtons, IonContent, IonHeader, IonIcon, IonItem, 
-    IonLabel, IonMenuButton, IonTitle, IonToolbar
-    
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    IonSegmentButton,
+    IonInput,
+    IonSelect,
+    IonTextarea,
+    IonSegment,
+    IonSegmentButton,
+    IonButton,
+    IonSelectOption,
+    IonItemDivider,
+    IonToggle,
+    IonList,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+    IonGrid,
+    IonRow,
+    IonCol
+  ]
 })
 export class NewPage implements OnInit {
+
   units = UNITS;
   recipeId: string | null = null; // ID de la receta (opcional)
   userId: string = ''; // ID del usuario autenticado
@@ -58,16 +97,28 @@ export class NewPage implements OnInit {
       this.userId = userData.id;
       this.recipe.user_id = this.userId;
     }
-
-    // Comprobar si estamos en modo edición o creación
+  
+    // Comprobar si estamos en modo creación o edición
     this.recipeId = this.route.snapshot.paramMap.get('id');
     if (this.recipeId) {
-      this.isEditMode = true;
-      this.loadRecipe(this.recipeId); // Cargar receta existente
+      const recipeIdNumber = parseInt(this.recipeId, 10);
+  
+      if (recipeIdNumber === 0) {
+        // Caso: creación de nueva receta
+        this.isEditMode = false;
+        console.log("Modo creación de receta");
+      } else {
+        // Caso: edición de receta existente
+        this.isEditMode = true;
+        this.recipe.id = recipeIdNumber;
+        console.log("Modo edición, Receta ID:", this.recipeId);
+        this.loadRecipe(this.recipeId);
+      }
     }
-
+  
     this.loadCategories();
   }
+  
 
   // Cargar las categorías disponibles
   async loadCategories() {
@@ -91,22 +142,30 @@ export class NewPage implements OnInit {
         'recetas',
         { id }
       );
-
+  
       if (recipe.user_id !== this.userId) {
         alert('No tienes permiso para editar esta receta.');
         return;
       }
-
+  
       this.recipe = { ...recipe };
+      console.log("Receta cargada:", recipe);
     } catch (error: any) {
       console.error('Error al cargar la receta:', error.message || error);
+      alert('No se pudo cargar la receta. Por favor, inténtalo de nuevo.');
     }
   }
+  
 
   // Guardar receta (crear o actualizar)
   async saveRecipe() {
+    if (!this.isFormValid()) {
+      alert("Por favor, completa todos los campos obligatorios.");
+      return;
+    }
+  
     const payload = { ...this.recipe, user_id: this.userId };
-
+  
     try {
       if (this.isEditMode) {
         // Actualizar receta existente
@@ -114,7 +173,9 @@ export class NewPage implements OnInit {
         alert('Receta actualizada con éxito.');
       } else {
         // Crear nueva receta
-        await this.supabaseService.insertIntoTable('recetas', payload);
+        const { id, ...recipeToSave } = payload; // Excluir el campo `id` al crear el objeto
+
+        await this.supabaseService.insertIntoTable('recetas', recipeToSave);
         alert('Receta creada con éxito.');
       }
     } catch (error: any) {
@@ -122,6 +183,20 @@ export class NewPage implements OnInit {
       alert('Ocurrió un error al guardar la receta. Inténtalo de nuevo.');
     }
   }
+  
+
+  updateDurationUnit(index: number, event: any) {
+    const isChecked = event.detail.checked;
+    this.recipe.steps[index].durationUnit = isChecked ? 'seconds' : 'minutes';
+    
+    // Forzar la detección de cambios
+    this.recipe.steps = [...this.recipe.steps];
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
+  
 
   // Añadir un nuevo ingrediente
   addIngredient() {
@@ -152,10 +227,14 @@ export class NewPage implements OnInit {
     return (
       !!this.recipe.name &&
       !!this.recipe.preparation_time &&
+      !!this.recipe.num_people &&
+      !!this.recipe.category_id &&
       this.recipe.ingredients.every(
         (ing) => !!ing.name && !!ing.quantity && !!ing.unit
       ) &&
       this.recipe.steps.every((step) => !!step.duration && !!step.instructions)
     );
   }
+  
+  
 }

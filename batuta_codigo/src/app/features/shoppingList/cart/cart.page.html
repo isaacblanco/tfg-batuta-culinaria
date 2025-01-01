@@ -40,9 +40,14 @@
   </ion-list>
 
   <ion-list>
+
     <ion-list-header>
       <h2>Ingredientes en las recetas</h2>
+      <ion-item>
+        <ion-icon name="trash-bin" color="danger" (click)="emptyAllIndredients()" slot="end"></ion-icon>
+      </ion-item>
     </ion-list-header>
+
   </ion-list>
 
   <!-- Selector de vista -->
@@ -56,7 +61,9 @@
     <div *ngFor="let recipe of cart.shopping_list">
       <ion-item-divider>{{ recipe.recipe_name }}</ion-item-divider>
       <ion-item *ngFor="let ingredient of recipe.ingredients">
-        <ion-label>{{ ingredient.name }} ({{ ingredient.quantity }} {{ ingredient.unit }})</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="ingredient.checked"></ion-checkbox>
+        <ion-label [ngStyle]="{ 'text-decoration': ingredient.checked ? 'line-through' : 'none' }">{{ ingredient.name }}
+          ({{ ingredient.quantity }} {{ ingredient.unit }})</ion-label>
       </ion-item>
     </div>
   </ng-container>

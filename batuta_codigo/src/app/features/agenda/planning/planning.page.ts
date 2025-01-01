@@ -2,7 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonButton, IonButtons, IonCheckbox, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenuButton, IonReorder, IonReorderGroup, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {
+  IonButton, IonButtons, IonCheckbox, IonContent, IonHeader, IonIcon, IonItem,
+  IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList,
+  IonMenuButton, IonReorder, IonReorderGroup, IonTitle,
+  IonToolbar, ToastController
+} from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { agendaDTO } from 'src/app/shared/models/agenda-DTO';
 @Component({
@@ -10,7 +15,10 @@ import { agendaDTO } from 'src/app/shared/models/agenda-DTO';
   templateUrl: './planning.page.html',
   styleUrls: ['./planning.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, IonButton, IonButtons, IonMenuButton,IonCheckbox, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonListHeader, IonReorder, IonReorderGroup, IonTitle, IonToolbar],
+  imports: [CommonModule, FormsModule, RouterLink, IonButton, IonButtons, IonMenuButton,
+    IonCheckbox, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOptions, 
+    IonItemOption, IonItemSliding, IonLabel, IonList,  
+    IonReorder, IonReorderGroup, IonTitle, IonToolbar],
 })
 export class PlanningPage implements OnInit {
   agenda: agendaDTO | null = null;
@@ -22,9 +30,18 @@ export class PlanningPage implements OnInit {
 
 
   constructor(
-    private supabaseService: SupabaseService  ) {}
+    private supabaseService: SupabaseService,
+  private toastController: ToastController  ) {}
 
   async ngOnInit() {
+    this.initializate();
+  }
+
+  async ionViewWillEnter() {
+    this.initializate();
+  }
+
+  async initializate() {
     const userData = await this.supabaseService.getUser();
     if (userData) {
       this.userId = userData.id;
@@ -32,7 +49,6 @@ export class PlanningPage implements OnInit {
     }
 
     this.generateUpcomingWeek();
-    
   }
 
   async loadAgenda() {
@@ -106,7 +122,7 @@ export class PlanningPage implements OnInit {
       this.upcomingWeek.push({ dayName, formattedDate, recipes });
     }
   
-    console.log('Generated upcoming week:', this.upcomingWeek);
+    // console.log('Generated upcoming week:', this.upcomingWeek);
   }
   
 
@@ -156,7 +172,7 @@ export class PlanningPage implements OnInit {
   private async clearShoppingList() {
     try {
       const { error } = await this.supabaseService.client
-        .from('shopping_list')
+        .from('cesta')
         .delete()
         .eq('user_id', this.userId);
 
@@ -173,52 +189,56 @@ export class PlanningPage implements OnInit {
 
   private async addIngredientsToShoppingList() {
     try {
-      const ingredients: { name: string; quantity: number; unit: string }[] = [];
-
-      this.upcomingWeek.forEach(day => {
-        day.recipes.forEach(recipe => {
-          if (recipe.ingredients) {
-            recipe.ingredients.forEach((ingredient: any) => {
-              const existing = ingredients.find(
-                ing => ing.name === ingredient.name && ing.unit === ingredient.unit
-              );
-              if (existing) {
-                existing.quantity += ingredient.quantity;
-              } else {
-                ingredients.push({ ...ingredient });
-              }
-            });
-          }
-        });
-      });
-
-      if (ingredients.length === 0) {
-        console.log('No hay ingredientes para mover a la cesta de la compra.');
+      // Generar la lista de recetas y sus ingredientes
+      const shoppingList = this.upcomingWeek.flatMap(day =>
+        day.recipes.map(recipe => ({
+          recipe_id: recipe.recipe_id,
+          recipe_name: recipe.recipe_title,
+          multiplier: recipe.multiplier || 1, // Asume un multiplicador de 1 si no está definido
+          ingredients: recipe.ingredients.map((ingredient: any) => ({
+            name: ingredient.name,
+            quantity: ingredient.quantity,
+            unit: ingredient.unit,
+          })),
+        }))
+      );
+  
+      if (shoppingList.length === 0) {
+        console.log('No hay recetas o ingredientes para mover a la lista de la compra.');
         return;
       }
-
+  
+      // Preparar el objeto para guardar en la base de datos
+      const payload = {
+        user_id: this.userId,
+        shopping_list: shoppingList,
+      };
+  
+      // Guardar o actualizar en la base de datos
       const { error } = await this.supabaseService.client
-        .from('shopping_list')
-        .insert({ user_id: this.userId, items: ingredients });
-
+        .from('cesta')
+        .upsert(payload, { onConflict: 'user_id' });
+  
       if (error) {
-        console.error('Error al mover los ingredientes a la lista de la compra:', error);
+        console.error('Error al guardar la lista de la compra:', error);
         return;
       }
-
-      console.log('Ingredientes movidos a la lista de la compra:', ingredients);
+  
+      console.log('Lista de la compra guardada con éxito:', shoppingList);
       this.showToast('Ingredientes añadidos a la cesta de la compra.');
     } catch (error) {
       console.error('Error al mover ingredientes a la lista de la compra:', error);
     }
   }
+  
 
   async showToast(message: string) {
-    const toast = document.createElement('ion-toast');
-    toast.message = message;
-    toast.duration = 2000;
-    document.body.appendChild(toast);
-    return toast.present();
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+    });
+    await toast.present();
   }
   
   async reorderRecipes(event: any, day: { dayName: string; formattedDate: string; recipes: any[] }) {
@@ -233,24 +253,26 @@ export class PlanningPage implements OnInit {
 
   // Actualiza la agenda en la base de datos
   await this.updateAgendaInDatabase();
+
   }
   
-  private calculateTargetDayIndex(toIndex: number, currentDayIndex: number): number {
-    let cumulativeIndex = 0;
-  
-    for (let i = 0; i < this.upcomingWeek.length; i++) {
-      if (i === currentDayIndex) continue;
-  
-      const recipesCount = this.upcomingWeek[i].recipes.length;
-      if (toIndex >= cumulativeIndex && toIndex < cumulativeIndex + recipesCount) {
-        return i;
-      }
-  
-      cumulativeIndex += recipesCount;
-    }
-  
-    return currentDayIndex;
+
+  // Recargamos los datos
+// Recargamos los datos
+async refreshAgenda() {
+  try {
+    await this.loadAgenda(); // Carga la nueva agenda
+    this.upcomingWeek = []; // Limpia la semana generada previamente
+    this.generateUpcomingWeek(); // Genera los datos nuevamente
+    console.log('Agenda refrescada con éxito.');
+    this.showToast('Agenda actualizada.');
+  } catch (error) {
+    console.error('Error al refrescar la agenda:', error);
+    this.showToast('Error al refrescar la agenda.');
   }
+}
+
+    
   
   private async updateAgendaInDatabase() {
     try {

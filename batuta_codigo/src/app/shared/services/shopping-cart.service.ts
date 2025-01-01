@@ -106,7 +106,28 @@ export class ShoppingCartService {
         throw new Error('Error al actualizar la lista de la compra.');
       }
     } catch (error) {
-      console.error('Error al actualizar la lista de la compra:', error);
+      // console.error('Error al actualizar la lista de la compra:', error);
+    }
+  }
+
+  // Nuevo método para eliminar todos los ingredientes de la tabla `cesta` para un usuario
+  async clearCart(userId: string): Promise<void> {
+    try {
+      const { error } = await this.supabaseService.client
+        .from('cesta')
+        .delete()
+        .eq('user_id', userId);
+
+      if (error) {
+        throw new Error('Error al vaciar la lista de la compra.');
+      }
+
+      // Limpiar la referencia local del carrito
+      this.cart = { user_id: userId, shopping_list: [] };
+      // console.log('Lista de la compra vaciada con éxito.');
+    } catch (error) {
+      console.error('Error al vaciar la lista de la compra:', error);
+      throw error;
     }
   }
 

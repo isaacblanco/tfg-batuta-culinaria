@@ -74,7 +74,6 @@ export class RecipePage implements OnInit {
         'recetas',
         id
       );
-      console.log('Datos de la receta:', recipeData);
   
       this.recipe = { ...recipeData };
       this.duration = timeFormat(this.recipe.preparation_time);
@@ -89,7 +88,7 @@ export class RecipePage implements OnInit {
         });
   
         this.author = authorData?.username || 'Autor desconocido';
-        console.log('Nombre del autor:', this.author);
+        
       } else {
         this.author = 'Autor desconocido';
         console.warn('No se encontró user_id en la receta.');
@@ -128,14 +127,14 @@ export class RecipePage implements OnInit {
         .insert([{ user_id: this.userId, recipe_id: this.recipe.id }]);
 
       if (error) {
-        console.error('Error al añadir a favoritos:', error.message);
+        // console.error('Error al añadir a favoritos:', error.message);
         return;
       }
 
-      console.log('Receta añadida a favoritos:', data);
+      // console.log('Receta añadida a favoritos:', data);
       this.favorite = true;
     } catch (error) {
-      console.error('Error al añadir a favoritos:', error);
+      // console.error('Error al añadir a favoritos:', error);
     }
   }
 
@@ -158,10 +157,10 @@ export class RecipePage implements OnInit {
         return;
       }
 
-      console.log('Receta eliminada de favoritos.');
+      // console.log('Receta eliminada de favoritos.');
       this.favorite = false;
     } catch (error) {
-      console.error('Error al eliminar de favoritos:', error);
+      // console.error('Error al eliminar de favoritos:', error);
     }
   }
 
@@ -170,60 +169,68 @@ export class RecipePage implements OnInit {
       console.warn('Información insuficiente para agregar a la agenda.');
       return;
     }
-
+  
     try {
+      // Determinar la fecha seleccionada
       const selectedDate = new Date();
       selectedDate.setDate(new Date().getDate() + day.dayIndex);
       const formattedDate = selectedDate.toISOString().split('T')[0];
-
+  
+      // Verificar si la agenda ya existe
       const { data: agenda, error } = await this.supabaseService.client
         .from('agenda')
         .select('*')
         .eq('user_id', this.userId)
         .single();
-
+  
       if (error && error.code !== 'PGRST116') {
         console.error('Error al verificar la agenda existente:', error);
         return;
       }
-
-      const agendaData = agenda?.data || [];
-      agendaData.push({
+  
+      // Preparar los datos de la receta para agregar a la agenda
+      const recipeData = {
         date: formattedDate,
         recipe_name: this.recipe.name,
         recipe_id: this.recipe.id,
         recipe_title: this.recipe.name,
-      });
-
+        ingredients: this.recipe.ingredients || [], // Incluye los ingredientes
+      };
+  
+      // Si la agenda ya existe, actualízala
+      const agendaData = agenda?.data || [];
+      agendaData.push(recipeData);
+  
       if (agenda) {
         const { error: updateError } = await this.supabaseService.client
           .from('agenda')
           .update({ data: agendaData })
           .eq('user_id', this.userId);
-
+  
         if (updateError) {
           console.error('Error al actualizar la agenda:', updateError.message);
           return;
         }
       } else {
+        // Si no existe una agenda, crea una nueva
         const { error: insertError } = await this.supabaseService.client
           .from('agenda')
           .insert({
             user_id: this.userId,
             data: agendaData,
           });
-
+  
         if (insertError) {
           console.error('Error al crear una nueva agenda:', insertError.message);
           return;
         }
       }
-
+  
       this.showToast(`Receta añadida a la agenda para el ${formattedDate}`);
     } catch (error) {
       console.error('Error al agregar la receta a la agenda:', error);
     }
-  }
+  } 
 
   async showToast(message: string) {
     const toast = await this.toastController.create({

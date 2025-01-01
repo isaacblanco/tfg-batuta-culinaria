@@ -83,7 +83,13 @@ export class CookPage implements OnInit, OnDestroy {
   }
 
   setRemainingTime() {
-    this.remainingTime = this.recipe?.steps[this.currentStepIndex]?.duration || 0;
+    const currentStep = this.recipe?.steps[this.currentStepIndex];
+    if (currentStep) {
+      // Convertir a segundos si la unidad es minutos
+      this.remainingTime = currentStep.durationUnit === 'minutes' 
+        ? currentStep.duration * 60 
+        : currentStep.duration;
+    }
   }
 
   startTimer() {

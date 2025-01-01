@@ -2,7 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonMenuButton, IonSegmentButton, IonSelectOption, IonTitle, IonToolbar, NavController } from '@ionic/angular/standalone';
+
+import {
+  IonButton, IonButtons,
+  IonCheckbox,
+  IonContent, IonHeader, IonIcon,
+  IonInput,
+  IonItem,
+  IonItemDivider, IonLabel, IonList, IonListHeader, IonMenuButton,
+  IonSegment,
+  IonSegmentButton,
+  IonSelect,
+  IonSelectOption, IonTitle, IonToolbar,
+  NavController
+} from '@ionic/angular/standalone';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { UNITS } from 'src/app/shared/enums/units';
 import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.service';
@@ -12,7 +25,10 @@ import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.servi
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, IonSelectOption, IonSegmentButton, IonListHeader, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar],
+  imports: [CommonModule, FormsModule, RouterLink, IonSelectOption, IonSegmentButton, 
+    IonListHeader,  IonToolbar, IonSelect, IonSegment, IonCheckbox,IonInput,
+    IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, 
+    IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar],
 })
 export class CartPage implements OnInit {
   units = UNITS;
@@ -27,6 +43,14 @@ export class CartPage implements OnInit {
     private navCtrl: NavController) {}
 
   async ngOnInit() {
+    this.initializate();
+  }
+
+  async ionViewWillEnter() {
+    this.initializate();
+  }
+
+  async initializate() {
     const userId = this.localStorageService.getUserId();
     await this.shoppingCartService.initializeCart(userId);
   
@@ -47,7 +71,6 @@ export class CartPage implements OnInit {
     }
   }
   
-
   // Actualiza el localStorage
   updateLocalStorage() {
     localStorage.setItem('ingredients', JSON.stringify(this.localStorageIngredients));
@@ -67,6 +90,41 @@ export class CartPage implements OnInit {
   removeLocalIngredient(index: number) {
     this.localStorageIngredients.splice(index, 1);
     this.updateLocalStorage(); // Actualiza el localStorage
+  }
+
+  async emptyAllIndredients() {
+    try {
+      const userId = this.localStorageService.getUserId(); // Obtener el user_id del localStorage
+  
+      if (!userId) {
+        console.warn('No se pudo obtener el ID de usuario.');
+        return;
+      }
+  
+      // Usar el servicio Supabase para eliminar todos los ingredientes de la tabla `cesta`
+      
+      await this.shoppingCartService.clearCart(userId);
+  
+      // Limpiar el carrito en la aplicación
+      this.cart = { shopping_list: [] };
+      this.localStorageIngredients = [];
+      this.allIngredients = [];
+  
+      console.log('Todos los ingredientes fueron eliminados con éxito.');
+      this.showToast('Todos los ingredientes fueron eliminados.');
+    } catch (error) {
+      console.error('Error inesperado al vaciar los ingredientes:', error);
+      this.showToast('Error inesperado al vaciar los ingredientes.');
+    }
+  }
+  
+
+  async showToast(message: string) {
+    const toast = document.createElement('ion-toast');
+    toast.message = message;
+    toast.duration = 2000;
+    document.body.appendChild(toast);
+    await toast.present();
   }
    
   // Calcula los ingredientes totales
@@ -141,7 +199,7 @@ export class CartPage implements OnInit {
       }
     } else {
       console.warn('La API de compartir no está disponible en este navegador.');
-      alert('La funcionalidad de compartir no está disponible en este dispositivo.');
+      // alert('La funcionalidad de compartir no está disponible en este dispositivo.');
     }
   }
 }
