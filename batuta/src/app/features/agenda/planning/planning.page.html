@@ -19,13 +19,12 @@
 <ion-content [fullscreen]="true">
   <!-- Botón para mover ingredientes a la lista de compra -->
   <ion-item>
-    <ion-checkbox slot="start" [(ngModel)]="clearShoppingListEnabled"><ion-label>Vaciar
-        carrito</ion-label></ion-checkbox>
-    <ion-button expand="block" (click)="moveIngredientsToShoppingList()">
+    <ion-checkbox slot="start" [(ngModel)]="clearShoppingListEnabled" [disabled]="!hasRecipes">
+      <ion-label>Vaciar carrito</ion-label>
+    </ion-checkbox>
+    <ion-button expand="block" (click)="moveIngredientsToShoppingList()" [disabled]="!hasRecipes">
       Crear lista de la compra
     </ion-button>
-
-
   </ion-item>
 
   <ion-list>
