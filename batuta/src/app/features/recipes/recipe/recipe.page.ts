@@ -256,6 +256,7 @@ export class RecipePage implements OnInit {
   }
 
   duplicateRecipe() {
+    // NO disponible
     console.log('Duplicar receta:', this.recipe);
     // Implementa la lógica para duplicar la receta
   }

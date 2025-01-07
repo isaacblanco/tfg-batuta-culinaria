@@ -14,7 +14,7 @@
 
 <ion-content>
   <ng-container *ngIf="recipe; else loading">
-    <div class="ion-text-center">
+    <div class="ion-text-center bg-white">
       <p>Paso {{ currentStepIndex + 1 }} de {{ recipe.steps.length }}</p>
       <h2>{{ recipe.steps[currentStepIndex].instructions }}</h2>
       <p>Duración del paso: <b>{{ recipe.steps[currentStepIndex].duration |

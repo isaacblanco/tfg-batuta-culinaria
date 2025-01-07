@@ -58,11 +58,11 @@
       </ion-label>
     </ion-item>
     <ion-item-divider>Ingredientes</ion-item-divider>
-    <ion-item>
-      <ion-icon name="add-circle-outline" slot="end"></ion-icon>
+    <ion-item lines="full">
+      <!--<ion-icon name="add-circle-outline" slot="end"></ion-icon>-->
       Raciones: {{ recipe?.num_people }}
-      <ion-icon name="person" slot="end"></ion-icon>
-      <ion-icon name="remove-circle-outline" slot="end"></ion-icon>
+      <ion-icon name="person" slot="start"></ion-icon>
+      <!--<ion-icon name="remove-circle-outline" slot="end"></ion-icon>-->
     </ion-item>
     <ion-item *ngFor="let ingredient of recipe?.ingredients" lines="none">
       <ion-label>
@@ -75,7 +75,7 @@
       <ion-label>
         <b style="font-size: 1.2rem">{{ i + 1 }}</b>. {{ step.instructions }}
         <br />
-        <small>Duración: {{ step.duration }} segundos</small>
+        <small>Duración: {{ step.duration }} {{step.durationUnit}}</small>
       </ion-label>
     </ion-item>
   </ion-list>

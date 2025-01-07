@@ -113,7 +113,8 @@ export class CookPage implements OnInit, OnDestroy {
   clearTimer() {
     if (this.timer) {
       clearInterval(this.timer);
-      this.timer = null;
+      // this.timer = null;
+      this.setRemainingTime();
     }
     this.timerRunning = false;
   }
