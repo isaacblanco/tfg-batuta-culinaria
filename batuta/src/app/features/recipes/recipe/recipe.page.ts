@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonNote, IonPopover, IonRow, IonTitle, IonToolbar, MenuController, NavController, ToastController } from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
@@ -15,6 +15,8 @@ import { timeFormat } from 'src/app/shared/utils/dateTime-utils';
   imports: [CommonModule, RouterLink,IonItemDivider,IonGrid, IonRow, IonCol, IonPopover,IonImg, IonList, IonNote,IonButton,IonButtons,IonContent,IonHeader,IonIcon,IonItem,IonLabel,IonMenuButton,IonTitle,IonToolbar],
 })
 export class RecipePage implements OnInit {
+  @ViewChild('menuPopover') popover!: IonPopover;
+
   recipe: RecipeDTO | null = null;
   duration: string = '';
   favorite: boolean = false;
@@ -250,6 +252,7 @@ export class RecipePage implements OnInit {
     try {
       await this.shoppingCartService.addRecipeToCart(this.userId, this.recipe);
       this.showToast('Receta añadida a la lista de la compra.');
+      await this.popover.dismiss();
     } catch (error) {
       console.error('Error al añadir a la lista de la compra:', error);
     }
@@ -265,6 +268,7 @@ export class RecipePage implements OnInit {
     console.log('Editar receta:', this.recipe);
     if (this.recipe) {
       await this.menuController.close(); // Cierra el menú antes de navegar
+      await this.popover.dismiss();
       this.router.navigate(['/new', this.recipe.id]);
     }
   }
