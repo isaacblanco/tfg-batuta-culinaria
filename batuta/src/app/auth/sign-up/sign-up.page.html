@@ -15,7 +15,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>Sign Up</ion-card-title>
-      <ion-card-subtitle>Create your account</ion-card-subtitle>
+      <ion-card-subtitle>Crear cuenta</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
@@ -23,8 +23,17 @@
         <ion-input [(ngModel)]="email" type="email"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Password</ion-label>
-        <ion-input [(ngModel)]="password" type="password"></ion-input>
+        <ion-label position="stacked">Clave</ion-label>
+        <ion-input [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'">
+
+        </ion-input>
+        <ion-button slot="end" fill="clear" (click)="togglePassword()">
+          <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Repetir clave</ion-label>
+        <ion-input [(ngModel)]="password2" type="password"></ion-input>
       </ion-item>
       <ion-text color="danger" *ngIf="errorMessage">
         {{ errorMessage }}

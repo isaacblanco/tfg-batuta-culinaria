@@ -17,21 +17,14 @@
       <form (submit)="login()" autocomplete="on">
         <ion-item>
           <ion-label position="stacked">Email</ion-label>
-          <ion-input
-            [(ngModel)]="email"
-            type="email"
-            name="email"
-            required
-          ></ion-input>
+          <ion-input [(ngModel)]="email" type="email" name="email" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Password</ion-label>
-          <ion-input
-            [(ngModel)]="password"
-            type="password"
-            name="password"
-            required
-          ></ion-input>
+          <ion-label position="stacked">Clave</ion-label>
+          <ion-input name="password" [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'"></ion-input>
+          <ion-button slot="end" fill="clear" (click)="togglePassword()">
+            <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+          </ion-button>
         </ion-item>
         <ion-text color="danger" *ngIf="errorMessage">
           {{ errorMessage }}

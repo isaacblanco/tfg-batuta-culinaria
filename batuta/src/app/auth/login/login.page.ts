@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCol, IonContent, IonGrid, IonImg, IonInput, IonItem, IonLabel, IonRow, IonText } from '@ionic/angular/standalone';
+import {
+  IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCol,
+  IonContent, IonGrid, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonRow, IonText
+} from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
@@ -11,12 +14,13 @@ import { SupabaseService } from 'src/app/core/services/supabase.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonText, IonButton, IonInput, IonItem, IonLabel, IonContent, IonGrid, IonRow, IonCol, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle],
+  imports: [CommonModule, FormsModule, IonText, IonButton, IonInput, IonItem, IonIcon, IonLabel, IonContent, IonGrid, IonRow, IonCol, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle],
 })
 export class LoginPage implements OnInit {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
+  showPassword: boolean = false;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -31,6 +35,10 @@ export class LoginPage implements OnInit {
     if (!user) {
       this.localStorageService.clearUserData();
     }
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
   async login() {

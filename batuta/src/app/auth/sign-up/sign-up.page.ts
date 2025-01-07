@@ -16,7 +16,10 @@ import { SupabaseService } from 'src/app/core/services/supabase.service';
 export class SignUpPage implements OnInit {
   email: string = '';
   password: string = '';
+  password2: string = '';
   errorMessage: string = '';
+
+  showPassword: boolean = false;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -24,7 +27,13 @@ export class SignUpPage implements OnInit {
     private navCtrl: NavController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.showPassword = false;
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   /**
    * Comprueba si la contraseña es fuerte
@@ -40,6 +49,12 @@ export class SignUpPage implements OnInit {
     if (!this.isPasswordStrong(this.password)) {
       this.errorMessage =
         'La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas y números.';
+      return;
+    }
+
+    if (this.password != this.password2) {
+      this.errorMessage =
+        'Las contraseñas no coinciden';
       return;
     }
 
