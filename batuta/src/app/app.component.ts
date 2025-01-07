@@ -31,10 +31,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private menuController: MenuController,
     private authService: AuthService
-  ) {
-    
-
-  }
+  ) { }
 
   ngOnInit() {
     // Suscribirse al estado de autenticación
