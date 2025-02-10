@@ -51,6 +51,9 @@ export class CartPage implements OnInit {
   }
 
   async initializate() {
+    this.cart = null; // Reinicia la agenda a un estado vacío
+    this.allIngredients = []; // Reinicia el array como vacío
+
     const userId = this.localStorageService.getUserId();
     await this.shoppingCartService.initializeCart(userId);
   

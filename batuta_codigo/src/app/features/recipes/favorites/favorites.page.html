@@ -6,7 +6,7 @@
         <ion-icon name="home"></ion-icon>
       </a>
     </ion-buttons>
-    <ion-title>Favorites</ion-title>
+    <ion-title>Favoritas</ion-title>
     <ion-buttons slot="end" fill="clear">
       <a [routerLink]="'/cart'" routerDirection="forward">
         <ion-icon name="cart"></ion-icon>
@@ -14,20 +14,13 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar
-      placeholder="Buscar receta"
-      [(ngModel)]="searchTerm"
-      (ionInput)="filterFavorites()"
-    ></ion-searchbar>
+    <ion-searchbar placeholder="Buscar receta" [(ngModel)]="searchTerm" (ionInput)="filterFavorites()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <app-recipe-card
-      *ngFor="let favorite of filteredFavorites"
-      [recipe]="favorite.recetas"
-    >
+    <app-recipe-card *ngFor="let favorite of filteredFavorites" [recipe]="favorite.recetas">
     </app-recipe-card>
   </ion-list>
 </ion-content>

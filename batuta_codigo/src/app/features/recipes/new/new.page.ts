@@ -12,7 +12,8 @@ import {
   IonSelect,
   IonSelectOption,
   IonTextarea,
-  IonTitle, IonToggle, IonToolbar
+  IonTitle,
+  IonToolbar
 } from '@ionic/angular/standalone';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
@@ -35,29 +36,28 @@ import { RecipeDTO } from 'src/app/shared/models/recipe-DTO';
     CommonModule,
     FormsModule,
     RouterLink,
-    IonSegmentButton,
-    IonInput,
-    IonSelect,
-    IonTextarea,
-    IonSegment,
-    IonSegmentButton,
     IonButton,
-    IonSelectOption,
-    IonItemDivider,
-    IonToggle,
-    IonList,
     IonButtons,
     IonContent,
+    IonCol,
+    IonGrid,
     IonHeader,
     IonIcon,
+    IonInput,
     IonItem,
+    IonItemDivider,
     IonLabel,
+    IonList,
     IonMenuButton,
+    IonRow,
+    IonSelect,
+    IonSegment,
+    IonSegmentButton,
+    IonSelectOption,
+    IonTextarea,
     IonTitle,
     IonToolbar,
-    IonGrid,
-    IonRow,
-    IonCol
+    
   ]
 })
 export class NewPage implements OnInit {
@@ -220,6 +220,36 @@ export class NewPage implements OnInit {
   // Eliminar un paso existente
   removeStep(index: number) {
     this.recipe.steps.splice(index, 1);
+  }
+
+  handleDurationUnitChange(index: number, event: any) {
+    const newUnit = event.detail.value;
+    const step = this.recipe.steps[index];
+    
+    // Convertir el valor cuando se cambia la unidad
+    if (newUnit === 'seconds' && step.durationUnit === 'minutes') {
+      step.duration = Math.round(step.duration * 60);
+    } else if (newUnit === 'minutes' && step.durationUnit === 'seconds') {
+      step.duration = Math.round(step.duration / 60);
+    }
+    
+    step.durationUnit = newUnit;
+    
+    // Asegurar que el valor está dentro de los límites
+    this.validateDuration(index, { detail: { value: step.duration } });
+  }
+
+  validateDuration(index: number, event: any) {
+    const value = event.detail.value;
+    const step = this.recipe.steps[index];
+    
+    if (step.durationUnit === 'minutes') {
+      if (value > 180) step.duration = 180; // máximo 3 horas
+      if (value < 1) step.duration = 1;
+    } else {
+      if (value > 3600) step.duration = 3600; // máximo 1 hora en segundos
+      if (value < 1) step.duration = 1;
+    }
   }
 
   // Validar si el formulario está completo

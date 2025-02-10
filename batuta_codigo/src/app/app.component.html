@@ -11,15 +11,15 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content *ngIf="isAuthenticated">
-        <ion-list id="inbox-list">
-          <ion-menu-toggle auto-hide="true" *ngFor="let p of appPages; let i = index">
+      <ion-content>
+        <ion-list id="inbox-list" *ngIf="isAuthenticated">
+          <div auto-hide="true" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="full" detail="false"
               routerLinkActive="selected">
               <ion-icon slot="start" name="{{ p.icon }}"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </div>
         </ion-list>
       </ion-content>
       <ion-footer>
